@@ -9,14 +9,14 @@ const ListSupplyAndCustomer:React.FC =()=>{
     return(
         <>
         { data?.suppliersAndCustomers?.nodes.map((suply)=>(
-<ListRowItem bgColor={'gray'} actions={ <GridItem colSpan={1}>
+<ListRowItem boxShadow={'initial'}  bgColor={'#FFFFFF'} actions={ <GridItem colSpan={1}>
    Menu </GridItem> }>
-     <GridItem colSpan={4}>
+     <GridItem >
         {suply?.name}
     </GridItem> 
-    <GridItem colSpan={4}>{suply?.email}
+    <GridItem >{suply?.email}
     </GridItem> 
-    <GridItem colSpan={3}> {suply?.phone}
+    <GridItem > {suply?.phone}
     </GridItem> 
 </ListRowItem>
 ))

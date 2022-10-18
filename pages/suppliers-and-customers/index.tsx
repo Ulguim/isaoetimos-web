@@ -8,7 +8,7 @@ const SuppliersAndCustomers = () =>{
    
     return (
 <LayoutTemplate>
-   <Box margin={10}>
+   <Box margin={10} >
     <ListSupplyAndCustomer></ListSupplyAndCustomer>
    </Box>
 </LayoutTemplate>

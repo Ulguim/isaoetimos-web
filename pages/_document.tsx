@@ -17,7 +17,7 @@ async function validateToken(ctx, token: string) {
     return
   }
   const res = await axios.post(
-     "http://localhost:3000/graphql",
+     process.env.NEXT_PUBLIC_API_URL,
     // {
     //   operationName: 'getMe',
     //   query: `query getMe { me { id } }`,
@@ -75,7 +75,7 @@ class MyDocument extends Document {
             content="width=device-width, initial-scale=1.0"
           />
           {/* eslint-disable-next-line @next/next/no-title-in-document-head */}
-          <title>Reference</title>
+          <title>Eazy Rp</title>
         </Head>
         <body>
           <Main />

@@ -20,6 +20,7 @@ export const ListRowItem: React.FC<ListRowItemProps> = ({
     children,
     ...props
 }) =>{
+
     return(
         <Grid    
         minH={75}
@@ -29,7 +30,7 @@ export const ListRowItem: React.FC<ListRowItemProps> = ({
         px={6}
         py={2}
         alignItems="center"
-        templateColumns="repeat(12, 1fr)"
+        templateColumns={["1fr","1fr 1fr","1fr 1fr 1fr","repeat(4, 1fr)"]}
         {...props}>
 
       {children}
