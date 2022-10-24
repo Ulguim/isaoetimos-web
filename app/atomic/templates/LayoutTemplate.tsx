@@ -8,6 +8,7 @@ import { menuItems } from "../organisms/MenuItem";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import { faArrowCircleLeft } from "@fortawesome/free-solid-svg-icons";
+import router from "next/router";
 
 const LayoutTemplate:React.FC<any> = ({children}) => {
   const { collapseSidebar } = useProSidebar();
@@ -21,7 +22,7 @@ const LayoutTemplate:React.FC<any> = ({children}) => {
       <Sidebar  backgroundColor="#031C30" >
         <Menu>
           {menuItems.map((itens )=>
-          (<MenuItem  href={itens.href} icon={itens.icon} > {itens.label}</MenuItem>))
+          (<MenuItem onClick={()=> router.push(itens?.href)}  icon={itens.icon} > {itens.label}</MenuItem>))
           
         }
         </Menu>
