@@ -1,15 +1,15 @@
 import { Box, GridItem } from '@chakra-ui/react'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {
   faEnvelope,
-  faSquarePhone,
   faPenToSquare,
-  faTrashCan
+  faSquarePhone,
+  faTrashCan,
 } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
+import MoreOptionsMenu from '../../../../atomic/molecules/moreOptionsMenu/MoreOptionsMenu'
 import { ListRowItem } from '../../../../atomic/organisms/ListRowItem'
 import { useGetSuppliersAndCustomersQuery } from '../../graphql/suppliers-and-customers.generated'
-import MoreOptionsMenu from '../../../../atomic/molecules/moreOptionsMenu/MoreOptionsMenu'
 
 const ListSupplyAndCustomer: React.FC = () => {
   const { data } = useGetSuppliersAndCustomersQuery()
@@ -24,13 +24,17 @@ const ListSupplyAndCustomer: React.FC = () => {
             <MoreOptionsMenu
               options={[
                 {
-                  icon: <FontAwesomeIcon icon={faPenToSquare} size="lg" />,
-                  label: 'Editar'
+                  icon: (
+                    <FontAwesomeIcon icon={faPenToSquare} size="lg" />
+                  ),
+                  label: 'Editar',
                 },
                 {
-                  icon: <FontAwesomeIcon icon={faTrashCan} size="lg" />,
-                  label: 'Excluir'
-                }
+                  icon: (
+                    <FontAwesomeIcon icon={faTrashCan} size="lg" />
+                  ),
+                  label: 'Excluir',
+                },
               ]}
             />
           }
@@ -45,7 +49,11 @@ const ListSupplyAndCustomer: React.FC = () => {
             <Box ml={2}>{supply?.email}</Box>
           </GridItem>
           <GridItem display="flex" alignItems="center">
-            <FontAwesomeIcon icon={faSquarePhone} size="lg" color="#00B247" />
+            <FontAwesomeIcon
+              icon={faSquarePhone}
+              size="lg"
+              color="#00B247"
+            />
             <Box ml={2}>{supply?.phone}</Box>
           </GridItem>
         </ListRowItem>

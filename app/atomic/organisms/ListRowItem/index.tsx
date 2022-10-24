@@ -1,5 +1,11 @@
 import React from 'react'
-import { Grid, GridItem, GridItemProps, GridProps } from '@chakra-ui/react'
+
+import {
+  Grid,
+  GridItem,
+  GridItemProps,
+  GridProps,
+} from '@chakra-ui/react'
 
 export type ListRowItemProps = {
   actions: any
@@ -22,7 +28,12 @@ export const ListRowItem: React.FC<ListRowItemProps> = ({
       px={6}
       py={2}
       alignItems="center"
-      templateColumns={['1fr', '1fr 1fr 1fr 0.2fr', '1fr 1fr 1fr 0.2fr', '1fr 1fr 1fr 0.2fr']}
+      templateColumns={[
+        '1fr',
+        '1fr 1fr 1fr 0.2fr',
+        '1fr 1fr 1fr 0.2fr',
+        '1fr 1fr 1fr 0.2fr',
+      ]}
       gap={3}
       {...props}
     >

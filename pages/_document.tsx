@@ -9,7 +9,6 @@ import Document, {
   NextScript,
 } from 'next/document'
 
-
 async function validateToken(ctx, token: string) {
   if (!token) {
     ctx.res?.writeHead(302, { Location: '/auth/login' })
@@ -17,7 +16,7 @@ async function validateToken(ctx, token: string) {
     return
   }
   const res = await axios.post(
-     process.env.NEXT_PUBLIC_API_URL,
+    process.env.NEXT_PUBLIC_API_URL,
     // {
     //   operationName: 'getMe',
     //   query: `query getMe { me { id } }`,
