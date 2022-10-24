@@ -1,32 +1,39 @@
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+
+import { IconProp } from "@fortawesome/fontawesome-svg-core";
+import { faHouse,faPencil,faImage,faList, faGear } from "@fortawesome/free-solid-svg-icons";
+
+
+
 export const menuItems = [
     {
       label: 'Home',
-      href: 'Home',
-      icon: "None",
+      href: '/admin/travel-history',
+      icon:  <FontAwesomeIcon icon={faHouse}/>,
    
     },
     {
         label: 'Banco de Dados',
-        href: 'Banco de Dados',
-        icon: "None",
+        href: 'suppliers-and-customers',
+        icon:  <FontAwesomeIcon icon={faPencil}/>,
         
       },
       {
         label: 'Plano de Contas',
-        href: 'Plano de Contas',
-        icon: "None",
+        href: 'suppliers-and-customers',
+        icon:  <FontAwesomeIcon icon={faImage}/>,
       
       },
       {
         label: 'Fornecedores e Clientes',
         href: '/suppliers-and-customers',
-        icon: "None",
+        icon:  <FontAwesomeIcon icon={faList}/>,
        
       },
       {
         label: 'Config',
         href: '/config',
-        icon: "None",
+        icon:  <FontAwesomeIcon icon={faGear}/>,
       
       },
  

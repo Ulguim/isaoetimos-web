@@ -13,21 +13,22 @@ const LayoutTemplate:React.FC<any> = ({children}) => {
   const { collapseSidebar } = useProSidebar();
 
   return (<Box bgColor={'#DEDEDE'}>
-    <Box width={'100vw'} height={16} bgColor='#008836'><Image  maxHeight={'99%'} src='/Logo.svg'/> </Box>
+    <Box height={16} width={'100vw'} bgColor='#008836'  >
+    <Box ><Image pt='5px' pl='10px' maxHeight={14} src='/Logo.svg'/> </Box>
+    </Box>
     <Box width={'100vw'} display='flex' height={'calc(100vh - 64px)'}  >
       <Box color={'white'}  display="flex" height={'calc(100vh - 64px)'}> 
       <Sidebar  backgroundColor="#031C30" >
         <Menu>
           {menuItems.map((itens )=>
-          (<MenuItem > {itens.label}</MenuItem>))
+          (<MenuItem  href={itens.href} icon={itens.icon} > {itens.label}</MenuItem>))
           
         }
         </Menu>
+        <Box display={'flex'}  width={'100%'} justifyContent='center' >
         <main  style={{bottom:'5px', position:'fixed'}} >
-       
-      </main>
-      <Box display={'flex'} marginBottom={0}  width={'100%'} justifyContent='center' >
         <button  onClick={() => collapseSidebar()}><FontAwesomeIcon icon={faArrowCircleLeft} /></button>
+      </main> 
         </Box>
       </Sidebar>
       
