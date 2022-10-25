@@ -1,21 +1,26 @@
-import React from 'react'
+import React, { useState } from 'react'
 
 import { Box } from '@chakra-ui/react'
 import { Image } from '@chakra-ui/react'
-import { faArrowCircleLeft } from '@fortawesome/free-solid-svg-icons'
+import {
+  faArrowCircleLeft,
+  faArrowCircleRight
+} from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import router from 'next/router'
-import {
-  Menu,
-  MenuItem,
-  Sidebar,
-  useProSidebar,
-} from 'react-pro-sidebar'
+import { Menu, MenuItem, Sidebar, useProSidebar } from 'react-pro-sidebar'
 
 import { menuItems } from '../organisms/MenuItem'
 
 const LayoutTemplate: React.FC<any> = ({ children }) => {
+  const [isOpen, setIsOpen] = useState(true)
   const { collapseSidebar } = useProSidebar()
+  const arrowIcon = isOpen ? faArrowCircleLeft : faArrowCircleRight
+
+  const handleCollapseSidebar = () => {
+    setIsOpen(!isOpen)
+    collapseSidebar()
+  }
 
   return (
     <Box bgColor={'#DEDEDE'}>
@@ -24,41 +29,38 @@ const LayoutTemplate: React.FC<any> = ({ children }) => {
           <Image pt="5px" pl="10px" maxHeight={14} src="/Logo.svg" />
         </Box>
       </Box>
-      <Box
-        width={'100vw'}
-        display="flex"
-        height={'calc(100vh - 64px)'}
-      >
+      <Box width={'100vw'} display="flex" height={'calc(100vh - 64px)'}>
         <Box
           color={'white'}
           display="flex"
           height={'calc(100vh - 64px)'}
+          position="relative"
         >
           <Sidebar backgroundColor="#031C30">
             <Menu>
-              {
-                menuItems.map(itens => (
-                  // eslint-disable-next-line react/jsx-key
-                  <MenuItem
-                    onClick={() => router.push(itens?.href)}
-                    icon={itens.icon}
-                  >
-                    {' '}
-                    {itens.label}
-                  </MenuItem>
-                )) // eslint-disable-next-line react/jsx-indent-props
-              }
+              {menuItems.map((item, index) => (
+                <MenuItem
+                  key={`${item.label}-${index}`}
+                  onClick={() => router.push(item?.href)}
+                  icon={item.icon}
+                >
+                  {' '}
+                  {item.label}
+                </MenuItem>
+              ))}
             </Menu>
             <Box
               display={'flex'}
-              width={'100%'}
               justifyContent="center"
+              alignItems="center"
+              position="absolute"
+              cursor="pointer"
+              bottom="0"
+              w="100%"
+              h="50px"
+              onClick={() => handleCollapseSidebar()}
             >
-              <main style={{ bottom: '5px', position: 'fixed' }}>
-                <button onClick={() => collapseSidebar()}>
-                  <FontAwesomeIcon icon={faArrowCircleLeft} />
-                </button>
-              </main>
+              <FontAwesomeIcon icon={arrowIcon} />
             </Box>
           </Sidebar>
         </Box>
