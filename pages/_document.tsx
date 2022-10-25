@@ -29,7 +29,7 @@ async function validateToken(ctx, token: string) {
   )
   return !!res?.data?.data?.me
 }
-
+console.log(validateToken)
 class MyDocument extends Document {
   static async getInitialProps(ctx: DocumentContext) {
     const initialProps = await Document.getInitialProps(ctx)
