@@ -100,4 +100,3 @@ build-job:       # This job runs in the build stage, which runs first.
 #   script:
 #     - echo "Deploying application..."
 #     - echo "Application successfully deployed."
-
