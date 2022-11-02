@@ -356,7 +356,7 @@ export type UpdateSuppliersAndCustomerInput = {
   address?: InputMaybe<Scalars['String']>;
   cpf?: InputMaybe<Scalars['String']>;
   email?: InputMaybe<Scalars['String']>;
-  id: Scalars['ID'];
+  id?: InputMaybe<Scalars['ID']>;
   name?: InputMaybe<Scalars['String']>;
   phone?: InputMaybe<Scalars['String']>;
 };
