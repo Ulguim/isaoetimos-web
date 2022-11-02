@@ -1,4 +1,4 @@
-FROM node:14.15-alpine
+FROM node:16.12.0-alpine
 
 ENV PORT 3000
 
@@ -15,7 +15,7 @@ RUN yarn install
 # Copying source files
 COPY . /usr/src/app
 
-RUN yarn run generate
+RUN yarn run codegen
 
 # Building app
 RUN yarn build

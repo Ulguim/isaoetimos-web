@@ -1,5 +1,5 @@
 overwrite: true
-schema: ${NEXT_PUBLIC_API_URL}
+schema: ${NEXT_PUBLIC_API_URL:http://52.147.7.103:3000/graphql}
 documents: 'app/**/*.graphql'
 generates:
   app/generated/graphql.tsx:

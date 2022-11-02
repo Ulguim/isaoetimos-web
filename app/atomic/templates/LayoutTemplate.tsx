@@ -4,11 +4,16 @@ import { Box } from '@chakra-ui/react'
 import { Image } from '@chakra-ui/react'
 import {
   faArrowCircleLeft,
-  faArrowCircleRight
+  faArrowCircleRight,
 } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import router from 'next/router'
-import { Menu, MenuItem, Sidebar, useProSidebar } from 'react-pro-sidebar'
+import {
+  Menu,
+  MenuItem,
+  Sidebar,
+  useProSidebar,
+} from 'react-pro-sidebar'
 
 import { menuItems } from '../organisms/MenuItem'
 
@@ -29,7 +34,11 @@ const LayoutTemplate: React.FC<any> = ({ children }) => {
           <Image pt="5px" pl="10px" maxHeight={14} src="/Logo.svg" />
         </Box>
       </Box>
-      <Box width={'100vw'} display="flex" height={'calc(100vh - 64px)'}>
+      <Box
+        width={'100vw'}
+        display="flex"
+        height={'calc(100vh - 64px)'}
+      >
         <Box
           color={'white'}
           display="flex"
@@ -37,7 +46,7 @@ const LayoutTemplate: React.FC<any> = ({ children }) => {
           position="relative"
         >
           <Sidebar backgroundColor="#031C30">
-            <Menu>
+            <Menu style={{ marginTop: '24px' }}>
               {menuItems.map((item, index) => (
                 <MenuItem
                   key={`${item.label}-${index}`}

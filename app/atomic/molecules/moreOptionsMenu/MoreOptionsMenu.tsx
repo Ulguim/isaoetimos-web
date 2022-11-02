@@ -13,6 +13,7 @@ type MoreOptionsMenuProps = {
   options?: {
     icon: any
     label: string
+    onClick?: () => void
   }[]
 }
 
@@ -31,6 +32,7 @@ const MoreOptionsMenu: React.FC<MoreOptionsMenuProps> = ({
             icon={option.icon}
             display="flex"
             alignItems="center"
+            onClick={option?.onClick}
           >
             <Box fontWeight="semibold" ml="-1">
               {option.label}{' '}
