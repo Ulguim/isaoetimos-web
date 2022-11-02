@@ -10,16 +10,13 @@ WORKDIR /usr/src/app
 COPY package.json /usr/src/app/
 COPY yarn.lock /usr/src/app/
 
-RUN yarn install
+RUN yarn
 
-# Copying source files
 COPY . /usr/src/app
 
 RUN yarn run codegen
 
-# Building app
 RUN yarn build
 EXPOSE 3000
 
-# Running the app
 CMD "npm" "run" "dev"
