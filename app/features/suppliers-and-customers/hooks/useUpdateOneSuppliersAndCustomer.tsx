@@ -31,6 +31,7 @@ export default function useUpdateOneSupplierAndCustomer() {
         await UpdateOneSupplierAndCustomerMutation({
           variables: {
             id,
+            // @ts-ignore
             update: values,
           },
         })
