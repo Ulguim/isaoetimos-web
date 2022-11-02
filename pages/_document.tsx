@@ -37,18 +37,17 @@ class MyDocument extends Document {
     // const token = cookies?.['@reference:authToken']
     ctx.res?.writeHead(302, { Location: '/suppliers-and-customers' })
     ctx.res?.end()
-    // if (ctx.pathname === '/') {
-    //   const isTokenValid = await validateToken(ctx, token)
-    //   if (isTokenValid) {
-    //     ctx.res?.writeHead(302, { Location: '/admin/clients' })
-    //     ctx.res?.end()
-    //     return
-    //   } else {
-    //     ctx.res?.writeHead(302, { Location: '/auth/login' })
-    //     ctx.res?.end()
-    //     return
-    //   }
-    // }
+    console.log(ctx)
+    if (ctx.pathname == '/') {
+      ctx.res?.writeHead(302, {
+        Location: '/suppliers-and-customers',
+      })
+      ctx.res?.end()
+      return
+      //     ctx.res?.end()
+      //     return
+      //   }
+    }
 
     // if (ctx.pathname.includes('admin')) {
     //   const isTokenValid = await validateToken(ctx, token)
