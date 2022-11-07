@@ -1,0 +1,2 @@
+schema: ${NEXT_PUBLIC_API_URL}
+documents: app/features/*/.{graphql,tsx,jsx,ts,js}
