@@ -24,9 +24,9 @@
     "**/*.ts",
     "**/*.tsx"
   ],
-  "exclude": 
+  "exclude":
     ["node_modules", "./node_modules",
     "./node_modules/*",
-    "./node_modules/@types/node/index.d.ts"], "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"]
-  
+    "./node_modules/@types/node/index.d.ts"
+  ],
 }

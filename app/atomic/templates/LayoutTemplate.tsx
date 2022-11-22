@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useMemo, useState } from 'react'
 
 import { Box } from '@chakra-ui/react'
 import { Image } from '@chakra-ui/react'
@@ -7,7 +7,7 @@ import {
   faArrowCircleRight,
 } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import router from 'next/router'
+import  { useRouter } from 'next/router'
 import {
   Menu,
   MenuItem,
@@ -18,14 +18,18 @@ import {
 import { menuItems } from '../organisms/MenuItem'
 
 const LayoutTemplate: React.FC<any> = ({ children }) => {
+  const router = useRouter()
   const [isOpen, setIsOpen] = useState(true)
   const { collapseSidebar } = useProSidebar()
   const arrowIcon = isOpen ? faArrowCircleLeft : faArrowCircleRight
+
 
   const handleCollapseSidebar = () => {
     setIsOpen(!isOpen)
     collapseSidebar()
   }
+
+
 
   return (
     <Box bgColor={'#DEDEDE'}>
@@ -47,16 +51,23 @@ const LayoutTemplate: React.FC<any> = ({ children }) => {
         >
           <Sidebar backgroundColor="#031C30">
             <Menu style={{ marginTop: '24px' }}>
-              {menuItems.map((item, index) => (
+              {menuItems.map((item, index) => {
+                const isActive = useMemo(
+                  () => router.pathname.includes(item.href),
+                  [item.href, router.pathname],
+                )
+
+                return (
                 <MenuItem
                   key={`${item.label}-${index}`}
-                  onClick={() => router.push(item?.href)}
+                  onClick={() => {if(item?.href) router.push(item.href)}}
                   icon={item.icon}
+                 style={{background: isActive ? '#04345c' : 'unset'}}
                 >
                   {' '}
                   {item.label}
                 </MenuItem>
-              ))}
+              )})}
             </Menu>
             <Box
               display={'flex'}

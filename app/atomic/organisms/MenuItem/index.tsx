@@ -10,17 +10,17 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 export const menuItems = [
   {
     label: 'Home',
-    href: '/suppliers-and-customers',
+    // href: '/suppliers-and-customers',
     icon: <FontAwesomeIcon icon={faHouse} />,
   },
   {
     label: 'Banco de Dados',
-    href: '/suppliers-and-customers',
+    // href: '/suppliers-and-customers',
     icon: <FontAwesomeIcon icon={faPencil} />,
   },
   {
     label: 'Plano de Contas',
-    href: '/suppliers-and-customers',
+    href: '/account-plans',
     icon: <FontAwesomeIcon icon={faImage} />,
   },
   {
@@ -30,7 +30,7 @@ export const menuItems = [
   },
   {
     label: 'Config',
-    href: '/config',
+    // href: '/suppliers-and-customers',
     icon: <FontAwesomeIcon icon={faGear} />,
   },
 ]

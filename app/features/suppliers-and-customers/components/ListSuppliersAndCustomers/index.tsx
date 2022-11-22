@@ -2,7 +2,6 @@ import { useState } from 'react'
 
 import {
   Box,
-  Button,
   GridItem,
   useDisclosure,
   useToast,
@@ -10,18 +9,18 @@ import {
 import {
   faEnvelope,
   faPenToSquare,
-  faPlus,
   faSquarePhone,
   faTrashCan,
 } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
-import MoreOptionsMenu from '../../../../atomic/molecules/moreOptionsMenu/MoreOptionsMenu'
-import { SuppliersAndCustomersDrawer } from '../../../../atomic/organisms/AddsSupplersAndCustomersDrawer'
+import MoreOptionsMenu from '../../../../atomic/molecules/MoreOptionsMenu/MoreOptionsMenu'
+import { SuppliersAndCustomersDrawer } from '../../../../atomic/organisms/SupplersAndCustomersDrawer'
 import { ListRowItem } from '../../../../atomic/organisms/ListRowItem'
 import { SuppliersAndCustomer } from '../../../../generated/graphql'
 import { useDeleteOneSuppliersAndCustomerMutation } from '../../graphql/mutations.generated'
 import { useGetSuppliersAndCustomersQuery } from '../../graphql/suppliers-and-customers.generated'
+import { PlusButton } from '../../../../atomic/atoms/PlusButton'
 
 const ListSupplyAndCustomer: React.FC = () => {
   const { data } = useGetSuppliersAndCustomersQuery()
@@ -110,21 +109,7 @@ const ListSupplyAndCustomer: React.FC = () => {
           </GridItem>
         </ListRowItem>
       ))}
-      <Button
-        width="56px"
-        height="56px"
-        borderRadius="50%"
-        position="absolute"
-        bottom={10}
-        right={10}
-        colorScheme="teal"
-        onClick={() => {
-          onOpen()
-          setIsEditform(false)
-        }}
-      >
-        <FontAwesomeIcon size="lg" icon={faPlus} />
-      </Button>
+      <PlusButton onOpen={onOpen} setEdit={setIsEditform} />
       <SuppliersAndCustomersDrawer
         intitialValues={initialValues}
         isEditForm={isEditForm}
