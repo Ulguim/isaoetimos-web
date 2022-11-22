@@ -83,19 +83,19 @@ export const SuppliersAndCustomersDrawer: React.FC<
               validate="string"
               name="name"
               label="Nome"
-            ></TextField>
+            />
             <TextField
               isRequired
               validate="string"
               name="cpf"
               label="CPF/CNPJ"
-            ></TextField>
+            />
             <TextField
               isRequired
               validate="string"
               name="email"
               label="E-mail"
-            ></TextField>
+            />
             <MaskField
               isRequired
               validate="string"
@@ -108,7 +108,7 @@ export const SuppliersAndCustomersDrawer: React.FC<
               validate="string"
               name="address"
               label="Endereço"
-            ></TextField>
+            />
           </Box>
         </DrawerTemplate>
       )}
