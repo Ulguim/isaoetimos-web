@@ -1,0 +1,10 @@
+query getAccountPlans{
+  accountPlans{
+    nodes{
+     id
+      name
+      accountPlanType
+      costType
+    }
+  }
+}

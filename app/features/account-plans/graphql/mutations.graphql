@@ -1,0 +1,23 @@
+mutation createOneAccountPlan($input: CreateOneAccountPlanInput!) {
+  createOneAccountPlan(input: $input) {
+    id
+    name
+    accountPlanType
+    costType
+  }
+}
+
+mutation deleteOneAccountPlan($id:ID!){
+  deleteOneAccountPlan(input:{id:$id}){
+    id
+  }
+}
+
+mutation updateOneAccountPlan($id: ID!, $update: UpdateOneAccountPlanInput!) {
+  updateOneAccountPlan( input: { id:$id, update:$update}) {
+    id
+    name
+    accountPlanType
+    costType
+  }
+}
