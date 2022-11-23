@@ -4,9 +4,10 @@ import { Box, Button } from '@chakra-ui/react'
 import { Form } from 'react-final-form'
 
 import { DrawerTemplate } from '../../molecules/Drawer'
-import { MaskField } from '../../molecules/MaskField'
 import { TextField } from '../../molecules/TextField'
 import { SelectField } from '../../molecules/SelectField'
+import useCreateOneAccountPlan from '../../../features/account-plans/hooks/useCreateOneAccountPlan'
+import useUpdateOneAccountPlan from '../../../features/account-plans/hooks/useUpdateOneAccountPlan'
 
 interface AccountPlansDrawerProps {
   isOpen: boolean
@@ -18,32 +19,32 @@ interface AccountPlansDrawerProps {
 export const AccountPlansDrawer: React.FC<
 AccountPlansDrawerProps
 > = ({ isOpen, onClose, isEditForm, intitialValues }) => {
-  // const { createOneSupplierAndCustomer } =
-  //   useCreateOneSupplierAndCustomer()
+  const { CreateOneAccountPlan } =
+    useCreateOneAccountPlan()
 
-  // const { updateOneSupplierAndCustomer } =
-  //   useUpdateOneSupplierAndCustomer()
-  // const handleUpdate = values => {
-  //   values.id = intitialValues.id
-  //   updateOneSupplierAndCustomer(values)
-  // }
+  const { updateOneAccountPlan } =
+    useUpdateOneAccountPlan()
+  const handleUpdate = values => {
+    values.id = intitialValues.id
+    updateOneAccountPlan(values)
+  }
 
-  const typeOptions = [
-    {value: 'ENTRADA'},
-    {value: 'SAIDA'}
+  const costTypeOptions = [
+    {value: 'INCOME', label: 'Entrada'},
+    {value: 'OUTCOME', label: 'Saída'}
   ]
 
-  const fixedOptions = [
-    {value: 'FIXO'},
-    {value: 'VARIAVEL'}
+  const accoutPlanTypeOptions = [
+    {value: 'FIXED', label: "Fixo"},
+    {value: 'VARIABLE', label: 'Variável'}
   ]
 
   return (
     <Form
       onSubmit={values => {
-        // isEditForm
-        //   ? handleUpdate(values)
-        //   : createOneSupplierAndCustomer(values)
+        isEditForm
+          ? handleUpdate(values)
+          : CreateOneAccountPlan(values)
       }}
       initialValues={isEditForm ? intitialValues : null}
     >
@@ -95,27 +96,28 @@ AccountPlansDrawerProps
             />
             <SelectField
               isRequired
-              name='type'
+              name='accountPlanType'
               validate='string'
               label='Fixo / Variável'
               placeholder='Selecione'
             >
-              {typeOptions.map((type, index) => (
+              {accoutPlanTypeOptions.map((type, index) => (
                 <option key={index} value={type.value}>
-                  {type.value}
+                  {type.label}
                 </option>
               ))}
+
             </SelectField>
             <SelectField
               isRequired
-              name='fixed'
+              name='costType'
               validate='string'
               label='Entrada / Saída'
               placeholder='Selecione'
             >
-              {fixedOptions.map((fixed, index) => (
-                <option key={index} value={fixed.value}>
-                  {fixed.value}
+              {costTypeOptions.map((type, index) => (
+                <option key={index} value={type.value}>
+                  {type.label}
                 </option>
               ))}
             </SelectField>
