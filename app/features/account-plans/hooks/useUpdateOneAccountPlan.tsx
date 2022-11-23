@@ -1,34 +1,32 @@
 import { useToast } from '@chakra-ui/react'
+import { useUpdateOneAccountPlanMutation } from '../graphql/mutations.generated'
 
-import { useUpdateOneSuppliersAndCustomerMutation } from '../graphql/mutations.generated'
 
-export default function useUpdateOneSupplierAndCustomer() {
+export default function useUpdateOneAccountPlan() {
   const toast = useToast()
   const [
-    UpdateOneSupplierAndCustomerMutation,
-    { data: updatedSupplier },
-  ] = useUpdateOneSuppliersAndCustomerMutation({
-    refetchQueries: ['getSuppliersAndCustomers'],
+    UpdateOneAccountPlanMutation,
+    { data: updatedAccount },
+  ] = useUpdateOneAccountPlanMutation({
+    refetchQueries: ['getAccountPlans'],
   })
 
-  interface UpdateOneSupplierAndCustomerProps {
+  interface UpdateOneAccountPlanProps {
     id?: string
     name?: string
-    address?: string
-    cpf?: string
-    email?: string
-    phone?: string
+    accountPlanType?: string
+    costType?: string
   }
 
-  async function updateOneSupplierAndCustomer(
-    values: UpdateOneSupplierAndCustomerProps,
+  async function updateOneAccountPlan(
+    values: UpdateOneAccountPlanProps,
   ) {
     try {
-      console.log(values)
       const id = values.id
       delete values.id
-      const { data: updatedSupplier } =
-        await UpdateOneSupplierAndCustomerMutation({
+      console.log(values)
+      const { data: updatedAccount } =
+        await UpdateOneAccountPlanMutation({
           variables: {
             id,
             // @ts-ignore
@@ -44,7 +42,7 @@ export default function useUpdateOneSupplierAndCustomer() {
         isClosable: true,
       })
 
-      return updatedSupplier
+      return updatedAccount
     } catch (error) {
       toast({
         title: 'Erro!',
@@ -56,5 +54,5 @@ export default function useUpdateOneSupplierAndCustomer() {
       })
     }
   }
-  return { updateOneSupplierAndCustomer, updatedSupplier }
+  return { updateOneAccountPlan, updatedAccount }
 }

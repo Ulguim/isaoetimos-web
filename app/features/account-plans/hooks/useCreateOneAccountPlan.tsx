@@ -1,43 +1,39 @@
 import { useToast } from '@chakra-ui/react'
 
-import { useCreateOneSuppliersAndCustomerMutation } from '../graphql/mutations.generated'
+import { useCreateOneAccountPlanMutation } from '../graphql/mutations.generated'
 
-export default function useCreateOneSupplierAndCustomer() {
+export default function useCreateOneAccountPlan() {
   const toast = useToast()
   const [
-    CreateOneSupplierAndCustomerMutation,
-    { data: createdSupplier },
-  ] = useCreateOneSuppliersAndCustomerMutation({
-    refetchQueries: ['getSuppliersAndCustomers'],
+    CreateOneAccountPlanMutation,
+    { data: createdAccount },
+  ] = useCreateOneAccountPlanMutation({
+    refetchQueries: ['getAccountPlans'],
   })
 
-  interface CreateOneSupplierAndCustomerProps {
+  interface CreateOneAccountPlanProps {
     name?: string
-    address?: string
-    cpf?: string
-    email?: string
-    phone?: string
+    costType?: string
+    accountPlanType?: string
   }
 
-  async function createOneSupplierAndCustomer(
-    values: CreateOneSupplierAndCustomerProps,
+  async function CreateOneAccountPlan(
+    values: CreateOneAccountPlanProps,
   ) {
     try {
-      const { name, address, cpf, email, phone } = values
+      const { name, accountPlanType, costType } = values
       console.log(values)
-      const { data: createdSupplier } =
-        await CreateOneSupplierAndCustomerMutation({
+      const { data: createdAccount } =
+        await CreateOneAccountPlanMutation({
           variables: {
             input: {
-              suppliersAndCustomer: {
+              accountPlan: {
                 name,
-                address,
-                cpf,
-                email,
-                phone,
-              },
-            },
-          },
+                accountPlanType,
+                costType,
+              }
+            }
+          }
         })
       toast({
         title: 'Sucesso!',
@@ -48,7 +44,7 @@ export default function useCreateOneSupplierAndCustomer() {
         isClosable: true,
       })
 
-      return createdSupplier
+      return createdAccount
     } catch (error) {
       toast({
         title: 'Erro!',
@@ -60,5 +56,5 @@ export default function useCreateOneSupplierAndCustomer() {
       })
     }
   }
-  return { createOneSupplierAndCustomer, createdSupplier }
+  return { CreateOneAccountPlan, createdAccount }
 }

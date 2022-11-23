@@ -19,8 +19,8 @@ import { SuppliersAndCustomersDrawer } from '../../../../atomic/organisms/Supple
 import { ListRowItem } from '../../../../atomic/organisms/ListRowItem'
 import { SuppliersAndCustomer } from '../../../../generated/graphql'
 import { useDeleteOneSuppliersAndCustomerMutation } from '../../graphql/mutations.generated'
-import { useGetSuppliersAndCustomersQuery } from '../../graphql/suppliers-and-customers.generated'
 import { PlusButton } from '../../../../atomic/atoms/PlusButton'
+import { useGetSuppliersAndCustomersQuery } from '../../graphql/queries.generated'
 
 const ListSupplyAndCustomer: React.FC = () => {
   const { data } = useGetSuppliersAndCustomersQuery()
@@ -53,9 +53,7 @@ const ListSupplyAndCustomer: React.FC = () => {
       name: supply.name,
     })
     setIsEditform(true)
-
     onOpen()
-    console.log(supply)
   }
 
   return (

@@ -7,14 +7,17 @@ mutation createOneAccountPlan($input: CreateOneAccountPlanInput!) {
   }
 }
 
-mutation deleteOneAccountPlan($id:ID!){
-  deleteOneAccountPlan(input:{id:$id}){
+mutation deleteOneAccountPlan($id: ID!) {
+  deleteOneAccountPlan(input: { id: $id }) {
     id
   }
 }
 
-mutation updateOneAccountPlan($id: ID!, $update: UpdateOneAccountPlanInput!) {
-  updateOneAccountPlan( input: { id:$id, update:$update}) {
+mutation updateOneAccountPlan(
+  $id: ID!
+  $update: UpdateAccountPlanInput!
+) {
+  updateOneAccountPlan(input: { id: $id, update: $update }) {
     id
     name
     accountPlanType
