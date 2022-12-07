@@ -29,7 +29,7 @@ async function validateToken(ctx, token: string) {
   )
   return !!res?.data?.data?.me
 }
-console.log(validateToken)
+// console.log(validateToken)
 class MyDocument extends Document {
   static async getInitialProps(ctx: DocumentContext) {
     const initialProps = await Document.getInitialProps(ctx)
@@ -37,7 +37,7 @@ class MyDocument extends Document {
     // const token = cookies?.['@reference:authToken']
     ctx.res?.writeHead(302, { Location: '/suppliers-and-customers' })
     ctx.res?.end()
-    console.log(ctx)
+    // console.log(ctx)
     if (ctx.pathname == '/') {
       ctx.res?.writeHead(302, {
         Location: '/suppliers-and-customers',

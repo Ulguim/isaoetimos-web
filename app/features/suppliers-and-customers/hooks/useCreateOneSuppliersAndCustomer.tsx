@@ -24,7 +24,6 @@ export default function useCreateOneSupplierAndCustomer() {
   ) {
     try {
       const { name, address, cpf, email, phone } = values
-      console.log(values)
       const { data: createdSupplier } =
         await CreateOneSupplierAndCustomerMutation({
           variables: {

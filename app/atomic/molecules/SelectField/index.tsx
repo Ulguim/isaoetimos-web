@@ -13,6 +13,7 @@ import {
   TextProps,
 } from '@chakra-ui/react'
 import { useField, UseFieldConfig } from 'react-final-form'
+
 import { fv } from '../../../common/validator'
 
 export type SelectFieldProps = {
@@ -44,6 +45,7 @@ export const SelectField = ({
   errorFieldName,
   formWidth,
   hasLabel = true,
+  // eslint-disable-next-line @typescript-eslint/no-empty-function
   onChange = () => {},
   selectProps,
   errorProps,
@@ -52,7 +54,7 @@ export const SelectField = ({
   const { input, meta } = useField(name, {
     validate:
       validate &&
-      ((value) => {
+      (value => {
         let key = label ?? errorFieldName
         key = key.replace(':', '')
         const validation = fv.validate(
@@ -82,13 +84,14 @@ export const SelectField = ({
         variant="outline"
         size="md"
         bg="white"
+        shadow="0px 0px 3px rgba(0, 0, 0, 0.25)"
         placeholder={defaultValue}
         {...props}
         {...input}
         {...selectProps}
-        onChange={(e) => {
-          onChange(e)
-          input.onChange(e)
+        onChange={e => {
+          onChange?.(e)
+          input?.onChange?.(e)
         }}
       >
         {children}

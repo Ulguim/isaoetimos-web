@@ -13,7 +13,6 @@ import {
 
 export type DrawerProps = {
   title?: any
-  closable?: boolean
   footer?: React.ReactNode
   onClick?: () => void
 } & CKDrawerProps

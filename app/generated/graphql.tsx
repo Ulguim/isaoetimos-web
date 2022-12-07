@@ -19,9 +19,17 @@ export type AccountPlan = {
   costType: CostTypeEnum;
   createdAt?: Maybe<Scalars['DateTime']>;
   deletedAt?: Maybe<Scalars['DateTime']>;
+  finances?: Maybe<AccountPlanFinancesConnection>;
   id: Scalars['ID'];
   name: Scalars['String'];
   updatedAt?: Maybe<Scalars['DateTime']>;
+};
+
+
+export type AccountPlanFinancesArgs = {
+  filter?: InputMaybe<FinancesFilter>;
+  paging?: InputMaybe<OffsetPaging>;
+  sorting?: InputMaybe<Array<FinancesSort>>;
 };
 
 export type AccountPlanAggregateGroupBy = {
@@ -83,10 +91,32 @@ export type AccountPlanFilter = {
   costType?: InputMaybe<CostTypeEnumFilterComparison>;
   createdAt?: InputMaybe<DateFieldComparison>;
   deletedAt?: InputMaybe<DateFieldComparison>;
+  finances?: InputMaybe<AccountPlanFilterFinancesFilter>;
   id?: InputMaybe<IdFilterComparison>;
   name?: InputMaybe<StringFieldComparison>;
   or?: InputMaybe<Array<AccountPlanFilter>>;
   updatedAt?: InputMaybe<DateFieldComparison>;
+};
+
+export type AccountPlanFilterFinancesFilter = {
+  and?: InputMaybe<Array<AccountPlanFilterFinancesFilter>>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  dueDate?: InputMaybe<DateFieldComparison>;
+  issuedate?: InputMaybe<DateFieldComparison>;
+  or?: InputMaybe<Array<AccountPlanFilterFinancesFilter>>;
+  payDay?: InputMaybe<DateFieldComparison>;
+  paymentTerm?: InputMaybe<DateFieldComparison>;
+  status?: InputMaybe<FinaceStatusTypeEnumFilterComparison>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+  value?: InputMaybe<NumberFieldComparison>;
+};
+
+export type AccountPlanFinancesConnection = {
+  __typename?: 'AccountPlanFinancesConnection';
+  /** Array of nodes. */
+  nodes: Array<Finances>;
+  /** Paging information */
+  pageInfo: OffsetPageInfo;
 };
 
 export type AccountPlanMaxAggregate = {
@@ -156,6 +186,20 @@ export type AccountPlanUpdateFilter = {
   updatedAt?: InputMaybe<DateFieldComparison>;
 };
 
+export type AddFinancesToAccountPlanInput = {
+  /** The id of the record. */
+  id: Scalars['ID'];
+  /** The ids of the relations. */
+  relationIds: Array<Scalars['ID']>;
+};
+
+export type AddFinancesToSuppliersAndCustomerInput = {
+  /** The id of the record. */
+  id: Scalars['ID'];
+  /** The ids of the relations. */
+  relationIds: Array<Scalars['ID']>;
+};
+
 export type CostTypeEnumFilterComparison = {
   eq?: InputMaybe<CostTypeEnum>;
   gt?: InputMaybe<CostTypeEnum>;
@@ -180,12 +224,14 @@ export type CreateAccountPlan = {
 };
 
 export type CreateFinance = {
+  accountplanId?: InputMaybe<Scalars['String']>;
   comments: Scalars['String'];
   dueDate: Scalars['DateTime'];
-  issuedate: Scalars['String'];
+  issuedate: Scalars['DateTime'];
   payDay: Scalars['DateTime'];
   paymentTerm: Scalars['DateTime'];
   status: FinaceStatusTypeEnum;
+  supplierAndCustomerId?: InputMaybe<Scalars['String']>;
   value: Scalars['Float'];
 };
 
@@ -302,14 +348,16 @@ export type FinaceStatusTypeEnumFilterComparison = {
 
 export type Finances = {
   __typename?: 'Finances';
+  accountplan?: Maybe<AccountPlan>;
   comments?: Maybe<Scalars['String']>;
   createdAt: Scalars['DateTime'];
   dueDate: Scalars['DateTime'];
   id: Scalars['ID'];
-  issuedate: Scalars['String'];
+  issuedate: Scalars['DateTime'];
   payDay?: Maybe<Scalars['DateTime']>;
   paymentTerm: Scalars['DateTime'];
   status: FinaceStatusTypeEnum;
+  supplierAndCustomer?: Maybe<SuppliersAndCustomer>;
   updatedAt: Scalars['DateTime'];
   value: Scalars['Float'];
 };
@@ -318,7 +366,7 @@ export type FinancesAggregateGroupBy = {
   __typename?: 'FinancesAggregateGroupBy';
   createdAt?: Maybe<Scalars['DateTime']>;
   dueDate?: Maybe<Scalars['DateTime']>;
-  issuedate?: Maybe<Scalars['String']>;
+  issuedate?: Maybe<Scalars['DateTime']>;
   payDay?: Maybe<Scalars['DateTime']>;
   paymentTerm?: Maybe<Scalars['DateTime']>;
   status?: Maybe<FinaceStatusTypeEnum>;
@@ -355,7 +403,7 @@ export type FinancesDeleteFilter = {
   and?: InputMaybe<Array<FinancesDeleteFilter>>;
   createdAt?: InputMaybe<DateFieldComparison>;
   dueDate?: InputMaybe<DateFieldComparison>;
-  issuedate?: InputMaybe<StringFieldComparison>;
+  issuedate?: InputMaybe<DateFieldComparison>;
   or?: InputMaybe<Array<FinancesDeleteFilter>>;
   payDay?: InputMaybe<DateFieldComparison>;
   paymentTerm?: InputMaybe<DateFieldComparison>;
@@ -370,7 +418,7 @@ export type FinancesDeleteResponse = {
   createdAt?: Maybe<Scalars['DateTime']>;
   dueDate?: Maybe<Scalars['DateTime']>;
   id?: Maybe<Scalars['ID']>;
-  issuedate?: Maybe<Scalars['String']>;
+  issuedate?: Maybe<Scalars['DateTime']>;
   payDay?: Maybe<Scalars['DateTime']>;
   paymentTerm?: Maybe<Scalars['DateTime']>;
   status?: Maybe<FinaceStatusTypeEnum>;
@@ -379,23 +427,51 @@ export type FinancesDeleteResponse = {
 };
 
 export type FinancesFilter = {
+  accountplan?: InputMaybe<FinancesFilterAccountPlanFilter>;
   and?: InputMaybe<Array<FinancesFilter>>;
   createdAt?: InputMaybe<DateFieldComparison>;
   dueDate?: InputMaybe<DateFieldComparison>;
-  issuedate?: InputMaybe<StringFieldComparison>;
+  issuedate?: InputMaybe<DateFieldComparison>;
   or?: InputMaybe<Array<FinancesFilter>>;
   payDay?: InputMaybe<DateFieldComparison>;
   paymentTerm?: InputMaybe<DateFieldComparison>;
   status?: InputMaybe<FinaceStatusTypeEnumFilterComparison>;
+  supplierAndCustomer?: InputMaybe<FinancesFilterSuppliersAndCustomerFilter>;
   updatedAt?: InputMaybe<DateFieldComparison>;
   value?: InputMaybe<NumberFieldComparison>;
+};
+
+export type FinancesFilterAccountPlanFilter = {
+  accountPlanType?: InputMaybe<AccountPlanTypeEnumFilterComparison>;
+  and?: InputMaybe<Array<FinancesFilterAccountPlanFilter>>;
+  costType?: InputMaybe<CostTypeEnumFilterComparison>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  deletedAt?: InputMaybe<DateFieldComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  name?: InputMaybe<StringFieldComparison>;
+  or?: InputMaybe<Array<FinancesFilterAccountPlanFilter>>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+};
+
+export type FinancesFilterSuppliersAndCustomerFilter = {
+  address?: InputMaybe<StringFieldComparison>;
+  and?: InputMaybe<Array<FinancesFilterSuppliersAndCustomerFilter>>;
+  cpf?: InputMaybe<StringFieldComparison>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  deletedAt?: InputMaybe<DateFieldComparison>;
+  email?: InputMaybe<StringFieldComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  name?: InputMaybe<StringFieldComparison>;
+  or?: InputMaybe<Array<FinancesFilterSuppliersAndCustomerFilter>>;
+  phone?: InputMaybe<StringFieldComparison>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
 };
 
 export type FinancesMaxAggregate = {
   __typename?: 'FinancesMaxAggregate';
   createdAt?: Maybe<Scalars['DateTime']>;
   dueDate?: Maybe<Scalars['DateTime']>;
-  issuedate?: Maybe<Scalars['String']>;
+  issuedate?: Maybe<Scalars['DateTime']>;
   payDay?: Maybe<Scalars['DateTime']>;
   paymentTerm?: Maybe<Scalars['DateTime']>;
   status?: Maybe<FinaceStatusTypeEnum>;
@@ -407,7 +483,7 @@ export type FinancesMinAggregate = {
   __typename?: 'FinancesMinAggregate';
   createdAt?: Maybe<Scalars['DateTime']>;
   dueDate?: Maybe<Scalars['DateTime']>;
-  issuedate?: Maybe<Scalars['String']>;
+  issuedate?: Maybe<Scalars['DateTime']>;
   payDay?: Maybe<Scalars['DateTime']>;
   paymentTerm?: Maybe<Scalars['DateTime']>;
   status?: Maybe<FinaceStatusTypeEnum>;
@@ -441,7 +517,7 @@ export type FinancesUpdateFilter = {
   and?: InputMaybe<Array<FinancesUpdateFilter>>;
   createdAt?: InputMaybe<DateFieldComparison>;
   dueDate?: InputMaybe<DateFieldComparison>;
-  issuedate?: InputMaybe<StringFieldComparison>;
+  issuedate?: InputMaybe<DateFieldComparison>;
   or?: InputMaybe<Array<FinancesUpdateFilter>>;
   payDay?: InputMaybe<DateFieldComparison>;
   paymentTerm?: InputMaybe<DateFieldComparison>;
@@ -469,6 +545,8 @@ export type IdFilterComparison = {
 
 export type Mutation = {
   __typename?: 'Mutation';
+  addFinancesToAccountPlan: AccountPlan;
+  addFinancesToSuppliersAndCustomer: SuppliersAndCustomer;
   createManyAccountPlans: Array<AccountPlan>;
   createManyFinances: Array<Finances>;
   createManySuppliersAndCustomers: Array<SuppliersAndCustomer>;
@@ -481,12 +559,30 @@ export type Mutation = {
   deleteOneAccountPlan: AccountPlanDeleteResponse;
   deleteOneFinances: FinancesDeleteResponse;
   deleteOneSuppliersAndCustomer: SuppliersAndCustomerDeleteResponse;
+  removeAccountplanFromFinances: Finances;
+  removeFinancesFromAccountPlan: AccountPlan;
+  removeFinancesFromSuppliersAndCustomer: SuppliersAndCustomer;
+  removeSupplierAndCustomerFromFinances: Finances;
+  setAccountplanOnFinances: Finances;
+  setFinancesOnAccountPlan: AccountPlan;
+  setFinancesOnSuppliersAndCustomer: SuppliersAndCustomer;
+  setSupplierAndCustomerOnFinances: Finances;
   updateManyAccountPlans: UpdateManyResponse;
   updateManyFinances: UpdateManyResponse;
   updateManySuppliersAndCustomers: UpdateManyResponse;
   updateOneAccountPlan: AccountPlan;
   updateOneFinances: Finances;
   updateOneSuppliersAndCustomer: SuppliersAndCustomer;
+};
+
+
+export type MutationAddFinancesToAccountPlanArgs = {
+  input: AddFinancesToAccountPlanInput;
+};
+
+
+export type MutationAddFinancesToSuppliersAndCustomerArgs = {
+  input: AddFinancesToSuppliersAndCustomerInput;
 };
 
 
@@ -547,6 +643,46 @@ export type MutationDeleteOneFinancesArgs = {
 
 export type MutationDeleteOneSuppliersAndCustomerArgs = {
   input: DeleteOneSuppliersAndCustomerInput;
+};
+
+
+export type MutationRemoveAccountplanFromFinancesArgs = {
+  input: RemoveAccountplanFromFinancesInput;
+};
+
+
+export type MutationRemoveFinancesFromAccountPlanArgs = {
+  input: RemoveFinancesFromAccountPlanInput;
+};
+
+
+export type MutationRemoveFinancesFromSuppliersAndCustomerArgs = {
+  input: RemoveFinancesFromSuppliersAndCustomerInput;
+};
+
+
+export type MutationRemoveSupplierAndCustomerFromFinancesArgs = {
+  input: RemoveSupplierAndCustomerFromFinancesInput;
+};
+
+
+export type MutationSetAccountplanOnFinancesArgs = {
+  input: SetAccountplanOnFinancesInput;
+};
+
+
+export type MutationSetFinancesOnAccountPlanArgs = {
+  input: SetFinancesOnAccountPlanInput;
+};
+
+
+export type MutationSetFinancesOnSuppliersAndCustomerArgs = {
+  input: SetFinancesOnSuppliersAndCustomerInput;
+};
+
+
+export type MutationSetSupplierAndCustomerOnFinancesArgs = {
+  input: SetSupplierAndCustomerOnFinancesInput;
 };
 
 
@@ -654,6 +790,62 @@ export type QuerySuppliersAndCustomersArgs = {
   sorting?: InputMaybe<Array<SuppliersAndCustomerSort>>;
 };
 
+export type RemoveAccountplanFromFinancesInput = {
+  /** The id of the record. */
+  id: Scalars['ID'];
+  /** The id of relation. */
+  relationId: Scalars['ID'];
+};
+
+export type RemoveFinancesFromAccountPlanInput = {
+  /** The id of the record. */
+  id: Scalars['ID'];
+  /** The ids of the relations. */
+  relationIds: Array<Scalars['ID']>;
+};
+
+export type RemoveFinancesFromSuppliersAndCustomerInput = {
+  /** The id of the record. */
+  id: Scalars['ID'];
+  /** The ids of the relations. */
+  relationIds: Array<Scalars['ID']>;
+};
+
+export type RemoveSupplierAndCustomerFromFinancesInput = {
+  /** The id of the record. */
+  id: Scalars['ID'];
+  /** The id of relation. */
+  relationId: Scalars['ID'];
+};
+
+export type SetAccountplanOnFinancesInput = {
+  /** The id of the record. */
+  id: Scalars['ID'];
+  /** The id of relation. */
+  relationId: Scalars['ID'];
+};
+
+export type SetFinancesOnAccountPlanInput = {
+  /** The id of the record. */
+  id: Scalars['ID'];
+  /** The ids of the relations. */
+  relationIds: Array<Scalars['ID']>;
+};
+
+export type SetFinancesOnSuppliersAndCustomerInput = {
+  /** The id of the record. */
+  id: Scalars['ID'];
+  /** The ids of the relations. */
+  relationIds: Array<Scalars['ID']>;
+};
+
+export type SetSupplierAndCustomerOnFinancesInput = {
+  /** The id of the record. */
+  id: Scalars['ID'];
+  /** The id of relation. */
+  relationId: Scalars['ID'];
+};
+
 /** Sort Directions */
 export enum SortDirection {
   Asc = 'ASC',
@@ -690,10 +882,18 @@ export type SuppliersAndCustomer = {
   createdAt?: Maybe<Scalars['DateTime']>;
   deletedAt?: Maybe<Scalars['DateTime']>;
   email?: Maybe<Scalars['String']>;
+  finances?: Maybe<SuppliersAndCustomerFinancesConnection>;
   id: Scalars['ID'];
   name?: Maybe<Scalars['String']>;
   phone: Scalars['String'];
   updatedAt?: Maybe<Scalars['DateTime']>;
+};
+
+
+export type SuppliersAndCustomerFinancesArgs = {
+  filter?: InputMaybe<FinancesFilter>;
+  paging?: InputMaybe<OffsetPaging>;
+  sorting?: InputMaybe<Array<FinancesSort>>;
 };
 
 export type SuppliersAndCustomerAggregateGroupBy = {
@@ -764,11 +964,33 @@ export type SuppliersAndCustomerFilter = {
   createdAt?: InputMaybe<DateFieldComparison>;
   deletedAt?: InputMaybe<DateFieldComparison>;
   email?: InputMaybe<StringFieldComparison>;
+  finances?: InputMaybe<SuppliersAndCustomerFilterFinancesFilter>;
   id?: InputMaybe<IdFilterComparison>;
   name?: InputMaybe<StringFieldComparison>;
   or?: InputMaybe<Array<SuppliersAndCustomerFilter>>;
   phone?: InputMaybe<StringFieldComparison>;
   updatedAt?: InputMaybe<DateFieldComparison>;
+};
+
+export type SuppliersAndCustomerFilterFinancesFilter = {
+  and?: InputMaybe<Array<SuppliersAndCustomerFilterFinancesFilter>>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  dueDate?: InputMaybe<DateFieldComparison>;
+  issuedate?: InputMaybe<DateFieldComparison>;
+  or?: InputMaybe<Array<SuppliersAndCustomerFilterFinancesFilter>>;
+  payDay?: InputMaybe<DateFieldComparison>;
+  paymentTerm?: InputMaybe<DateFieldComparison>;
+  status?: InputMaybe<FinaceStatusTypeEnumFilterComparison>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+  value?: InputMaybe<NumberFieldComparison>;
+};
+
+export type SuppliersAndCustomerFinancesConnection = {
+  __typename?: 'SuppliersAndCustomerFinancesConnection';
+  /** Array of nodes. */
+  nodes: Array<Finances>;
+  /** Paging information */
+  pageInfo: OffsetPageInfo;
 };
 
 export type SuppliersAndCustomerMaxAggregate = {
@@ -832,18 +1054,20 @@ export type SuppliersAndCustomerUpdateFilter = {
 export type UpdateAccountPlanInput = {
   accountPlanType?: InputMaybe<AccountPlanTypeEnum>;
   costType?: InputMaybe<CostTypeEnum>;
-  id: Scalars['Int'];
+  id?: InputMaybe<Scalars['ID']>;
   name?: InputMaybe<Scalars['String']>;
 };
 
 export type UpdateFinanceInput = {
+  accountplanId?: InputMaybe<Scalars['String']>;
   comments?: InputMaybe<Scalars['String']>;
   dueDate?: InputMaybe<Scalars['DateTime']>;
-  id: Scalars['Int'];
-  issuedate?: InputMaybe<Scalars['String']>;
+  id?: InputMaybe<Scalars['ID']>;
+  issuedate?: InputMaybe<Scalars['DateTime']>;
   payDay?: InputMaybe<Scalars['DateTime']>;
   paymentTerm?: InputMaybe<Scalars['DateTime']>;
   status?: InputMaybe<FinaceStatusTypeEnum>;
+  supplierAndCustomerId?: InputMaybe<Scalars['String']>;
   value?: InputMaybe<Scalars['Float']>;
 };
 
@@ -899,7 +1123,7 @@ export type UpdateSuppliersAndCustomerInput = {
   address?: InputMaybe<Scalars['String']>;
   cpf?: InputMaybe<Scalars['String']>;
   email?: InputMaybe<Scalars['String']>;
-  id: Scalars['ID'];
+  id?: InputMaybe<Scalars['ID']>;
   name?: InputMaybe<Scalars['String']>;
   phone?: InputMaybe<Scalars['String']>;
 };

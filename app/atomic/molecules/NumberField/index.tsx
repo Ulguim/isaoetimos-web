@@ -1,4 +1,4 @@
-import { memo } from 'react'
+import React, { memo } from 'react'
 
 import {
   BoxProps,
@@ -6,40 +6,43 @@ import {
   FormErrorMessage,
   FormLabel,
   FormLabelProps,
-  Input,
-  InputProps,
+  NumberDecrementStepper,
+  NumberIncrementStepper,
+  NumberInput,
+  NumberInputField,
+  NumberInputProps,
+  NumberInputStepper,
 } from '@chakra-ui/react'
-import { ValidationRule } from 'fastest-validator'
 import { useField, UseFieldConfig } from 'react-final-form'
 
 import { fv } from '../../../common/validator'
 
-export type TextFieldProps = {
-  name?: string
-  maximumOfletters?: number
+export type NumberFieldProps = {
+  name: string
   label?: string
   labelProps?: FormLabelProps
-  inputProps?: InputProps
-  type?: string
+  inputProps?: NumberInputProps
   isRequired?: boolean
-  validate?: ValidationRule
+  isReadOnly?: boolean
+  showLabel?: boolean
+  showInputStepper?: boolean
+  validate?: string
   errorFieldName?: string
   config?: UseFieldConfig<any>
-  hasLabel?: boolean
 } & BoxProps
 
-export const TextField = memo(
+export const NumberField = memo(
   ({
     name,
     label,
-    labelProps,
     inputProps,
     isRequired,
-    errorFieldName,
     validate,
-    hasLabel = true,
+    showInputStepper,
+    errorFieldName,
+    labelProps,
     ...props
-  }: TextFieldProps) => {
+  }: NumberFieldProps) => {
     const { input, meta } = useField(name, {
       validate:
         validate &&
@@ -48,8 +51,7 @@ export const TextField = memo(
           key = key.replace(':', '')
           const validation = fv.validate(
             {
-              [key]:
-                props.type === 'number' ? parseFloat(value) : value,
+              [key]: Number(value),
             },
             {
               [key]: validate,
@@ -65,26 +67,23 @@ export const TextField = memo(
         {...props}
         isInvalid={!!(meta.touched && meta.error)}
       >
-        {hasLabel && (
-          <FormLabel
-            fontSize="sm"
-            fontWeight="normal"
-            {...labelProps}
-          >
-            {label ? label + ':' : null} {isRequired && '*'}
-          </FormLabel>
-        )}
-        <Input
-          color="boulder"
-          size="md"
-          shadow="0px 0px 3px rgba(0, 0, 0, 0.25)"
-          borderRadius="5px"
-          background="white"
-          border="1px solid"
-          {...input}
-          {...inputProps}
-          type={props.type}
-        />
+        <FormLabel fontSize="sm" fontWeight="normal" {...labelProps}>
+          {label}: {isRequired && '*'}
+        </FormLabel>
+
+        <NumberInput name={name} {...input} {...inputProps}>
+          <NumberInputField
+            shadow="0px 0px 3px rgba(0, 0, 0, 0.25)"
+            {...input}
+            {...props}
+          />
+          {showInputStepper && (
+            <NumberInputStepper>
+              <NumberIncrementStepper />
+              <NumberDecrementStepper />
+            </NumberInputStepper>
+          )}
+        </NumberInput>
 
         <FormErrorMessage>
           {meta.error?.[0]?.message && (

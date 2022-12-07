@@ -14,12 +14,12 @@ import {
 } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
+import { PlusButton } from '../../../../atomic/atoms/PlusButton'
 import MoreOptionsMenu from '../../../../atomic/molecules/MoreOptionsMenu/MoreOptionsMenu'
-import { SuppliersAndCustomersDrawer } from '../../../../atomic/organisms/SupplersAndCustomersDrawer'
 import { ListRowItem } from '../../../../atomic/organisms/ListRowItem'
+import { SuppliersAndCustomersDrawer } from '../../../../atomic/organisms/SupplersAndCustomersDrawer'
 import { SuppliersAndCustomer } from '../../../../generated/graphql'
 import { useDeleteOneSuppliersAndCustomerMutation } from '../../graphql/mutations.generated'
-import { PlusButton } from '../../../../atomic/atoms/PlusButton'
 import { useGetSuppliersAndCustomersQuery } from '../../graphql/queries.generated'
 
 const ListSupplyAndCustomer: React.FC = () => {

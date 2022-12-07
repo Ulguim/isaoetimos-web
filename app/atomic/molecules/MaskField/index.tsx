@@ -27,6 +27,7 @@ export type MaskFieldProps = {
   validate?: ValidationRule
   validateCPF?: boolean
   isReadOnly?: boolean
+  useMaskFormat?: boolean
 
   config?: UseFieldConfig<any>
 } & BoxProps
@@ -40,6 +41,7 @@ export const MaskField = memo(
     mask = '',
     validate,
     isRequired,
+    useMaskFormat,
     isReadOnly = false,
     ...props
   }: MaskFieldProps) => {
@@ -58,6 +60,7 @@ export const MaskField = memo(
       },
       parse(value) {
         masked.resolve(value ?? '')
+        if (useMaskFormat) return masked.value
         return masked.unmaskedValue
       },
       validate: value => {

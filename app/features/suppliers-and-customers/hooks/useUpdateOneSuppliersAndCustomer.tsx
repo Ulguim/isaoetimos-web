@@ -24,7 +24,6 @@ export default function useUpdateOneSupplierAndCustomer() {
     values: UpdateOneSupplierAndCustomerProps,
   ) {
     try {
-      console.log(values)
       const id = values.id
       delete values.id
       const { data: updatedSupplier } =
