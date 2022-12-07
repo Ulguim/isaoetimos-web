@@ -4,12 +4,10 @@ import { useCreateOneAccountPlanMutation } from '../graphql/mutations.generated'
 
 export default function useCreateOneAccountPlan() {
   const toast = useToast()
-  const [
-    CreateOneAccountPlanMutation,
-    { data: createdAccount },
-  ] = useCreateOneAccountPlanMutation({
-    refetchQueries: ['getAccountPlans'],
-  })
+  const [CreateOneAccountPlanMutation, { data: createdAccount }] =
+    useCreateOneAccountPlanMutation({
+      refetchQueries: ['getAccountPlans'],
+    })
 
   interface CreateOneAccountPlanProps {
     name?: string
@@ -22,7 +20,6 @@ export default function useCreateOneAccountPlan() {
   ) {
     try {
       const { name, accountPlanType, costType } = values
-      console.log(values)
       const { data: createdAccount } =
         await CreateOneAccountPlanMutation({
           variables: {
@@ -31,9 +28,9 @@ export default function useCreateOneAccountPlan() {
                 name,
                 accountPlanType,
                 costType,
-              }
-            }
-          }
+              },
+            },
+          },
         })
       toast({
         title: 'Sucesso!',

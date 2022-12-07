@@ -18,6 +18,7 @@ export const ListRowItem: React.FC<ListRowItemProps> = ({
   marker,
   actionsProps,
   children,
+  templateColumns,
   ...props
 }) => {
   return (
@@ -28,12 +29,14 @@ export const ListRowItem: React.FC<ListRowItemProps> = ({
       px={6}
       py={2}
       alignItems="center"
-      templateColumns={[
-        '1fr',
-        '1fr 1fr 1fr 0.2fr',
-        '1fr 1fr 1fr 0.2fr',
-        '1fr 1fr 1fr 0.2fr',
-      ]}
+      templateColumns={
+        templateColumns || [
+          '1fr',
+          '1fr 1fr 1fr 0.2fr',
+          '1fr 1fr 1fr 0.2fr',
+          '1fr 1fr 1fr 0.2fr',
+        ]
+      }
       gap={3}
       {...props}
     >

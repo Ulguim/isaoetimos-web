@@ -14,8 +14,8 @@ export const menuItems = [
     icon: <FontAwesomeIcon icon={faHouse} />,
   },
   {
-    label: 'Banco de Dados',
-    // href: '/suppliers-and-customers',
+    label: 'Finanças',
+    href: '/finances',
     icon: <FontAwesomeIcon icon={faPencil} />,
   },
   {

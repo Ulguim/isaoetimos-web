@@ -3,11 +3,11 @@ import React from 'react'
 import { Box, Button } from '@chakra-ui/react'
 import { Form } from 'react-final-form'
 
-import { DrawerTemplate } from '../../molecules/Drawer'
-import { TextField } from '../../molecules/TextField'
-import { SelectField } from '../../molecules/SelectField'
 import useCreateOneAccountPlan from '../../../features/account-plans/hooks/useCreateOneAccountPlan'
 import useUpdateOneAccountPlan from '../../../features/account-plans/hooks/useUpdateOneAccountPlan'
+import { DrawerTemplate } from '../../molecules/Drawer'
+import { SelectField } from '../../molecules/SelectField'
+import { TextField } from '../../molecules/TextField'
 
 interface AccountPlansDrawerProps {
   isOpen: boolean
@@ -17,26 +17,24 @@ interface AccountPlansDrawerProps {
 }
 
 export const AccountPlansDrawer: React.FC<
-AccountPlansDrawerProps
+  AccountPlansDrawerProps
 > = ({ isOpen, onClose, isEditForm, intitialValues }) => {
-  const { CreateOneAccountPlan } =
-    useCreateOneAccountPlan()
+  const { CreateOneAccountPlan } = useCreateOneAccountPlan()
 
-  const { updateOneAccountPlan } =
-    useUpdateOneAccountPlan()
+  const { updateOneAccountPlan } = useUpdateOneAccountPlan()
   const handleUpdate = values => {
     values.id = intitialValues.id
     updateOneAccountPlan(values)
   }
 
   const costTypeOptions = [
-    {value: 'INCOME', label: 'Entrada'},
-    {value: 'OUTCOME', label: 'Saída'}
+    { value: 'INCOME', label: 'Entrada' },
+    { value: 'OUTCOME', label: 'Saída' },
   ]
 
   const accoutPlanTypeOptions = [
-    {value: 'FIXED', label: "Fixo"},
-    {value: 'VARIABLE', label: 'Variável'}
+    { value: 'FIXED', label: 'Fixo' },
+    { value: 'VARIABLE', label: 'Variável' },
   ]
 
   return (
@@ -96,24 +94,23 @@ AccountPlansDrawerProps
             />
             <SelectField
               isRequired
-              name='accountPlanType'
-              validate='string'
-              label='Fixo / Variável'
-              placeholder='Selecione'
+              name="accountPlanType"
+              validate="string"
+              label="Fixo / Variável"
+              placeholder="Selecione"
             >
               {accoutPlanTypeOptions.map((type, index) => (
                 <option key={index} value={type.value}>
                   {type.label}
                 </option>
               ))}
-
             </SelectField>
             <SelectField
               isRequired
-              name='costType'
-              validate='string'
-              label='Entrada / Saída'
-              placeholder='Selecione'
+              name="costType"
+              validate="string"
+              label="Entrada / Saída"
+              placeholder="Selecione"
             >
               {costTypeOptions.map((type, index) => (
                 <option key={index} value={type.value}>

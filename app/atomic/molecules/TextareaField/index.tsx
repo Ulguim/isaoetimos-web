@@ -1,4 +1,4 @@
-import { memo } from 'react'
+import React, { memo } from 'react'
 
 import {
   BoxProps,
@@ -6,40 +6,37 @@ import {
   FormErrorMessage,
   FormLabel,
   FormLabelProps,
-  Input,
-  InputProps,
+  Textarea,
+  TextareaProps,
 } from '@chakra-ui/react'
-import { ValidationRule } from 'fastest-validator'
 import { useField, UseFieldConfig } from 'react-final-form'
 
 import { fv } from '../../../common/validator'
 
-export type TextFieldProps = {
-  name?: string
-  maximumOfletters?: number
+export type TextAreaFieldProps = {
+  name: string
   label?: string
   labelProps?: FormLabelProps
-  inputProps?: InputProps
-  type?: string
+  inputProps?: TextareaProps
   isRequired?: boolean
-  validate?: ValidationRule
+  isReadOnly?: boolean
+  showLabel?: boolean
+  validate?: string
   errorFieldName?: string
   config?: UseFieldConfig<any>
-  hasLabel?: boolean
 } & BoxProps
 
-export const TextField = memo(
+export const TextAreaField = memo(
   ({
     name,
     label,
-    labelProps,
     inputProps,
     isRequired,
-    errorFieldName,
     validate,
-    hasLabel = true,
+    errorFieldName,
+    labelProps,
     ...props
-  }: TextFieldProps) => {
+  }: TextAreaFieldProps) => {
     const { input, meta } = useField(name, {
       validate:
         validate &&
@@ -48,8 +45,7 @@ export const TextField = memo(
           key = key.replace(':', '')
           const validation = fv.validate(
             {
-              [key]:
-                props.type === 'number' ? parseFloat(value) : value,
+              [key]: value,
             },
             {
               [key]: validate,
@@ -65,25 +61,16 @@ export const TextField = memo(
         {...props}
         isInvalid={!!(meta.touched && meta.error)}
       >
-        {hasLabel && (
-          <FormLabel
-            fontSize="sm"
-            fontWeight="normal"
-            {...labelProps}
-          >
-            {label ? label + ':' : null} {isRequired && '*'}
-          </FormLabel>
-        )}
-        <Input
-          color="boulder"
-          size="md"
+        <FormLabel fontSize="sm" fontWeight="normal" {...labelProps}>
+          {label}: {isRequired && '*'}
+        </FormLabel>
+
+        <Textarea
+          name={name}
+          resize="none"
           shadow="0px 0px 3px rgba(0, 0, 0, 0.25)"
-          borderRadius="5px"
-          background="white"
-          border="1px solid"
           {...input}
           {...inputProps}
-          type={props.type}
         />
 
         <FormErrorMessage>

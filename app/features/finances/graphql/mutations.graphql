@@ -1,0 +1,31 @@
+mutation createOneFinance($input: CreateOneFinancesInput!) {
+  createOneFinances(input: $input) {
+    id
+    comments
+    dueDate
+    issuedate
+    payDay
+    paymentTerm
+    status
+    value
+  }
+}
+
+mutation deleteOneFinance($id: ID!) {
+  deleteOneFinances(input: { id: $id }) {
+    id
+  }
+}
+
+mutation updateOneFinance($id: ID!, $update: UpdateFinanceInput!) {
+  updateOneFinances(input: { id: $id, update: $update }) {
+    id
+    comments
+    dueDate
+    issuedate
+    payDay
+    paymentTerm
+    status
+    value
+  }
+}

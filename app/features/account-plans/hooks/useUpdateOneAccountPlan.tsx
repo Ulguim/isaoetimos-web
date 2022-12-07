@@ -1,15 +1,13 @@
 import { useToast } from '@chakra-ui/react'
-import { useUpdateOneAccountPlanMutation } from '../graphql/mutations.generated'
 
+import { useUpdateOneAccountPlanMutation } from '../graphql/mutations.generated'
 
 export default function useUpdateOneAccountPlan() {
   const toast = useToast()
-  const [
-    UpdateOneAccountPlanMutation,
-    { data: updatedAccount },
-  ] = useUpdateOneAccountPlanMutation({
-    refetchQueries: ['getAccountPlans'],
-  })
+  const [UpdateOneAccountPlanMutation, { data: updatedAccount }] =
+    useUpdateOneAccountPlanMutation({
+      refetchQueries: ['getAccountPlans'],
+    })
 
   interface UpdateOneAccountPlanProps {
     id?: string
@@ -24,7 +22,6 @@ export default function useUpdateOneAccountPlan() {
     try {
       const id = values.id
       delete values.id
-      console.log(values)
       const { data: updatedAccount } =
         await UpdateOneAccountPlanMutation({
           variables: {
