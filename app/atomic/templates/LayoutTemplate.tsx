@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/rules-of-hooks */
 import React, { useMemo, useState } from 'react'
 
 import { Box } from '@chakra-ui/react'
@@ -7,7 +8,7 @@ import {
   faArrowCircleRight,
 } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import  { useRouter } from 'next/router'
+import { useRouter } from 'next/router'
 import {
   Menu,
   MenuItem,
@@ -23,19 +24,22 @@ const LayoutTemplate: React.FC<any> = ({ children }) => {
   const { collapseSidebar } = useProSidebar()
   const arrowIcon = isOpen ? faArrowCircleLeft : faArrowCircleRight
 
-
   const handleCollapseSidebar = () => {
     setIsOpen(!isOpen)
     collapseSidebar()
   }
 
-
-
   return (
     <Box bgColor={'#DEDEDE'}>
       <Box height={16} width={'100vw'} bgColor="#008836">
         <Box>
-          <Image pt="5px" pl="10px" maxHeight={14} src="/Logo.svg" />
+          <Image
+            alt="Logo"
+            pt="5px"
+            pl="10px"
+            maxHeight={14}
+            src="/Logo.svg"
+          />
         </Box>
       </Box>
       <Box
@@ -54,20 +58,25 @@ const LayoutTemplate: React.FC<any> = ({ children }) => {
               {menuItems.map((item, index) => {
                 const isActive = useMemo(
                   () => router.pathname.includes(item.href),
-                  [item.href, router.pathname],
+                  [item.href],
                 )
 
                 return (
-                <MenuItem
-                  key={`${item.label}-${index}`}
-                  onClick={() => {if(item?.href) router.push(item.href)}}
-                  icon={item.icon}
-                 style={{background: isActive ? '#04345c' : 'unset'}}
-                >
-                  {' '}
-                  {item.label}
-                </MenuItem>
-              )})}
+                  <MenuItem
+                    key={`${item.label}-${index}`}
+                    onClick={() => {
+                      if (item?.href) router.push(item.href)
+                    }}
+                    icon={item.icon}
+                    style={{
+                      background: isActive ? '#04345c' : 'unset',
+                    }}
+                  >
+                    {' '}
+                    {item.label}
+                  </MenuItem>
+                )
+              })}
             </Menu>
             <Box
               display={'flex'}

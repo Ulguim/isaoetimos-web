@@ -107,19 +107,20 @@ const ListFinances: React.FC = () => {
     <>
       {data?.finances?.nodes?.map(finance => {
         const compareDate = compareAsc(
-          startOfDay(addDays(new Date(finance.dueDate), 1)),
+          startOfDay(addDays(new Date(finance?.dueDate), 1)),
           startOfDay(new Date()),
         )
-        const isLate = compareDate === -1 && finance.status === 'OPEN'
+        const isLate =
+          compareDate === -1 && finance?.status === 'OPEN'
 
         const borderLeftColor = isLate ? '#D90000' : '#00B247'
 
         const issueDate = format(
-          addDays(new Date(finance.issuedate), 1),
+          addDays(new Date(finance?.issuedate), 1),
           'dd/MM/yyyy',
         )
         const dueDate = format(
-          addDays(new Date(finance.dueDate), 1),
+          addDays(new Date(finance?.dueDate), 1),
           'dd/MM/yyyy',
         )
 
@@ -183,7 +184,7 @@ const ListFinances: React.FC = () => {
             borderLeftColor={borderLeftColor}
             my={5}
           >
-            <GridItem>{finance?.supplierAndCustomer.name}</GridItem>
+            <GridItem>{finance?.supplierAndCustomer?.name}</GridItem>
             <GridItem display="flex" alignItems="center">
               <Box ml={2} mr={3}>{`Emissão: ${issueDate}`}</Box>
               <FontAwesomeIcon icon={faCalendarXmark} size="lg" />
@@ -195,11 +196,11 @@ const ListFinances: React.FC = () => {
               alignItems="center"
               justifyContent="space-between"
             >
-              <Box>{`R$: ${finance.value.toFixed(2)}`}</Box>
+              <Box>{`R$: ${finance?.value?.toFixed(2)}`}</Box>
               <FontAwesomeIcon icon={faRepeat} size="lg" />
               <FontAwesomeIcon
-                icon={status().icon}
-                color={status().color}
+                icon={status()?.icon}
+                color={status()?.color}
                 size="lg"
               />
             </GridItem>

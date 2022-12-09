@@ -1,6 +1,5 @@
 import {
-  faGear,
-  faHouse,
+  // faHouse,
   faImage,
   faList,
   faPencil,
@@ -8,29 +7,29 @@ import {
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 export const menuItems = [
-  {
-    label: 'Home',
-    // href: '/suppliers-and-customers',
-    icon: <FontAwesomeIcon icon={faHouse} />,
-  },
+  // {
+  //   label: 'Home',
+  //   href: '/suppliers-and-customers',
+  //   icon: <FontAwesomeIcon icon={faHouse} />,
+  // },
   {
     label: 'Finanças',
-    href: '/finances',
+    href: '/admin/finances',
     icon: <FontAwesomeIcon icon={faPencil} />,
   },
   {
     label: 'Plano de Contas',
-    href: '/account-plans',
+    href: '/admin/account-plans',
     icon: <FontAwesomeIcon icon={faImage} />,
   },
   {
     label: 'Fornecedores e Clientes',
-    href: '/suppliers-and-customers',
+    href: '/admin/suppliers-and-customers',
     icon: <FontAwesomeIcon icon={faList} />,
   },
-  {
-    label: 'Config',
-    // href: '/suppliers-and-customers',
-    icon: <FontAwesomeIcon icon={faGear} />,
-  },
+  // {
+  //   label: 'Config',
+  //   href: '/admin/suppliers-and-customers',
+  //   icon: <FontAwesomeIcon icon={faGear} />,
+  // },
 ]

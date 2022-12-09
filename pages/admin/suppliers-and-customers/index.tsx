@@ -1,7 +1,7 @@
 import { Box } from '@chakra-ui/react'
 
-import LayoutTemplate from '../../app/atomic/templates/LayoutTemplate'
-import ListSupplyAndCustomer from '../../app/features/suppliers-and-customers/components/ListSuppliersAndCustomers'
+import LayoutTemplate from '../../../app/atomic/templates/LayoutTemplate'
+import ListSupplyAndCustomer from '../../../app/features/suppliers-and-customers/components/ListSuppliersAndCustomers'
 
 const SuppliersAndCustomers = () => {
   return (

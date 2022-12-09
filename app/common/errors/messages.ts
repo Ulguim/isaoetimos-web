@@ -1,0 +1,21 @@
+export const errorMessages = {
+  USER_NOT_FOUND: 'Usuário não encontrado',
+  CPF_INVALID: 'CPF Inválido',
+  AUTH_LOGIN_ERROR: 'Usuário não Autorizado',
+  USER_EXIST: 'Usuário já Cadastrado',
+
+  USER_NOT_ACTIVED: 'Usuário não está Ativo',
+  USER_PASS_EMPTY: 'Campo senha não pode ser vazio',
+  USER_INVALID_CODE: 'Código Inválido',
+  USER_PASS_ALREADY_DEFINED: 'Senha já cadastrada',
+  USER_PASS_INCORRECT: 'Senha incorreta',
+  SMS_LIMIT_EXCEEDED: 'Limite de SMS excedido',
+  USER_PHONE_NOT_VALID: 'Número de telefone inválido',
+  USER_NAME_EMPTY: 'Campo nome não pode ser vazio',
+  USER_EMAIL_EMPTY: 'Campo email não pode ser vazio',
+  USER_ROLE_EMPTY: 'Nível de Acesso não pode ser vazio',
+  USER_ID_EMPTY: 'ID vazio',
+  USER_EMAIL_NOT_VALID: 'E-mail não válido',
+  ROLE_NAME_EMPTY: 'Nível de Acesso não pode ser vazio',
+  POST_TEXT_EMPTY: 'Texto do post não pode ser vazio',
+}
