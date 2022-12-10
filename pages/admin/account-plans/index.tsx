@@ -1,7 +1,7 @@
 import { Box } from '@chakra-ui/react'
 
-import LayoutTemplate from '../../app/atomic/templates/LayoutTemplate'
-import ListAccountPlan from '../../app/features/account-plans/components/ListAccountPlans'
+import LayoutTemplate from '../../../app/atomic/templates/LayoutTemplate'
+import ListAccountPlan from '../../../app/features/account-plans/components/ListAccountPlans'
 
 const AccountPlans = () => {
   return (

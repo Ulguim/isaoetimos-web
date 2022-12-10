@@ -200,6 +200,17 @@ export type AddFinancesToSuppliersAndCustomerInput = {
   relationIds: Array<Scalars['ID']>;
 };
 
+export type Auth = {
+  __typename?: 'Auth';
+  token: Scalars['String'];
+  user: User;
+};
+
+export type AuthInput = {
+  email: Scalars['String'];
+  password: Scalars['String'];
+};
+
 export type CostTypeEnumFilterComparison = {
   eq?: InputMaybe<CostTypeEnum>;
   gt?: InputMaybe<CostTypeEnum>;
@@ -225,10 +236,10 @@ export type CreateAccountPlan = {
 
 export type CreateFinance = {
   accountplanId?: InputMaybe<Scalars['String']>;
-  comments: Scalars['String'];
+  comments?: InputMaybe<Scalars['String']>;
   dueDate: Scalars['DateTime'];
   issuedate: Scalars['DateTime'];
-  payDay: Scalars['DateTime'];
+  payDay?: InputMaybe<Scalars['DateTime']>;
   paymentTerm: Scalars['DateTime'];
   status: FinaceStatusTypeEnum;
   supplierAndCustomerId?: InputMaybe<Scalars['String']>;
@@ -250,6 +261,11 @@ export type CreateManySuppliersAndCustomersInput = {
   suppliersAndCustomers: Array<CreateSuppliersAndCustomer>;
 };
 
+export type CreateManyUsersInput = {
+  /** Array of records to create */
+  users: Array<CreateUserInput>;
+};
+
 export type CreateOneAccountPlanInput = {
   /** The record to create */
   accountPlan: CreateAccountPlan;
@@ -265,12 +281,23 @@ export type CreateOneSuppliersAndCustomerInput = {
   suppliersAndCustomer: CreateSuppliersAndCustomer;
 };
 
+export type CreateOneUserInput = {
+  /** The record to create */
+  user: CreateUserInput;
+};
+
 export type CreateSuppliersAndCustomer = {
   address: Scalars['String'];
   cpf: Scalars['String'];
   email: Scalars['String'];
   name: Scalars['String'];
   phone: Scalars['String'];
+};
+
+export type CreateUserInput = {
+  email: Scalars['String'];
+  name: Scalars['String'];
+  password: Scalars['String'];
 };
 
 export type DateFieldComparison = {
@@ -314,6 +341,11 @@ export type DeleteManySuppliersAndCustomersInput = {
   filter: SuppliersAndCustomerDeleteFilter;
 };
 
+export type DeleteManyUsersInput = {
+  /** Filter to find records to delete */
+  filter: UserDeleteFilter;
+};
+
 export type DeleteOneAccountPlanInput = {
   /** The id of the record to delete. */
   id: Scalars['ID'];
@@ -325,6 +357,11 @@ export type DeleteOneFinancesInput = {
 };
 
 export type DeleteOneSuppliersAndCustomerInput = {
+  /** The id of the record to delete. */
+  id: Scalars['ID'];
+};
+
+export type DeleteOneUserInput = {
   /** The id of the record to delete. */
   id: Scalars['ID'];
 };
@@ -550,15 +587,20 @@ export type Mutation = {
   createManyAccountPlans: Array<AccountPlan>;
   createManyFinances: Array<Finances>;
   createManySuppliersAndCustomers: Array<SuppliersAndCustomer>;
+  createManyUsers: Array<User>;
   createOneAccountPlan: AccountPlan;
   createOneFinances: Finances;
   createOneSuppliersAndCustomer: SuppliersAndCustomer;
+  createOneUser: User;
   deleteManyAccountPlans: DeleteManyResponse;
   deleteManyFinances: DeleteManyResponse;
   deleteManySuppliersAndCustomers: DeleteManyResponse;
+  deleteManyUsers: DeleteManyResponse;
   deleteOneAccountPlan: AccountPlanDeleteResponse;
   deleteOneFinances: FinancesDeleteResponse;
   deleteOneSuppliersAndCustomer: SuppliersAndCustomerDeleteResponse;
+  deleteOneUser: UserDeleteResponse;
+  login: Auth;
   removeAccountplanFromFinances: Finances;
   removeFinancesFromAccountPlan: AccountPlan;
   removeFinancesFromSuppliersAndCustomer: SuppliersAndCustomer;
@@ -570,9 +612,11 @@ export type Mutation = {
   updateManyAccountPlans: UpdateManyResponse;
   updateManyFinances: UpdateManyResponse;
   updateManySuppliersAndCustomers: UpdateManyResponse;
+  updateManyUsers: UpdateManyResponse;
   updateOneAccountPlan: AccountPlan;
   updateOneFinances: Finances;
   updateOneSuppliersAndCustomer: SuppliersAndCustomer;
+  updateOneUser: User;
 };
 
 
@@ -601,6 +645,11 @@ export type MutationCreateManySuppliersAndCustomersArgs = {
 };
 
 
+export type MutationCreateManyUsersArgs = {
+  input: CreateManyUsersInput;
+};
+
+
 export type MutationCreateOneAccountPlanArgs = {
   input: CreateOneAccountPlanInput;
 };
@@ -613,6 +662,11 @@ export type MutationCreateOneFinancesArgs = {
 
 export type MutationCreateOneSuppliersAndCustomerArgs = {
   input: CreateOneSuppliersAndCustomerInput;
+};
+
+
+export type MutationCreateOneUserArgs = {
+  input: CreateOneUserInput;
 };
 
 
@@ -631,6 +685,11 @@ export type MutationDeleteManySuppliersAndCustomersArgs = {
 };
 
 
+export type MutationDeleteManyUsersArgs = {
+  input: DeleteManyUsersInput;
+};
+
+
 export type MutationDeleteOneAccountPlanArgs = {
   input: DeleteOneAccountPlanInput;
 };
@@ -643,6 +702,16 @@ export type MutationDeleteOneFinancesArgs = {
 
 export type MutationDeleteOneSuppliersAndCustomerArgs = {
   input: DeleteOneSuppliersAndCustomerInput;
+};
+
+
+export type MutationDeleteOneUserArgs = {
+  input: DeleteOneUserInput;
+};
+
+
+export type MutationLoginArgs = {
+  data: AuthInput;
 };
 
 
@@ -701,6 +770,11 @@ export type MutationUpdateManySuppliersAndCustomersArgs = {
 };
 
 
+export type MutationUpdateManyUsersArgs = {
+  input: UpdateManyUsersInput;
+};
+
+
 export type MutationUpdateOneAccountPlanArgs = {
   input: UpdateOneAccountPlanInput;
 };
@@ -713,6 +787,11 @@ export type MutationUpdateOneFinancesArgs = {
 
 export type MutationUpdateOneSuppliersAndCustomerArgs = {
   input: UpdateOneSuppliersAndCustomerInput;
+};
+
+
+export type MutationUpdateOneUserArgs = {
+  input: UpdateOneUserInput;
 };
 
 export type NumberFieldComparison = {
@@ -755,8 +834,11 @@ export type Query = {
   accountPlan?: Maybe<AccountPlan>;
   accountPlans: AccountPlanConnection;
   finances: FinancesConnection;
+  isTokenValid: TokenValidType;
   suppliersAndCustomer?: Maybe<SuppliersAndCustomer>;
   suppliersAndCustomers: SuppliersAndCustomerConnection;
+  user?: Maybe<User>;
+  users: UserConnection;
 };
 
 
@@ -779,6 +861,11 @@ export type QueryFinancesArgs = {
 };
 
 
+export type QueryIsTokenValidArgs = {
+  token: Scalars['String'];
+};
+
+
 export type QuerySuppliersAndCustomerArgs = {
   id: Scalars['ID'];
 };
@@ -788,6 +875,18 @@ export type QuerySuppliersAndCustomersArgs = {
   filter?: InputMaybe<SuppliersAndCustomerFilter>;
   paging?: InputMaybe<OffsetPaging>;
   sorting?: InputMaybe<Array<SuppliersAndCustomerSort>>;
+};
+
+
+export type QueryUserArgs = {
+  id: Scalars['ID'];
+};
+
+
+export type QueryUsersArgs = {
+  filter?: InputMaybe<UserFilter>;
+  paging?: InputMaybe<OffsetPaging>;
+  sorting?: InputMaybe<Array<UserSort>>;
 };
 
 export type RemoveAccountplanFromFinancesInput = {
@@ -1051,6 +1150,11 @@ export type SuppliersAndCustomerUpdateFilter = {
   updatedAt?: InputMaybe<DateFieldComparison>;
 };
 
+export type TokenValidType = {
+  __typename?: 'TokenValidType';
+  valid: Scalars['Boolean'];
+};
+
 export type UpdateAccountPlanInput = {
   accountPlanType?: InputMaybe<AccountPlanTypeEnum>;
   costType?: InputMaybe<CostTypeEnum>;
@@ -1098,6 +1202,13 @@ export type UpdateManySuppliersAndCustomersInput = {
   update: UpdateSuppliersAndCustomerInput;
 };
 
+export type UpdateManyUsersInput = {
+  /** Filter used to find fields to update */
+  filter: UserUpdateFilter;
+  /** The update to apply to all records found using the filter */
+  update: UpdateUserInput;
+};
+
 export type UpdateOneAccountPlanInput = {
   /** The id of the record to update */
   id: Scalars['ID'];
@@ -1119,6 +1230,13 @@ export type UpdateOneSuppliersAndCustomerInput = {
   update: UpdateSuppliersAndCustomerInput;
 };
 
+export type UpdateOneUserInput = {
+  /** The id of the record to update */
+  id: Scalars['ID'];
+  /** The update to apply. */
+  update: UpdateUserInput;
+};
+
 export type UpdateSuppliersAndCustomerInput = {
   address?: InputMaybe<Scalars['String']>;
   cpf?: InputMaybe<Scalars['String']>;
@@ -1126,6 +1244,131 @@ export type UpdateSuppliersAndCustomerInput = {
   id?: InputMaybe<Scalars['ID']>;
   name?: InputMaybe<Scalars['String']>;
   phone?: InputMaybe<Scalars['String']>;
+};
+
+export type UpdateUserInput = {
+  email?: InputMaybe<Scalars['String']>;
+  id?: InputMaybe<Scalars['ID']>;
+  name?: InputMaybe<Scalars['String']>;
+  password?: InputMaybe<Scalars['String']>;
+};
+
+export type User = {
+  __typename?: 'User';
+  createdAt?: Maybe<Scalars['DateTime']>;
+  deletedAt?: Maybe<Scalars['DateTime']>;
+  email: Scalars['String'];
+  id: Scalars['ID'];
+  name: Scalars['String'];
+  password: Scalars['String'];
+  updatedAt?: Maybe<Scalars['DateTime']>;
+};
+
+export type UserAggregateGroupBy = {
+  __typename?: 'UserAggregateGroupBy';
+  createdAt?: Maybe<Scalars['DateTime']>;
+  deletedAt?: Maybe<Scalars['DateTime']>;
+  email?: Maybe<Scalars['String']>;
+  id?: Maybe<Scalars['ID']>;
+  name?: Maybe<Scalars['String']>;
+  updatedAt?: Maybe<Scalars['DateTime']>;
+};
+
+export type UserConnection = {
+  __typename?: 'UserConnection';
+  /** Array of nodes. */
+  nodes: Array<User>;
+  /** Paging information */
+  pageInfo: OffsetPageInfo;
+};
+
+export type UserCountAggregate = {
+  __typename?: 'UserCountAggregate';
+  createdAt?: Maybe<Scalars['Int']>;
+  deletedAt?: Maybe<Scalars['Int']>;
+  email?: Maybe<Scalars['Int']>;
+  id?: Maybe<Scalars['Int']>;
+  name?: Maybe<Scalars['Int']>;
+  updatedAt?: Maybe<Scalars['Int']>;
+};
+
+export type UserDeleteFilter = {
+  and?: InputMaybe<Array<UserDeleteFilter>>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  deletedAt?: InputMaybe<DateFieldComparison>;
+  email?: InputMaybe<StringFieldComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  name?: InputMaybe<StringFieldComparison>;
+  or?: InputMaybe<Array<UserDeleteFilter>>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+};
+
+export type UserDeleteResponse = {
+  __typename?: 'UserDeleteResponse';
+  createdAt?: Maybe<Scalars['DateTime']>;
+  deletedAt?: Maybe<Scalars['DateTime']>;
+  email?: Maybe<Scalars['String']>;
+  id?: Maybe<Scalars['ID']>;
+  name?: Maybe<Scalars['String']>;
+  password?: Maybe<Scalars['String']>;
+  updatedAt?: Maybe<Scalars['DateTime']>;
+};
+
+export type UserFilter = {
+  and?: InputMaybe<Array<UserFilter>>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  deletedAt?: InputMaybe<DateFieldComparison>;
+  email?: InputMaybe<StringFieldComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  name?: InputMaybe<StringFieldComparison>;
+  or?: InputMaybe<Array<UserFilter>>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+};
+
+export type UserMaxAggregate = {
+  __typename?: 'UserMaxAggregate';
+  createdAt?: Maybe<Scalars['DateTime']>;
+  deletedAt?: Maybe<Scalars['DateTime']>;
+  email?: Maybe<Scalars['String']>;
+  id?: Maybe<Scalars['ID']>;
+  name?: Maybe<Scalars['String']>;
+  updatedAt?: Maybe<Scalars['DateTime']>;
+};
+
+export type UserMinAggregate = {
+  __typename?: 'UserMinAggregate';
+  createdAt?: Maybe<Scalars['DateTime']>;
+  deletedAt?: Maybe<Scalars['DateTime']>;
+  email?: Maybe<Scalars['String']>;
+  id?: Maybe<Scalars['ID']>;
+  name?: Maybe<Scalars['String']>;
+  updatedAt?: Maybe<Scalars['DateTime']>;
+};
+
+export type UserSort = {
+  direction: SortDirection;
+  field: UserSortFields;
+  nulls?: InputMaybe<SortNulls>;
+};
+
+export enum UserSortFields {
+  CreatedAt = 'createdAt',
+  DeletedAt = 'deletedAt',
+  Email = 'email',
+  Id = 'id',
+  Name = 'name',
+  UpdatedAt = 'updatedAt'
+}
+
+export type UserUpdateFilter = {
+  and?: InputMaybe<Array<UserUpdateFilter>>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  deletedAt?: InputMaybe<DateFieldComparison>;
+  email?: InputMaybe<StringFieldComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  name?: InputMaybe<StringFieldComparison>;
+  or?: InputMaybe<Array<UserUpdateFilter>>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
 };
 
 export enum AccountPlanTypeEnum {
