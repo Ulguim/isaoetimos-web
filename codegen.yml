@@ -1,5 +1,5 @@
 overwrite: true
-schema: http://vps43628.publiccloud.com.br:3000/graphql
+schema: http://vps43628.publiccloud.com.br:4000/graphql
 documents: 'app/**/*.graphql'
 generates:
   app/generated/graphql.tsx:
