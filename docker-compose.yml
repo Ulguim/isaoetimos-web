@@ -11,10 +11,10 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    # volumes:
-    #   # Required to sync file changes.
-    #   - .:/usr/src/app
-    #   # Required to not break node modules.
-    #   - /usr/src/app/node_modules
-    #   # Required for next to do it's thing.
-    #   - /usr/src/app/.next
+    volumes:
+      # Required to sync file changes.
+      - .:/usr/src/app
+      # Required to not break node modules.
+      - /usr/src/app/node_modules
+      # Required for next to do it's thing.
+      - /usr/src/app/.next
