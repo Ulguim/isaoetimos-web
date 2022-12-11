@@ -1,6 +1,6 @@
 FROM node:16.12.0-alpine
 
-ENV PORT 4000
+ENV PORT 3000
 
 # Create app directory
 RUN mkdir -p /usr/src/app
@@ -17,6 +17,6 @@ COPY . /usr/src/app
 RUN yarn run codegen
 
 # RUN yarn build
-EXPOSE 4000
+EXPOSE 3000
 
 CMD "npm" "run" "dev"
