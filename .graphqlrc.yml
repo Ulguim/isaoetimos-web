@@ -1,2 +1,2 @@
-schema: ${NEXT_PUBLIC_API_URL}
+schema: http://172.18.0.3:3000/graphql
 documents: app/features/*/.{graphql,tsx,jsx,ts,js}
