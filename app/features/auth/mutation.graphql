@@ -1,0 +1,15 @@
+mutation login($data: AuthInput!) {
+  login(data: $data) {
+    user {
+      id
+       name
+    }
+    token
+  }
+}
+
+query isTokenValid($token: String!){
+  isTokenValid(token: $token) {
+    valid
+  }
+}

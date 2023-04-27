@@ -1,0 +1,20 @@
+version: "3.7"
+
+services:
+  admin:
+    restart: always
+    container_name: visaoetimos-web
+    ports:
+      - ${NEXT_PORT}:3000
+    env_file:
+      - .env
+    build:
+      context: .
+      dockerfile: Dockerfile
+    # volumes:
+    #   # Required to sync file changes.
+    #   - .:/usr/src/app
+    #   # Required to not break node modules.
+    #   - /usr/src/app/node_modules
+    #   # Required for next to do it's thing.
+    #   - /usr/src/app/.next
