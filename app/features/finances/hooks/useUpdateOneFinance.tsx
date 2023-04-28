@@ -61,6 +61,7 @@ export default function useUpdateOneFinance() {
               dueDate: formatedDueDate,
               issuedate: formatedIssueDate,
               paymentTerm: formatedPaymentTerm,
+              // @ts-ignore
               status,
               supplierAndCustomerId,
               value: Number(value),
