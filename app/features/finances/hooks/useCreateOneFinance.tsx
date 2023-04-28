@@ -59,6 +59,7 @@ export default function useCreateOneFinance() {
                 dueDate: formatedDueDate,
                 issuedate: formatedIssueDate,
                 paymentTerm: formatedPaymentTerm,
+                // @ts-ignore
                 status,
                 supplierAndCustomerId,
                 value: Number(value),

@@ -1,3 +1,7 @@
+import {
+  AccountPlanTypeEnum,
+  CostTypeEnum,
+} from '@app/generated/graphql'
 import { useToast } from '@chakra-ui/react'
 
 import { useCreateOneAccountPlanMutation } from '../graphql/mutations.generated'
@@ -11,8 +15,8 @@ export default function useCreateOneAccountPlan() {
 
   interface CreateOneAccountPlanProps {
     name?: string
-    costType?: string
-    accountPlanType?: string
+    costType?: CostTypeEnum
+    accountPlanType?: AccountPlanTypeEnum
   }
 
   async function CreateOneAccountPlan(
