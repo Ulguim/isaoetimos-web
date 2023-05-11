@@ -12,7 +12,7 @@ jobs:
       - name: Checkout GitLab repository
         uses: actions/checkout@v2
         with:
-          repository: <gitlab-repository-url>
+          repository: https://gitlab.com/senac-projetos-de-desenvolvimento/2022-william-ulguim/visaoetimos-web/-/tree/main
           ref: <gitlab-branch>
           token: ${{ secrets.GITLAB_ACCESS_TOKEN }}  # adicione uma secret com o seu token de acesso do GitLab
       - name: Create GitHub branch
@@ -20,7 +20,7 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           commit-message: "Copy GitLab branch to GitHub"
-          branch: <github-branch>
+          branch: main
           title: "Copy GitLab branch to GitHub"
           body: "This is an automated pull request created by GitHub Actions."
-          delete-branch: true
+          delete-branch: false
