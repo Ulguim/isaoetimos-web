@@ -27,29 +27,29 @@
 name: Copy GitLab branch to GitHub
 
 on:
-  pull_request:
-    types: [closed]
   push:
     branches:
-      - main  
+      - main
+  pull_request:
+    types: [closed]
 
 jobs:
   copy-branch:
     runs-on: ubuntu-latest
-    if: github.event.pull_request.merged == true
+    if: github.event.pull_request.merged == true && github.event.pull_request.head.ref == 'main'
     steps:
       - name: Checkout GitLab repository
         uses: actions/checkout@v2
         with:
           repository: https://gitlab.com/senac-projetos-de-desenvolvimento/2022-william-ulguim/visaoetimos-web
-          ref: stable
-          token: ${{ secrets.GITLAB_ACCESS_TOKEN }}  # adicione uma secret com o seu token de acesso do GitLab
+          ref: main
+          token: ${{ secrets.GITLAB_ACCESS_TOKEN }}
       - name: Create GitHub branch
         uses: peter-evans/create-pull-request@v3.8.1
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           commit-message: "Copy GitLab branch to GitHub"
-          branch: stable
+          branch: main
           title: "Copy GitLab branch to GitHub"
           body: "This is an automated pull request created by GitHub Actions."
           delete-branch: false
@@ -65,4 +65,4 @@ jobs:
         run: |
           git config --global user.name "GitHub Actions"
           git config --global user.email "actions@github.com"
-          git push origin stable
+          git push origin main
