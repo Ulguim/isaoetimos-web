@@ -46,7 +46,7 @@ install:
       - $CI_MERGE_REQUEST_TARGET_BRANCH_NAME == "dev"
 
 lint:
-  stage: build
+  stage: lint
   image: node:16.13
   tags:
     - gitlab-org
