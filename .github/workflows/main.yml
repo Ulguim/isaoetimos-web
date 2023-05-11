@@ -1,0 +1,23 @@
+name: Merge Request
+
+on:
+  pull_request:
+    types: [opened]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+      with:
+        ref: ${{ github.head_ref }}
+        repository: ${{ github.event.repository.full_name }}
+
+    - name: Copy branch from GitLab
+      run: |
+        git remote add gitlab https://gitlab.com/senac-projetos-de-desenvolvimento/2022-william-ulguim/visaoetimos-web.git
+        git fetch gitlab
+        git checkout -b ${GITHUB_HEAD_REF} gitlab/${GITHUB_HEAD_REF}
+        git push -u origin ${GITHUB_HEAD_REF}
