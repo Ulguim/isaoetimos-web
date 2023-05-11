@@ -1,0 +1,30 @@
+query getFinances {
+  finances {
+    nodes {
+      id
+      comments
+      dueDate
+      issuedate
+      payDay
+      paymentTerm
+      status
+      value
+      createdAt
+      updatedAt
+      accountplan {
+        id
+        accountPlanType
+        costType
+        name
+      }
+      supplierAndCustomer {
+        id
+        name
+        address
+        cpf
+        email
+        phone
+      }
+    }
+  }
+}

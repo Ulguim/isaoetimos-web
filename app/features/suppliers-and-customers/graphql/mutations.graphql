@@ -1,0 +1,25 @@
+mutation createOneSuppliersAndCustomer($input: CreateOneSuppliersAndCustomerInput!) {
+  createOneSuppliersAndCustomer(input: $input) {
+    id
+    address
+    cpf
+    email
+    phone
+  }
+}
+
+mutation deleteOneSuppliersAndCustomer($id:ID!){
+  deleteOneSuppliersAndCustomer(input:{id:$id}){
+    id
+  }
+}
+
+mutation updateOneSuppliersAndCustomer($id: ID!, $update: UpdateSuppliersAndCustomerInput!) {
+  updateOneSuppliersAndCustomer( input: { id:$id, update:$update}) {
+    id
+    address
+    cpf
+    email
+    phone
+  }
+}

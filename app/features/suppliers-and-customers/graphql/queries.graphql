@@ -1,0 +1,14 @@
+query getSuppliersAndCustomers{ 
+  suppliersAndCustomers{
+    nodes{
+      id
+      address
+      cpf
+      createdAt
+      updatedAt
+      email
+      name
+      phone
+    }
+  }
+}
