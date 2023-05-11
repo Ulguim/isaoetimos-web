@@ -1,8 +1,41 @@
-copy-to-github:
-  image: alpine/git
-  script:
-    - git clone https://github.com/Ulguim/visaoetimos-web.git
-    - cd visaoetimos-web
-    - git checkout main
-    - git pull
-    - git push https://github.com/Ulguim/visaoetimos-web.git main
+stages:          # List of stages for jobs, and their order of execution	
+  - install	
+  - build	
+  - test	
+  - deploy	
+
+cache:	
+  paths:	
+    - node_modules/	
+
+
+install:	
+  stage: install	
+  image: node:16.13	
+  tags:	
+    - gitlab-org	
+  script:	
+    - yarn	
+  artifacts:	
+    name: "${CI_BUILD_REF}"	
+    expire_in: 20 mins	
+    paths:	
+        - node_modules	
+  only:	
+    refs:	
+      - merge_requests	
+    variables:	
+      - $CI_MERGE_REQUEST_TARGET_BRANCH_NAME == "dev"	
+
+lint:	
+  stage: build	
+  image: node:16.13	
+  tags:	
+    - gitlab-org	
+  script:	
+    - yarn ci:lint	
+  only:	
+    refs:	
+      - merge_requests	
+    variables:	
+      - $CI_MERGE_REQUEST_TARGET_BRANCH_NAME == "dev"	
