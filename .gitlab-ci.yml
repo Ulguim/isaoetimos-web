@@ -8,7 +8,6 @@ cache:
   paths:
     - node_modules/
 
-
 install:
   stage: install
   image: node:16.13
@@ -17,10 +16,10 @@ install:
   script:
     - yarn
   artifacts:
-    name: "${CI_BUILD_REF}"
+    name: '${CI_BUILD_REF}'
     expire_in: 20 mins
     paths:
-        - node_modules
+      - node_modules
   only:
     refs:
       - merge_requests
@@ -44,10 +43,10 @@ build:
   stage: build
   image: node:16.13
   artifacts:
-    name: "${CI_BUILD_REF}"
+    name: '${CI_BUILD_REF}'
     expire_in: 20 mins
     paths:
-        - .next
+      - .next
   tags:
     - gitlab-org
   script:
@@ -56,7 +55,7 @@ build:
     refs:
       - merge_requests
 
-build-job:       # This job runs in the build stage, which runs first.
+build-job: # This job runs in the build stage, which runs first.
   stage: build
   script:
     - echo "Compiling the code..."
