@@ -101,7 +101,9 @@ export type AccountPlanFilter = {
 export type AccountPlanFilterFinancesFilter = {
   and?: InputMaybe<Array<AccountPlanFilterFinancesFilter>>;
   createdAt?: InputMaybe<DateFieldComparison>;
+  deletedAt?: InputMaybe<DateFieldComparison>;
   dueDate?: InputMaybe<DateFieldComparison>;
+  id?: InputMaybe<IdFilterComparison>;
   issuedate?: InputMaybe<DateFieldComparison>;
   or?: InputMaybe<Array<AccountPlanFilterFinancesFilter>>;
   payDay?: InputMaybe<DateFieldComparison>;
@@ -209,6 +211,18 @@ export type Auth = {
 export type AuthInput = {
   email: Scalars['String'];
   password: Scalars['String'];
+};
+
+export type CashFlowData = {
+  __typename?: 'CashFlowData';
+  cashFlows: Array<AccountPlan>;
+  type: Scalars['String'];
+};
+
+export type CashFlowGroup = {
+  __typename?: 'CashFlowGroup';
+  cashFlows: Array<Finances>;
+  type: Scalars['String'];
 };
 
 export type CostTypeEnumFilterComparison = {
@@ -387,7 +401,8 @@ export type Finances = {
   __typename?: 'Finances';
   accountplan?: Maybe<AccountPlan>;
   comments?: Maybe<Scalars['String']>;
-  createdAt: Scalars['DateTime'];
+  createdAt?: Maybe<Scalars['DateTime']>;
+  deletedAt?: Maybe<Scalars['DateTime']>;
   dueDate: Scalars['DateTime'];
   id: Scalars['ID'];
   issuedate: Scalars['DateTime'];
@@ -395,14 +410,16 @@ export type Finances = {
   paymentTerm: Scalars['DateTime'];
   status: FinaceStatusTypeEnum;
   supplierAndCustomer?: Maybe<SuppliersAndCustomer>;
-  updatedAt: Scalars['DateTime'];
+  updatedAt?: Maybe<Scalars['DateTime']>;
   value: Scalars['Float'];
 };
 
 export type FinancesAggregateGroupBy = {
   __typename?: 'FinancesAggregateGroupBy';
   createdAt?: Maybe<Scalars['DateTime']>;
+  deletedAt?: Maybe<Scalars['DateTime']>;
   dueDate?: Maybe<Scalars['DateTime']>;
+  id?: Maybe<Scalars['ID']>;
   issuedate?: Maybe<Scalars['DateTime']>;
   payDay?: Maybe<Scalars['DateTime']>;
   paymentTerm?: Maybe<Scalars['DateTime']>;
@@ -427,7 +444,9 @@ export type FinancesConnection = {
 export type FinancesCountAggregate = {
   __typename?: 'FinancesCountAggregate';
   createdAt?: Maybe<Scalars['Int']>;
+  deletedAt?: Maybe<Scalars['Int']>;
   dueDate?: Maybe<Scalars['Int']>;
+  id?: Maybe<Scalars['Int']>;
   issuedate?: Maybe<Scalars['Int']>;
   payDay?: Maybe<Scalars['Int']>;
   paymentTerm?: Maybe<Scalars['Int']>;
@@ -439,7 +458,9 @@ export type FinancesCountAggregate = {
 export type FinancesDeleteFilter = {
   and?: InputMaybe<Array<FinancesDeleteFilter>>;
   createdAt?: InputMaybe<DateFieldComparison>;
+  deletedAt?: InputMaybe<DateFieldComparison>;
   dueDate?: InputMaybe<DateFieldComparison>;
+  id?: InputMaybe<IdFilterComparison>;
   issuedate?: InputMaybe<DateFieldComparison>;
   or?: InputMaybe<Array<FinancesDeleteFilter>>;
   payDay?: InputMaybe<DateFieldComparison>;
@@ -453,6 +474,7 @@ export type FinancesDeleteResponse = {
   __typename?: 'FinancesDeleteResponse';
   comments?: Maybe<Scalars['String']>;
   createdAt?: Maybe<Scalars['DateTime']>;
+  deletedAt?: Maybe<Scalars['DateTime']>;
   dueDate?: Maybe<Scalars['DateTime']>;
   id?: Maybe<Scalars['ID']>;
   issuedate?: Maybe<Scalars['DateTime']>;
@@ -467,7 +489,9 @@ export type FinancesFilter = {
   accountplan?: InputMaybe<FinancesFilterAccountPlanFilter>;
   and?: InputMaybe<Array<FinancesFilter>>;
   createdAt?: InputMaybe<DateFieldComparison>;
+  deletedAt?: InputMaybe<DateFieldComparison>;
   dueDate?: InputMaybe<DateFieldComparison>;
+  id?: InputMaybe<IdFilterComparison>;
   issuedate?: InputMaybe<DateFieldComparison>;
   or?: InputMaybe<Array<FinancesFilter>>;
   payDay?: InputMaybe<DateFieldComparison>;
@@ -507,7 +531,9 @@ export type FinancesFilterSuppliersAndCustomerFilter = {
 export type FinancesMaxAggregate = {
   __typename?: 'FinancesMaxAggregate';
   createdAt?: Maybe<Scalars['DateTime']>;
+  deletedAt?: Maybe<Scalars['DateTime']>;
   dueDate?: Maybe<Scalars['DateTime']>;
+  id?: Maybe<Scalars['ID']>;
   issuedate?: Maybe<Scalars['DateTime']>;
   payDay?: Maybe<Scalars['DateTime']>;
   paymentTerm?: Maybe<Scalars['DateTime']>;
@@ -519,7 +545,9 @@ export type FinancesMaxAggregate = {
 export type FinancesMinAggregate = {
   __typename?: 'FinancesMinAggregate';
   createdAt?: Maybe<Scalars['DateTime']>;
+  deletedAt?: Maybe<Scalars['DateTime']>;
   dueDate?: Maybe<Scalars['DateTime']>;
+  id?: Maybe<Scalars['ID']>;
   issuedate?: Maybe<Scalars['DateTime']>;
   payDay?: Maybe<Scalars['DateTime']>;
   paymentTerm?: Maybe<Scalars['DateTime']>;
@@ -536,7 +564,9 @@ export type FinancesSort = {
 
 export enum FinancesSortFields {
   CreatedAt = 'createdAt',
+  DeletedAt = 'deletedAt',
   DueDate = 'dueDate',
+  Id = 'id',
   Issuedate = 'issuedate',
   PayDay = 'payDay',
   PaymentTerm = 'paymentTerm',
@@ -553,7 +583,9 @@ export type FinancesSumAggregate = {
 export type FinancesUpdateFilter = {
   and?: InputMaybe<Array<FinancesUpdateFilter>>;
   createdAt?: InputMaybe<DateFieldComparison>;
+  deletedAt?: InputMaybe<DateFieldComparison>;
   dueDate?: InputMaybe<DateFieldComparison>;
+  id?: InputMaybe<IdFilterComparison>;
   issuedate?: InputMaybe<DateFieldComparison>;
   or?: InputMaybe<Array<FinancesUpdateFilter>>;
   payDay?: InputMaybe<DateFieldComparison>;
@@ -834,7 +866,10 @@ export type Query = {
   accountPlan?: Maybe<AccountPlan>;
   accountPlans: AccountPlanConnection;
   finances: FinancesConnection;
+  gerenateCashFlow: Array<CashFlowGroup>;
+  gerenateCashFlowByAccount: Array<CashFlowData>;
   isTokenValid: TokenValidType;
+  me: User;
   suppliersAndCustomer?: Maybe<SuppliersAndCustomer>;
   suppliersAndCustomers: SuppliersAndCustomerConnection;
   user?: Maybe<User>;
@@ -1074,7 +1109,9 @@ export type SuppliersAndCustomerFilter = {
 export type SuppliersAndCustomerFilterFinancesFilter = {
   and?: InputMaybe<Array<SuppliersAndCustomerFilterFinancesFilter>>;
   createdAt?: InputMaybe<DateFieldComparison>;
+  deletedAt?: InputMaybe<DateFieldComparison>;
   dueDate?: InputMaybe<DateFieldComparison>;
+  id?: InputMaybe<IdFilterComparison>;
   issuedate?: InputMaybe<DateFieldComparison>;
   or?: InputMaybe<Array<SuppliersAndCustomerFilterFinancesFilter>>;
   payDay?: InputMaybe<DateFieldComparison>;
