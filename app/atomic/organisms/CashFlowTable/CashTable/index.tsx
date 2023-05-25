@@ -7,7 +7,24 @@ import { CashFlowData } from '../../../../generated/graphql'
 import { CashFlowTypeRow } from '../CashFlowTypeRow'
 
 export const CashTable = () => {
-  const [load, { data, called }] = useGetCashFlowLazyQuery()
+  const [load, { data, called }] = useGetCashFlowLazyQuery({
+    fetchPolicy: 'cache-and-network',
+  })
+
+  const months = [
+    'JAN',
+    'FEV',
+    'MAR',
+    'ABR',
+    'MAI',
+    'JUN',
+    'JUL',
+    'AGO',
+    'SET',
+    'OUT',
+    'NOV',
+    'DEZ',
+  ]
 
   const cashFlows = data?.gerenateCashFlowByAccount
 
@@ -20,15 +37,8 @@ export const CashTable = () => {
         <Flex direction="column" w="100%">
           <Flex direction="column" w="100%" backgroundColor="#ffffff">
             <Grid
-              gridTemplateColumns={[
-                '1fr',
-                '1fr 1fr 1fr 1fr ',
-                '1fr 1fr 1fr 1fr 1fr 1fr',
-                '1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr',
-                '2fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr',
-                '2fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr',
-              ]}
-              display={['none', 'none', 'none', 'grid']}
+              gridTemplateColumns={'2fr repeat(13, 1fr)'}
+              display={'grid'}
               w="100%"
               gridGap="5px"
               py={2}
@@ -39,47 +49,21 @@ export const CashTable = () => {
                 fontSize="md"
                 color="#404040"
               ></Text>
-              <Text fontWeight="bold" fontSize="md" color="#404040">
-                JAN
-              </Text>
-              <Text fontWeight="bold" fontSize="md" color="#404040">
-                FEV
-              </Text>
-              <Text fontWeight="bold" fontSize="md" color="#404040">
-                MAR
-              </Text>
-              <Text fontWeight="bold" fontSize="md" color="#404040">
-                ABR
-              </Text>
-              <Text fontWeight="bold" fontSize="md" color="#404040">
-                MAI
-              </Text>
-              <Text fontWeight="bold" fontSize="md" color="#404040">
-                JUN
-              </Text>
-              <Text fontWeight="bold" fontSize="md" color="#404040">
-                JUL
-              </Text>
-              <Text fontWeight="bold" fontSize="md" color="#404040">
-                AGO
-              </Text>
-              <Text fontWeight="bold" fontSize="md" color="#404040">
-                SET
-              </Text>
-              <Text fontWeight="bold" fontSize="md" color="#404040">
-                OUT
-              </Text>
-              <Text fontWeight="bold" fontSize="md" color="#404040">
-                NOV
-              </Text>
-              <Text fontWeight="bold" fontSize="md" color="#404040">
-                DEC
-              </Text>
+              {months.map(item => (
+                <Text
+                  key={item}
+                  fontWeight="bold"
+                  fontSize="md"
+                  color="#404040"
+                >
+                  {item}
+                </Text>
+              ))}
               <Text
                 fontWeight="bold"
                 fontSize="md"
                 color="#404040"
-                textAlign={['center', 'end']}
+                textAlign={'end'}
               >
                 Total
               </Text>

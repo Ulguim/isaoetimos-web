@@ -22,6 +22,7 @@ type AccountPlanRowProps = {
 export const AccountPlanRow: React.FC<AccountPlanRowProps> = ({
   accountPlan,
 }) => {
+  const months = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
   const name = accountPlan?.name
   const finances = accountPlan?.finances?.nodes
   const groupedFinances = groupBy(finances, 'supplierAndCustomer.id')
@@ -58,14 +59,7 @@ export const AccountPlanRow: React.FC<AccountPlanRowProps> = ({
                   disabled
                 >
                   <Grid
-                    gridTemplateColumns={[
-                      '1fr',
-                      '1fr 1fr 1fr 1fr ',
-                      '1fr 1fr 1fr 1fr 1fr 1fr',
-                      '1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr',
-                      '2fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr',
-                      '2fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr',
-                    ]}
+                    gridTemplateColumns={'2fr repeat(13, 1fr)'}
                     w="100%"
                     gridGap="5px"
                   >
@@ -79,119 +73,22 @@ export const AccountPlanRow: React.FC<AccountPlanRowProps> = ({
                       )}
                       {name}
                     </GridItem>
+                    {months.map(month => (
+                      <GridItem key={month}>
+                        <Text
+                          fontWeight={'400'}
+                          fontSize="14px"
+                          textAlign={'start'}
+                        >
+                          -
+                        </Text>
+                      </GridItem>
+                    ))}
                     <GridItem>
                       <Text
-                        fontWeight={['bold', 'bold', 'bold', '400']}
+                        fontWeight={'400'}
                         fontSize="14px"
-                        textAlign={['center', 'start']}
-                      >
-                        -
-                      </Text>
-                    </GridItem>
-                    <GridItem>
-                      <Text
-                        fontWeight={['bold', 'bold', 'bold', '400']}
-                        fontSize="14px"
-                        textAlign={['center', 'start']}
-                      >
-                        -
-                      </Text>
-                    </GridItem>
-                    <GridItem>
-                      <Text
-                        fontWeight={['bold', 'bold', 'bold', '400']}
-                        fontSize="14px"
-                        textAlign={['center', 'start']}
-                      >
-                        -
-                      </Text>
-                    </GridItem>
-                    <GridItem>
-                      <Text
-                        fontWeight={['bold', 'bold', 'bold', '400']}
-                        fontSize="14px"
-                        textAlign={['center', 'start']}
-                      >
-                        -
-                      </Text>
-                    </GridItem>
-                    <GridItem>
-                      <Text
-                        fontWeight={['bold', 'bold', 'bold', '400']}
-                        fontSize="14px"
-                        textAlign={['center', 'start']}
-                      >
-                        -
-                      </Text>
-                    </GridItem>
-                    <GridItem>
-                      <Text
-                        fontWeight={['bold', 'bold', 'bold', '400']}
-                        fontSize="14px"
-                        textAlign={['center', 'start']}
-                      >
-                        -
-                      </Text>
-                    </GridItem>
-                    <GridItem>
-                      <Text
-                        fontWeight={['bold', 'bold', 'bold', '400']}
-                        fontSize="14px"
-                        textAlign={['center', 'start']}
-                      >
-                        -
-                      </Text>
-                    </GridItem>
-                    <GridItem>
-                      <Text
-                        fontWeight={['bold', 'bold', 'bold', '400']}
-                        fontSize="14px"
-                        textAlign={['center', 'start']}
-                      >
-                        -
-                      </Text>
-                    </GridItem>
-                    <GridItem>
-                      <Text
-                        fontWeight={['bold', 'bold', 'bold', '400']}
-                        fontSize="14px"
-                        textAlign={['center', 'start']}
-                      >
-                        -
-                      </Text>
-                    </GridItem>
-                    <GridItem>
-                      <Text
-                        fontWeight={['bold', 'bold', 'bold', '400']}
-                        fontSize="14px"
-                        textAlign={['center', 'start']}
-                      >
-                        -
-                      </Text>
-                    </GridItem>
-                    <GridItem>
-                      <Text
-                        fontWeight={['bold', 'bold', 'bold', '400']}
-                        fontSize="14px"
-                        textAlign={['center', 'start']}
-                      >
-                        -
-                      </Text>
-                    </GridItem>
-                    <GridItem>
-                      <Text
-                        fontWeight={['bold', 'bold', 'bold', '400']}
-                        fontSize="14px"
-                        textAlign={['center', 'start']}
-                      >
-                        -
-                      </Text>
-                    </GridItem>
-                    <GridItem>
-                      <Text
-                        fontWeight={['bold', 'bold', 'bold', '400']}
-                        fontSize="14px"
-                        textAlign={['center', 'end']}
+                        textAlign={'end'}
                       >
                         -
                       </Text>

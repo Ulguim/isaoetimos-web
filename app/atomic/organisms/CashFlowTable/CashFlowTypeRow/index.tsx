@@ -10,6 +10,8 @@ import {
   GridItem,
   Text,
 } from '@chakra-ui/react'
+import { getMonth } from 'date-fns'
+import { sum } from 'lodash'
 
 import { CashFlowData } from '../../../../generated/graphql'
 import { AccountPlanRow } from '../AccountPlanRow'
@@ -21,8 +23,27 @@ type CashFlowTypeRowProps = {
 export const CashFlowTypeRow: React.FC<CashFlowTypeRowProps> = ({
   cashFlow,
 }) => {
+  const months = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
   const Type = cashFlow?.cashFlows
   const name = cashFlow?.type
+
+  const values = []
+  cashFlow?.cashFlows?.map(item => {
+    item?.finances?.nodes?.map(item => {
+      values.push({
+        month: getMonth(new Date(item?.issuedate)) + 1,
+        value: item?.value,
+      })
+    })
+  })
+  const totalValue = sum(values?.map(item => item.value))
+
+  const groupedValues = values.reduce((acc, cur) => {
+    cur.month in acc
+      ? (acc[cur.month] += cur.value)
+      : (acc[cur.month] = cur.value)
+    return acc
+  }, {})
 
   const formatValue = value => {
     return value.toLocaleString('pt-br', {
@@ -60,136 +81,34 @@ export const CashFlowTypeRow: React.FC<CashFlowTypeRowProps> = ({
                   bgColor={'#fff'}
                 >
                   <Grid
-                    gridTemplateColumns={[
-                      '1fr',
-                      '1fr 1fr 1fr 1fr ',
-                      '1fr 1fr 1fr 1fr 1fr 1fr',
-                      '1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr',
-                      '2fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr',
-                      '2fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr',
-                    ]}
+                    gridTemplateColumns={'2fr repeat(13, 1fr)'}
                     w="100%"
                     gridGap="5px"
                   >
                     <GridItem display="flex" alignItems="center">
                       <AccordionIcon mt={1} />
-                      {name}
+                      <b>{name}</b>
                     </GridItem>
+                    {months?.map(item => (
+                      <GridItem key={item}>
+                        <Text
+                          fontWeight={'400'}
+                          fontSize="14px"
+                          textAlign={'start'}
+                        >
+                          {groupedValues[item]
+                            ? formatValue(groupedValues[item])
+                            : '-'}
+                        </Text>
+                      </GridItem>
+                    ))}
                     <GridItem>
                       <Text
-                        fontWeight={['bold', 'bold', 'bold', '400']}
+                        fontWeight={'400'}
                         fontSize="14px"
-                        textAlign={['center', 'start']}
+                        textAlign={'end'}
                       >
-                        {formatValue(2500)}
-                      </Text>
-                    </GridItem>
-                    <GridItem>
-                      <Text
-                        fontWeight={['bold', 'bold', 'bold', '400']}
-                        fontSize="14px"
-                        textAlign={['center', 'start']}
-                      >
-                        {formatValue(2500)}
-                      </Text>
-                    </GridItem>
-                    <GridItem>
-                      <Text
-                        fontWeight={['bold', 'bold', 'bold', '400']}
-                        fontSize="14px"
-                        textAlign={['center', 'start']}
-                      >
-                        {formatValue(2500)}
-                      </Text>
-                    </GridItem>
-                    <GridItem>
-                      <Text
-                        fontWeight={['bold', 'bold', 'bold', '400']}
-                        fontSize="14px"
-                        textAlign={['center', 'start']}
-                      >
-                        {formatValue(2500)}
-                      </Text>
-                    </GridItem>
-                    <GridItem>
-                      <Text
-                        fontWeight={['bold', 'bold', 'bold', '400']}
-                        fontSize="14px"
-                        textAlign={['center', 'start']}
-                      >
-                        {formatValue(2500)}
-                      </Text>
-                    </GridItem>
-                    <GridItem>
-                      <Text
-                        fontWeight={['bold', 'bold', 'bold', '400']}
-                        fontSize="14px"
-                        textAlign={['center', 'start']}
-                      >
-                        {formatValue(2500)}
-                      </Text>
-                    </GridItem>
-                    <GridItem>
-                      <Text
-                        fontWeight={['bold', 'bold', 'bold', '400']}
-                        fontSize="14px"
-                        textAlign={['center', 'start']}
-                      >
-                        {formatValue(2500)}
-                      </Text>
-                    </GridItem>
-                    <GridItem>
-                      <Text
-                        fontWeight={['bold', 'bold', 'bold', '400']}
-                        fontSize="14px"
-                        textAlign={['center', 'start']}
-                      >
-                        {formatValue(2500)}
-                      </Text>
-                    </GridItem>
-                    <GridItem>
-                      <Text
-                        fontWeight={['bold', 'bold', 'bold', '400']}
-                        fontSize="14px"
-                        textAlign={['center', 'start']}
-                      >
-                        {formatValue(2500)}
-                      </Text>
-                    </GridItem>
-                    <GridItem>
-                      <Text
-                        fontWeight={['bold', 'bold', 'bold', '400']}
-                        fontSize="14px"
-                        textAlign={['center', 'start']}
-                      >
-                        {formatValue(2500)}
-                      </Text>
-                    </GridItem>
-                    <GridItem>
-                      <Text
-                        fontWeight={['bold', 'bold', 'bold', '400']}
-                        fontSize="14px"
-                        textAlign={['center', 'start']}
-                      >
-                        {formatValue(2500)}
-                      </Text>
-                    </GridItem>
-                    <GridItem>
-                      <Text
-                        fontWeight={['bold', 'bold', 'bold', '400']}
-                        fontSize="14px"
-                        textAlign={['center', 'start']}
-                      >
-                        {formatValue(2500)}
-                      </Text>
-                    </GridItem>
-                    <GridItem>
-                      <Text
-                        fontWeight={['bold', 'bold', 'bold', '400']}
-                        fontSize="14px"
-                        textAlign={['center', 'end']}
-                      >
-                        {formatValue(2500)}
+                        {totalValue ? formatValue(totalValue) : '-'}
                       </Text>
                     </GridItem>
                   </Grid>

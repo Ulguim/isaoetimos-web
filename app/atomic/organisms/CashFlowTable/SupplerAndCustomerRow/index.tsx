@@ -6,7 +6,8 @@ import {
   GridItem,
   Text,
 } from '@chakra-ui/react'
-import { sum as soma } from 'lodash'
+import { getMonth } from 'date-fns'
+import { sum } from 'lodash'
 
 import { Finances } from '../../../../generated/graphql'
 
@@ -17,10 +18,24 @@ type SupplerAndCustomerRowProps = {
 export const SupplerAndCustomerRow: React.FC<
   SupplerAndCustomerRowProps
 > = ({ finances }) => {
+  const months = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
   const name = finances?.[0]?.supplierAndCustomer?.name
+  const values = []
+  const total = sum(finances?.map(item => item.value))
 
-  const sum = soma(finances?.map(item => item.value))
-  console.log(sum)
+  finances?.map(item => {
+    values.push({
+      month: getMonth(new Date(item?.issuedate)) + 1,
+      value: item?.value,
+    })
+  })
+
+  const groupedValues = values.reduce((acc, cur) => {
+    cur.month in acc
+      ? (acc[cur.month] += cur.value)
+      : (acc[cur.month] = cur.value)
+    return acc
+  }, {})
 
   const formatValue = value => {
     return value.toLocaleString('pt-br', {
@@ -59,14 +74,7 @@ export const SupplerAndCustomerRow: React.FC<
               _hover={{ bgColor: 'rgba(0, 0, 0, 0.04)' }}
             >
               <Grid
-                gridTemplateColumns={[
-                  '1fr',
-                  '1fr 1fr 1fr 1fr ',
-                  '1fr 1fr 1fr 1fr 1fr 1fr',
-                  '1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr',
-                  '2fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr',
-                  '2fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr',
-                ]}
+                gridTemplateColumns={'2fr repeat(13, 1fr)'}
                 w="100%"
                 gridGap="5px"
               >
@@ -77,121 +85,34 @@ export const SupplerAndCustomerRow: React.FC<
                 >
                   {name}
                 </GridItem>
-                <GridItem>
-                  <Text
-                    fontWeight={['bold', 'bold', 'bold', '400']}
-                    fontSize="14px"
-                    textAlign={['center', 'start']}
+                {months.map(item => (
+                  <GridItem
+                    key={item}
+                    display="flex"
+                    alignItems="center"
                   >
-                    {formatValue(sum)}
-                  </Text>
-                </GridItem>
-                <GridItem>
+                    <Text
+                      fontWeight={'400'}
+                      fontSize="14px"
+                      textAlign={'start'}
+                    >
+                      {groupedValues[item]
+                        ? formatValue(groupedValues[item])
+                        : '-'}
+                    </Text>
+                  </GridItem>
+                ))}
+                <GridItem
+                  display="flex"
+                  alignItems="center"
+                  justifyContent={'flex-end'}
+                >
                   <Text
-                    fontWeight={['bold', 'bold', 'bold', '400']}
+                    fontWeight={'400'}
                     fontSize="14px"
-                    textAlign={['center', 'start']}
+                    textAlign={'end'}
                   >
-                    {formatValue(sum)}
-                  </Text>
-                </GridItem>
-                <GridItem>
-                  <Text
-                    fontWeight={['bold', 'bold', 'bold', '400']}
-                    fontSize="14px"
-                    textAlign={['center', 'start']}
-                  >
-                    {formatValue(sum)}
-                  </Text>
-                </GridItem>
-                <GridItem>
-                  <Text
-                    fontWeight={['bold', 'bold', 'bold', '400']}
-                    fontSize="14px"
-                    textAlign={['center', 'start']}
-                  >
-                    {formatValue(sum)}
-                  </Text>
-                </GridItem>
-                <GridItem>
-                  <Text
-                    fontWeight={['bold', 'bold', 'bold', '400']}
-                    fontSize="14px"
-                    textAlign={['center', 'start']}
-                  >
-                    {formatValue(sum)}
-                  </Text>
-                </GridItem>
-                <GridItem>
-                  <Text
-                    fontWeight={['bold', 'bold', 'bold', '400']}
-                    fontSize="14px"
-                    textAlign={['center', 'start']}
-                  >
-                    {formatValue(sum)}
-                  </Text>
-                </GridItem>
-                <GridItem>
-                  <Text
-                    fontWeight={['bold', 'bold', 'bold', '400']}
-                    fontSize="14px"
-                    textAlign={['center', 'start']}
-                  >
-                    {formatValue(sum)}
-                  </Text>
-                </GridItem>
-                <GridItem>
-                  <Text
-                    fontWeight={['bold', 'bold', 'bold', '400']}
-                    fontSize="14px"
-                    textAlign={['center', 'start']}
-                  >
-                    {formatValue(sum)}
-                  </Text>
-                </GridItem>
-                <GridItem>
-                  <Text
-                    fontWeight={['bold', 'bold', 'bold', '400']}
-                    fontSize="14px"
-                    textAlign={['center', 'start']}
-                  >
-                    {formatValue(sum)}
-                  </Text>
-                </GridItem>
-                <GridItem>
-                  <Text
-                    fontWeight={['bold', 'bold', 'bold', '400']}
-                    fontSize="14px"
-                    textAlign={['center', 'start']}
-                  >
-                    {formatValue(sum)}
-                  </Text>
-                </GridItem>
-                <GridItem>
-                  <Text
-                    fontWeight={['bold', 'bold', 'bold', '400']}
-                    fontSize="14px"
-                    textAlign={['center', 'start']}
-                  >
-                    {formatValue(sum)}
-                  </Text>
-                </GridItem>
-                <GridItem>
-                  <Text
-                    fontWeight={['bold', 'bold', 'bold', '400']}
-                    fontSize="14px"
-                    textAlign={['center', 'start']}
-                  >
-                    {formatValue(sum)}
-                  </Text>
-                </GridItem>
-                <GridItem>
-                  <Text
-                    fontWeight={['bold', 'bold', 'bold', '400']}
-                    fontSize="14px"
-                    textAlign={['center', 'end']}
-                  >
-                    {formatValue(sum)}
+                    {total ? formatValue(total) : '-'}
                   </Text>
                 </GridItem>
               </Grid>
