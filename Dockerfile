@@ -16,7 +16,7 @@ COPY . /usr/src/app
 
 RUN yarn run codegen
 
-RUN yarn build
+# RUN yarn build
 EXPOSE 3000
 
 CMD "npm" "run" "dev"
