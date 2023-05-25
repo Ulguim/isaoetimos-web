@@ -2,6 +2,7 @@ import {
   // faHouse,
   faImage,
   faList,
+  faMoneyBillTransfer,
   faPencil,
 } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -12,6 +13,11 @@ export const menuItems = [
   //   href: '/suppliers-and-customers',
   //   icon: <FontAwesomeIcon icon={faHouse} />,
   // },
+  {
+    label: 'Fluxo de Caixa',
+    href: '/admin/cash-flow',
+    icon: <FontAwesomeIcon icon={faMoneyBillTransfer} />,
+  },
   {
     label: 'Finanças',
     href: '/admin/finances',

@@ -1,0 +1,25 @@
+query getCashFlow {
+  gerenateCashFlowByAccount{
+    type
+    cashFlows {
+      id
+      name
+      accountPlanType
+      costType
+      createdAt
+      deletedAt
+      updatedAt
+      finances{
+        nodes {
+          id
+          value
+          issuedate
+          supplierAndCustomer{
+            id
+            name
+          }
+        }
+      }
+    }
+  }
+}
