@@ -93,7 +93,7 @@ const LayoutTemplate: React.FC<any> = ({ children }) => {
             </Box>
           </Sidebar>
         </Box>
-        <Box width={'100%'}>{children}</Box>
+        <Box width={'100%'} height='100%' overflow="auto" >{children}</Box>
       </Box>
     </Box>
   )

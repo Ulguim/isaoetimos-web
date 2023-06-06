@@ -7,6 +7,9 @@ const SuppliersAndCustomers = () => {
   return (
     <LayoutTemplate>
       <Box margin={10}>
+        <Box fontSize="24px" fontWeight="bold" pb="6px">
+          Fornecedores e Clientes
+        </Box>
         <ListSupplyAndCustomer />
       </Box>
     </LayoutTemplate>

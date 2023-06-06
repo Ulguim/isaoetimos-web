@@ -164,6 +164,7 @@ const ListFinances: React.FC = () => {
                       />
                     ),
                     label: 'Editar',
+                    // @ts-ignore
                     onClick: () => handleUpdate(finance),
                   },
                   {
