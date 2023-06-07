@@ -32,6 +32,10 @@ export async function middleware(req: NextRequest) {
     return NextResponse.rewrite(new URL('/admin/finances', req.url))
   }
 
+  if(!isValidUser && req.nextUrl.pathname == '/') {
+    return NextResponse.rewrite(new URL('/auth/login', req.url))
+  }
+
   if (req.nextUrl.pathname.startsWith('/admin')) {
     if (!isValidUser) {
       console.log('Invalid user redirecting to login area')
