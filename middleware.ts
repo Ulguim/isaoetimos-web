@@ -27,10 +27,14 @@ export async function middleware(req: NextRequest) {
   })
 
   const isValidUser = !!res?.data?.data?.isTokenValid?.valid
-  console.log(
-    '🚀 ~ file: middleware.ts:28 ~ middleware ~ isValidUser:',
-    res?.data?.data?.isTokenValid?.valid,
-  )
+
+  if (isValidUser && req.nextUrl.pathname == '/') {
+    return NextResponse.rewrite(new URL('/admin/finances', req.url))
+  }
+
+  if(!isValidUser && req.nextUrl.pathname == '/') {
+    return NextResponse.rewrite(new URL('/auth/login', req.url))
+  }
 
   if (req.nextUrl.pathname.startsWith('/admin')) {
     if (!isValidUser) {
