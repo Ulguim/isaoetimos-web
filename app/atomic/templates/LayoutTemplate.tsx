@@ -1,8 +1,15 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 import React, { useMemo, useState } from 'react'
 
-import { Box } from '@chakra-ui/react'
+import { useAuthHook } from '@app/features/auth/hooks/useAuthHook'
+import { Avatar, Box, Flex, Text } from '@chakra-ui/react'
 import { Image } from '@chakra-ui/react'
+import {
+  Menu as ChakraMenu,
+  MenuButton,
+  MenuItem as ChakraMenuItem,
+  MenuList,
+} from '@chakra-ui/react'
 import {
   faArrowCircleLeft,
   faArrowCircleRight,
@@ -28,11 +35,11 @@ const LayoutTemplate: React.FC<any> = ({ children }) => {
     setIsOpen(!isOpen)
     collapseSidebar()
   }
-
+  const { logout } = useAuthHook()
   return (
     <Box bgColor={'#DEDEDE'}>
       <Box height={16} width={'100vw'} bgColor="#008836">
-        <Box>
+        <Box display="flex" flexDirection="row">
           <Image
             alt="Logo"
             pt="5px"
@@ -40,6 +47,47 @@ const LayoutTemplate: React.FC<any> = ({ children }) => {
             maxHeight={14}
             src="/Logo.svg"
           />
+          <Box
+            h={16}
+            w="200px"
+            display="flex"
+            flexDirection="row"
+            marginLeft="auto"
+            backgroundColor="#031C30"
+            justifyContent="center"
+            alignContent="center"
+          >
+            <Flex width="100%" flexDirection="row">
+              <ChakraMenu closeOnSelect={false}>
+                <MenuButton
+                  as={Box}
+                  colorScheme="blue"
+                  width="100%"
+                  display="flex"
+                  flexDirection="row"
+                  alignItems="center"
+                >
+                  <Flex
+                    width="100%"
+                    flexDirection="row"
+                    justifyContent="space-evenly"
+                    alignItems="center"
+                  >
+                    <Avatar
+                      name="Dan Abrahmov"
+                      src="https://bit.ly/dan-abramov"
+                    />
+                    <Text color="white">UserName</Text>
+                  </Flex>
+                </MenuButton>
+                <MenuList minWidth="240px">
+                  <ChakraMenuItem onClick={logout}>
+                    Sair
+                  </ChakraMenuItem>
+                </MenuList>
+              </ChakraMenu>
+            </Flex>
+          </Box>
         </Box>
       </Box>
       <Box
@@ -93,7 +141,9 @@ const LayoutTemplate: React.FC<any> = ({ children }) => {
             </Box>
           </Sidebar>
         </Box>
-        <Box width={'100%'} height='100%' overflow="auto" >{children}</Box>
+        <Box width={'100%'} height="100%" overflow="auto">
+          {children}
+        </Box>
       </Box>
     </Box>
   )
