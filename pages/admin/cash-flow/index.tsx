@@ -1,3 +1,5 @@
+import React from 'react'
+
 import { Box } from '@chakra-ui/react'
 
 import { CashTable } from '../../../app/atomic/organisms/CashFlowTable/CashTable'

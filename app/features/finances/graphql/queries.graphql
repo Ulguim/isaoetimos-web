@@ -28,3 +28,34 @@ query getFinances {
     }
   }
 }
+
+query getFinancesForDarshboard ($filter: FinancesFilter $sorting:[FinancesSort!]) {
+  finances(filter:$filter,sorting:$sorting) {
+    nodes {
+      id
+      comments
+      dueDate
+      issuedate
+      payDay
+      paymentTerm
+      status
+      value
+      createdAt
+      updatedAt
+      accountplan {
+        id
+        accountPlanType
+        costType
+        name
+      }
+      supplierAndCustomer {
+        id
+        name
+        address
+        cpf
+        email
+        phone
+      }
+    }
+  }
+}
