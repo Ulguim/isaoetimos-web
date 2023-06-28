@@ -2,7 +2,11 @@ import { useState } from 'react'
 
 import {
   Box,
+  Flex,
   GridItem,
+  Input,
+  Spinner,
+  Stack,
   useDisclosure,
   useToast,
 } from '@chakra-ui/react'
@@ -29,7 +33,15 @@ type AccountPlanProps = {
 }
 
 const ListAccountPlan: React.FC = () => {
-  const { data } = useGetAccountPlansQuery()
+  const [search, setSearch] = useState('')
+
+  const handleSearch = (e: any) => {
+    setSearch(e.target.value)
+  }
+
+  const { data, loading } = useGetAccountPlansQuery({
+    variables: { name: `%${search}%` ?? `%%` },
+  })
   const toast = useToast()
   const [DeleteOneAccountPlan] = useDeleteOneAccountPlanMutation({
     refetchQueries: ['getAccountPlans'],
@@ -72,6 +84,32 @@ const ListAccountPlan: React.FC = () => {
 
   return (
     <>
+      <Stack spacing={3}>
+        <Input
+          backgroundColor="white"
+          maxWidth="400px"
+          placeholder="Pesquisar"
+          size="lg"
+          onChange={e => handleSearch(e)}
+        />
+      </Stack>
+
+      {loading && (
+        <Flex
+          width="100%"
+          height="100%"
+          justify="center"
+          alignItems="center"
+        >
+          <Spinner
+            thickness="4px"
+            speed="0.65s"
+            emptyColor="gray.200"
+            color="blue.500"
+            size="xl"
+          />
+        </Flex>
+      )}
       {data?.accountPlans?.nodes.map(accountPlan => {
         const borderLeftColor =
           accountPlan.costType === 'INCOME' ? '#00B247' : '#D90000'

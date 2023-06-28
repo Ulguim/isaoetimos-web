@@ -3,15 +3,17 @@ import * as Types from '../../../generated/graphql';
 import { gql } from '@apollo/client';
 import * as Apollo from '@apollo/client';
 const defaultOptions = {} as const;
-export type GetAccountPlansQueryVariables = Types.Exact<{ [key: string]: never; }>;
+export type GetAccountPlansQueryVariables = Types.Exact<{
+  name?: Types.InputMaybe<Types.Scalars['String']>;
+}>;
 
 
 export type GetAccountPlansQuery = { __typename?: 'Query', accountPlans: { __typename?: 'AccountPlanConnection', nodes: Array<{ __typename?: 'AccountPlan', id: string, name: string, accountPlanType: Types.AccountPlanTypeEnum, costType: Types.CostTypeEnum }> } };
 
 
 export const GetAccountPlansDocument = gql`
-    query getAccountPlans {
-  accountPlans {
+    query getAccountPlans($name: String) {
+  accountPlans(filter: {or: [{name: {iLike: $name}}]}) {
     nodes {
       id
       name
@@ -34,6 +36,7 @@ export const GetAccountPlansDocument = gql`
  * @example
  * const { data, loading, error } = useGetAccountPlansQuery({
  *   variables: {
+ *      name: // value for 'name'
  *   },
  * });
  */

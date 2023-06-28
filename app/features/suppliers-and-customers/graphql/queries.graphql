@@ -1,6 +1,56 @@
-query getSuppliersAndCustomers{ 
-  suppliersAndCustomers{
-    nodes{
+# query getSuppliersAndCustomers($namOrEmail: String) {
+#   suppliersAndCustomers(
+#     filter: {
+#       or: { name: { iLike: $namOrEmail } }
+#       email: { iLike: $namOrEmail }
+#     }
+#   ) {
+#     nodes {
+#       id
+#       address
+#       cpf
+#       createdAt
+#       updatedAt
+#       email
+#       name
+#       phone
+#     }
+#   }
+# }
+# query getSuppliersAndCustomers($namOrEmail: String, $offset: OffsetPaging) {
+#   suppliersAndCustomers(
+#     filter: {
+#       or: { name: { iLike: $namOrEmail } }
+#       email: { iLike: $namOrEmail }
+#     }
+#     paging: $offset
+#   ) {
+#     nodes {
+#       id
+#       address
+#       cpf
+#       createdAt
+#       updatedAt
+#       email
+#       name
+#       phone
+#     }
+#     pageInfo{
+#       hasNextPage
+#       hasPreviousPage
+#     }
+#   }
+# }
+
+query getSuppliersAndCustomers($namOrEmail: String, $offset:Int) {
+  suppliersAndCustomers(
+    filter: {
+      or: { name: { iLike: $namOrEmail } }
+      email: { iLike: $namOrEmail }
+    }
+    paging: {limit:10 ,offset:$offset}
+  ) {
+    nodes {
       id
       address
       cpf
@@ -9,6 +59,10 @@ query getSuppliersAndCustomers{
       email
       name
       phone
+    }
+    pageInfo{
+      hasNextPage
+      hasPreviousPage
     }
   }
 }

@@ -3,7 +3,9 @@ import * as Types from '../../../generated/graphql';
 import { gql } from '@apollo/client';
 import * as Apollo from '@apollo/client';
 const defaultOptions = {} as const;
-export type GetFinancesQueryVariables = Types.Exact<{ [key: string]: never; }>;
+export type GetFinancesQueryVariables = Types.Exact<{
+  nameOrEmail?: Types.InputMaybe<Types.Scalars['String']>;
+}>;
 
 
 export type GetFinancesQuery = { __typename?: 'Query', finances: { __typename?: 'FinancesConnection', nodes: Array<{ __typename?: 'Finances', id: string, comments?: string | null, dueDate: any, issuedate: any, payDay?: any | null, paymentTerm: any, status: Types.FinaceStatusTypeEnum, value: number, createdAt?: any | null, updatedAt?: any | null, accountplan?: { __typename?: 'AccountPlan', id: string, accountPlanType: Types.AccountPlanTypeEnum, costType: Types.CostTypeEnum, name: string } | null, supplierAndCustomer?: { __typename?: 'SuppliersAndCustomer', id: string, name?: string | null, address: string, cpf: string, email?: string | null, phone: string } | null }> } };
@@ -19,8 +21,10 @@ export type GetFinancesForDarshboardQuery = { __typename?: 'Query', finances: { 
 
 
 export const GetFinancesDocument = gql`
-    query getFinances {
-  finances {
+    query getFinances($nameOrEmail: String) {
+  finances(
+    filter: {or: [{supplierAndCustomer: {name: {iLike: $nameOrEmail}}}, {supplierAndCustomer: {email: {iLike: $nameOrEmail}}}]}
+  ) {
     nodes {
       id
       comments
@@ -63,6 +67,7 @@ export const GetFinancesDocument = gql`
  * @example
  * const { data, loading, error } = useGetFinancesQuery({
  *   variables: {
+ *      nameOrEmail: // value for 'nameOrEmail'
  *   },
  * });
  */

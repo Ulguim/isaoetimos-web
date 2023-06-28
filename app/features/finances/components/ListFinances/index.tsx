@@ -2,7 +2,11 @@ import { useState } from 'react'
 
 import {
   Box,
+  Flex,
   GridItem,
+  Input,
+  Spinner,
+  Stack,
   useDisclosure,
   useToast,
 } from '@chakra-ui/react'
@@ -47,7 +51,16 @@ type ListFinancesProps = {
 }
 
 const ListFinances: React.FC = () => {
-  const { data } = useGetFinancesQuery()
+  const [search, setSearch] = useState('')
+
+  const handleSearch = (e: any) => {
+    setSearch(e.target.value)
+  }
+
+  const { data, loading } = useGetFinancesQuery({
+    variables: { nameOrEmail: `%${search}%` ?? `%%` },
+  })
+
   const toast = useToast()
   const [DeleteOneFinance] = useDeleteOneFinanceMutation({
     refetchQueries: ['getFinances'],
@@ -105,6 +118,32 @@ const ListFinances: React.FC = () => {
 
   return (
     <>
+      <Stack spacing={3}>
+        <Input
+          backgroundColor="white"
+          maxWidth="400px"
+          placeholder="Pesquisar"
+          size="lg"
+          onChange={e => handleSearch(e)}
+        />
+      </Stack>
+
+      {loading && (
+        <Flex
+          width="100%"
+          height="100%"
+          justify="center"
+          alignItems="center"
+        >
+          <Spinner
+            thickness="4px"
+            speed="0.65s"
+            emptyColor="gray.200"
+            color="blue.500"
+            size="xl"
+          />
+        </Flex>
+      )}
       {data?.finances?.nodes?.map(finance => {
         const compareDate = compareAsc(
           startOfDay(addDays(new Date(finance?.dueDate), 1)),

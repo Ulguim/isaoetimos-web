@@ -49,6 +49,7 @@
     "react-final-form": "^6.5.9",
     "react-hook-form": "^7.38.0",
     "react-imask": "^6.4.3",
+    "react-infinite-scroll-component": "^6.1.0",
     "react-input-mask": "^2.0.4",
     "react-pro-sidebar": "^1.0.0-alpha.4",
     "scheduler": "^0.23.0",

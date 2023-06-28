@@ -1,5 +1,13 @@
-query getFinances {
-  finances {
+query getFinances($nameOrEmail: String) {
+  finances(
+    filter: {
+      or: [
+        { supplierAndCustomer: { name: { iLike: $nameOrEmail } } },
+        { supplierAndCustomer: { email: { iLike: $nameOrEmail } } },
+
+      ]
+    }
+  )  {
     nodes {
       id
       comments

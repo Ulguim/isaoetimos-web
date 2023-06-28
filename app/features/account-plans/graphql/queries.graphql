@@ -1,7 +1,7 @@
-query getAccountPlans{
-  accountPlans{
-    nodes{
-     id
+query getAccountPlans($name: String) {
+  accountPlans(filter: { or: [{ name: { iLike: $name } }] }) {
+    nodes {
+      id
       name
       accountPlanType
       costType

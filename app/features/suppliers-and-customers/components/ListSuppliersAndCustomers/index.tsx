@@ -2,7 +2,11 @@ import { useState } from 'react'
 
 import {
   Box,
+  Flex,
   GridItem,
+  Input,
+  Spinner,
+  Stack,
   useDisclosure,
   useToast,
 } from '@chakra-ui/react'
@@ -23,7 +27,47 @@ import { useDeleteOneSuppliersAndCustomerMutation } from '../../graphql/mutation
 import { useGetSuppliersAndCustomersQuery } from '../../graphql/queries.generated'
 
 const ListSupplyAndCustomer: React.FC = () => {
-  const { data } = useGetSuppliersAndCustomersQuery()
+  const [search, setSearch] = useState('')
+
+  const handleSearch = (e: any) => {
+    setSearch(e.target.value)
+  }
+
+  const { data, loading } = useGetSuppliersAndCustomersQuery({
+    variables: { namOrEmail: `%${search}%` ?? `%%` },
+  })
+  // const [isFetchingMore, setIsFetchingMore] = useState(false)
+  // const loadMore = async () => {
+  //   const variables = {
+  //     offset: data?.suppliersAndCustomers?.nodes.length,
+  //     namOrEmail: `%${search}%` ?? `%%`,
+  //   }
+
+  //   try {
+  //     setIsFetchingMore(true)
+  //     fetchMore({
+  //       variables: variables,
+  //       updateQuery: (previousResult, { fetchMoreResult }) => {
+  //         if (!fetchMoreResult) return previousResult
+
+  //         return {
+  //           suppliersAndCustomers: {
+  //             ...previousResult.suppliersAndCustomers,
+  //             nodes: [
+  //               ...previousResult.suppliersAndCustomers.nodes,
+  //               ...fetchMoreResult.suppliersAndCustomers.nodes,
+  //             ],
+  //           },
+  //         }
+  //       },
+  //     })
+  //   } catch (error) {
+  //     console.log(error)
+  //   } finally {
+  //     setIsFetchingMore(false)
+  //   }
+  // }
+
   const toast = useToast()
   const [DeleteSupplierAndCustomer] =
     useDeleteOneSuppliersAndCustomerMutation({
@@ -39,6 +83,7 @@ const ListSupplyAndCustomer: React.FC = () => {
         })
       },
     })
+
   const { isOpen, onOpen, onClose } = useDisclosure()
   const [initialValues, setInitalValues] =
     useState<SuppliersAndCustomer | null>(null)
@@ -58,6 +103,36 @@ const ListSupplyAndCustomer: React.FC = () => {
 
   return (
     <>
+      <Stack spacing={3}>
+        <Input
+          backgroundColor="white"
+          maxWidth="400px"
+          placeholder="Pesquisar"
+          size="lg"
+          onChange={e => handleSearch(e)}
+        />
+      </Stack>
+
+      {/* <Button disabled={isFetchingMore || loading} onClick={loadMore}>
+        loadmore
+      </Button> */}
+
+      {loading && (
+        <Flex
+          width="100%"
+          height="100%"
+          justify="center"
+          alignItems="center"
+        >
+          <Spinner
+            thickness="4px"
+            speed="0.65s"
+            emptyColor="gray.200"
+            color="blue.500"
+            size="xl"
+          />
+        </Flex>
+      )}
       {data?.suppliersAndCustomers?.nodes.map(supply => (
         <ListRowItem
           maxW={'95%'}
