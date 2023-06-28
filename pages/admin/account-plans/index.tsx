@@ -6,7 +6,7 @@ import ListAccountPlan from '../../../app/features/account-plans/components/List
 const AccountPlans = () => {
   return (
     <LayoutTemplate>
-      <Box margin={10}>
+      <Box margin={5}>
         <Box fontSize="24px" fontWeight="bold" pb="6px">
           Plano de Contas
         </Box>

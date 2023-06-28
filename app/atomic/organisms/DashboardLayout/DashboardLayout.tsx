@@ -27,8 +27,8 @@ const DashboardLayout = () => {
         gridTemplateColumns={[
           '1fr',
           '1fr',
-          '1fr 1fr',
-          '1fr 1fr',
+          '1fr',
+          '1fr',
           '1fr 1fr',
           '1fr 1fr 1fr',
         ]}

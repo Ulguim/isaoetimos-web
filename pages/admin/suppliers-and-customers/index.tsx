@@ -6,7 +6,7 @@ import ListSupplyAndCustomer from '../../../app/features/suppliers-and-customers
 const SuppliersAndCustomers = () => {
   return (
     <LayoutTemplate>
-      <Box margin={10}>
+      <Box margin={5}>
         <Box fontSize="24px" fontWeight="bold" pb="6px">
           Fornecedores e Clientes
         </Box>

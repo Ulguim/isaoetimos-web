@@ -8,7 +8,7 @@ import LayoutTemplate from '../../../app/atomic/templates/LayoutTemplate'
 const CashFlow = () => {
   return (
     <LayoutTemplate>
-      <Box margin={10}>
+      <Box margin={5}>
         <Box fontSize="24px" fontWeight="bold" pb="6px">
           Fluxo de Caixa {2023}
         </Box>

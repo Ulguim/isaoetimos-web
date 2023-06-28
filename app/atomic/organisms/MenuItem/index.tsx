@@ -1,5 +1,5 @@
 import {
-  // faHouse,
+  faHouse,
   faImage,
   faList,
   faMoneyBillTransfer,
@@ -11,7 +11,7 @@ export const menuItems = [
   {
     label: 'Dashboard',
     href: '/admin/dashboard',
-    icon: <FontAwesomeIcon icon={faMoneyBillTransfer} />,
+    icon: <FontAwesomeIcon icon={faHouse} />,
   },
   {
     label: 'Fluxo de Caixa',

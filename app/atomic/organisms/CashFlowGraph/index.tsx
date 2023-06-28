@@ -29,13 +29,6 @@ const CashFlowGraph = () => {
     fetchPolicy: 'cache-and-network',
   })
 
-  const formatValue = value => {
-    return value.toLocaleString('pt-br', {
-      style: 'currency',
-      currency: 'BRL',
-    })
-  }
-
   const cashFlows = data?.gerenateCashFlowByAccount
 
   const cashFlowTypes = cashFlows?.flatMap(cashFlow => {
@@ -85,29 +78,7 @@ const CashFlowGraph = () => {
       width: 600,
       seriesField: 'type',
       dodgePadding: 2,
-      label: {
-        // 可手动配置 label 数据标签位置
-        position: 'middle',
-        // 'top', 'bottom', 'middle',
-        // 配置样式
-        style: {
-          fill: '#FFFFFF',
-          opacity: 0.6,
-        },
-        layout: [
-          // 柱形图数据标签位置自动调整
-          {
-            type: 'interval-adjust-position',
-          }, // 数据标签防遮挡
-          {
-            type: 'interval-hide-overlap',
-          }, // 数据标签文颜色自动调整
-          {
-            type: 'adjust-color',
-          },
-        ],
-        content: ({ totalValue }) => formatValue(totalValue || 0),
-      },
+
       xAxis: {
         label: {
           autoHide: true,

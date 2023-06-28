@@ -29,8 +29,8 @@ query getFinances {
   }
 }
 
-query getFinancesForDarshboard ($filter: FinancesFilter $sorting:[FinancesSort!]) {
-  finances(filter:$filter,sorting:$sorting) {
+query getFinancesForDarshboard ($filter: FinancesFilter $sorting:[FinancesSort!] $paging: OffsetPaging) {
+  finances(filter:$filter,sorting:$sorting,paging: $paging) {
     nodes {
       id
       comments

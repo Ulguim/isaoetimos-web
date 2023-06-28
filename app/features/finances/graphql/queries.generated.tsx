@@ -11,6 +11,7 @@ export type GetFinancesQuery = { __typename?: 'Query', finances: { __typename?: 
 export type GetFinancesForDarshboardQueryVariables = Types.Exact<{
   filter?: Types.InputMaybe<Types.FinancesFilter>;
   sorting?: Types.InputMaybe<Array<Types.FinancesSort> | Types.FinancesSort>;
+  paging?: Types.InputMaybe<Types.OffsetPaging>;
 }>;
 
 
@@ -77,8 +78,8 @@ export type GetFinancesQueryHookResult = ReturnType<typeof useGetFinancesQuery>;
 export type GetFinancesLazyQueryHookResult = ReturnType<typeof useGetFinancesLazyQuery>;
 export type GetFinancesQueryResult = Apollo.QueryResult<GetFinancesQuery, GetFinancesQueryVariables>;
 export const GetFinancesForDarshboardDocument = gql`
-    query getFinancesForDarshboard($filter: FinancesFilter, $sorting: [FinancesSort!]) {
-  finances(filter: $filter, sorting: $sorting) {
+    query getFinancesForDarshboard($filter: FinancesFilter, $sorting: [FinancesSort!], $paging: OffsetPaging) {
+  finances(filter: $filter, sorting: $sorting, paging: $paging) {
     nodes {
       id
       comments
@@ -123,6 +124,7 @@ export const GetFinancesForDarshboardDocument = gql`
  *   variables: {
  *      filter: // value for 'filter'
  *      sorting: // value for 'sorting'
+ *      paging: // value for 'paging'
  *   },
  * });
  */

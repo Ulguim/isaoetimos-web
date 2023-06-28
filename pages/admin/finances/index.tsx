@@ -6,7 +6,7 @@ import ListFinances from '../../../app/features/finances/components/ListFinances
 const Finances = () => {
   return (
     <LayoutTemplate>
-      <Box margin={10}>
+      <Box margin={5}>
         <Box fontSize="24px" fontWeight="bold" pb="6px">
           Finanças
         </Box>
