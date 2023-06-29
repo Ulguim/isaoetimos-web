@@ -46,7 +46,7 @@ const LayoutTemplate: React.FC<any> = ({ children }) => {
             pt="5px"
             pl="10px"
             maxHeight={14}
-            src="/Logo.svg"
+            src="/LogoWhite.svg"
           />
           <Box
             h={16}
@@ -87,8 +87,11 @@ const LayoutTemplate: React.FC<any> = ({ children }) => {
                     title="Menu"
                   >
                     {menuItems.map(item => (
-                      <Link key={item.href} href={item.href}>
-                        {' '}
+                      <Link
+                        display={['none', 'none', '']}
+                        key={item.href}
+                        href={item.href}
+                      >
                         <ChakraMenuItem> {item.label}</ChakraMenuItem>
                       </Link>
                     ))}
@@ -139,8 +142,16 @@ const LayoutTemplate: React.FC<any> = ({ children }) => {
                   )
                 })}
               </Menu>
+              <Image
+                alt="Logo"
+                pt="5px"
+                maxHeight={14}
+                marginInline="auto"
+                src="/LogoWhite.svg"
+              />
               <Box
                 display={'flex'}
+                flexDirection="column"
                 justifyContent="center"
                 alignItems="center"
                 position="absolute"

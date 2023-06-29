@@ -107,6 +107,7 @@ const ListSupplyAndCustomer: React.FC = () => {
           backgroundColor="white"
           maxWidth="400px"
           placeholder="Pesquisar"
+          boxShadow={'lg'}
           size="lg"
           onChange={e => handleSearch(e)}
         />
