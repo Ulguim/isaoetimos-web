@@ -5,20 +5,28 @@ import * as Apollo from '@apollo/client';
 const defaultOptions = {} as const;
 export type GetAccountPlansQueryVariables = Types.Exact<{
   name?: Types.InputMaybe<Types.Scalars['String']>;
+  offset?: Types.InputMaybe<Types.Scalars['Int']>;
 }>;
 
 
-export type GetAccountPlansQuery = { __typename?: 'Query', accountPlans: { __typename?: 'AccountPlanConnection', nodes: Array<{ __typename?: 'AccountPlan', id: string, name: string, accountPlanType: Types.AccountPlanTypeEnum, costType: Types.CostTypeEnum }> } };
+export type GetAccountPlansQuery = { __typename?: 'Query', accountPlans: { __typename?: 'AccountPlanConnection', nodes: Array<{ __typename?: 'AccountPlan', id: string, name: string, accountPlanType: Types.AccountPlanTypeEnum, costType: Types.CostTypeEnum }>, pageInfo: { __typename?: 'OffsetPageInfo', hasNextPage?: boolean | null, hasPreviousPage?: boolean | null } } };
 
 
 export const GetAccountPlansDocument = gql`
-    query getAccountPlans($name: String) {
-  accountPlans(filter: {or: [{name: {iLike: $name}}]}) {
+    query getAccountPlans($name: String, $offset: Int) {
+  accountPlans(
+    filter: {or: [{name: {iLike: $name}}]}
+    paging: {limit: 10, offset: $offset}
+  ) {
     nodes {
       id
       name
       accountPlanType
       costType
+    }
+    pageInfo {
+      hasNextPage
+      hasPreviousPage
     }
   }
 }
@@ -37,6 +45,7 @@ export const GetAccountPlansDocument = gql`
  * const { data, loading, error } = useGetAccountPlansQuery({
  *   variables: {
  *      name: // value for 'name'
+ *      offset: // value for 'offset'
  *   },
  * });
  */

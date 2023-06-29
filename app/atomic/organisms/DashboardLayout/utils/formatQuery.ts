@@ -1,6 +1,8 @@
-import { GetFinancesQuery } from '@app/features/finances/graphql/queries.generated'
+import { GetFinancesForDarshboardQuery } from '@app/features/finances/graphql/queries.generated'
 
-export const handleFinanceData = (queryData: GetFinancesQuery) => {
+export const handleFinanceData = (
+  queryData: GetFinancesForDarshboardQuery,
+) => {
   const queryResults = queryData?.finances?.nodes
 
   const PieData = queryResults?.map(item => {

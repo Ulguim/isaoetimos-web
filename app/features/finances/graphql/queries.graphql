@@ -1,12 +1,13 @@
-query getFinances($nameOrEmail: String) {
+query getFinances($nameOrEmail: String, $offset: Int) {
   finances(
     filter: {
       or: [
-        { supplierAndCustomer: { name: { iLike: $nameOrEmail } } },
-        { supplierAndCustomer: { email: { iLike: $nameOrEmail } } },
-
+        { supplierAndCustomer: { name: { iLike: $nameOrEmail } } }
+        { supplierAndCustomer: { email: { iLike: $nameOrEmail } } }
       ]
     }
+    paging: { limit: 10, offset: $offset }
+  
   )  {
     nodes {
       id
@@ -33,6 +34,10 @@ query getFinances($nameOrEmail: String) {
         email
         phone
       }
+    }
+       pageInfo {
+      hasNextPage
+      hasPreviousPage
     }
   }
 }

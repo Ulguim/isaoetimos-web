@@ -5,10 +5,11 @@ import * as Apollo from '@apollo/client';
 const defaultOptions = {} as const;
 export type GetFinancesQueryVariables = Types.Exact<{
   nameOrEmail?: Types.InputMaybe<Types.Scalars['String']>;
+  offset?: Types.InputMaybe<Types.Scalars['Int']>;
 }>;
 
 
-export type GetFinancesQuery = { __typename?: 'Query', finances: { __typename?: 'FinancesConnection', nodes: Array<{ __typename?: 'Finances', id: string, comments?: string | null, dueDate: any, issuedate: any, payDay?: any | null, paymentTerm: any, status: Types.FinaceStatusTypeEnum, value: number, createdAt?: any | null, updatedAt?: any | null, accountplan?: { __typename?: 'AccountPlan', id: string, accountPlanType: Types.AccountPlanTypeEnum, costType: Types.CostTypeEnum, name: string } | null, supplierAndCustomer?: { __typename?: 'SuppliersAndCustomer', id: string, name?: string | null, address: string, cpf: string, email?: string | null, phone: string } | null }> } };
+export type GetFinancesQuery = { __typename?: 'Query', finances: { __typename?: 'FinancesConnection', nodes: Array<{ __typename?: 'Finances', id: string, comments?: string | null, dueDate: any, issuedate: any, payDay?: any | null, paymentTerm: any, status: Types.FinaceStatusTypeEnum, value: number, createdAt?: any | null, updatedAt?: any | null, accountplan?: { __typename?: 'AccountPlan', id: string, accountPlanType: Types.AccountPlanTypeEnum, costType: Types.CostTypeEnum, name: string } | null, supplierAndCustomer?: { __typename?: 'SuppliersAndCustomer', id: string, name?: string | null, address: string, cpf: string, email?: string | null, phone: string } | null }>, pageInfo: { __typename?: 'OffsetPageInfo', hasNextPage?: boolean | null, hasPreviousPage?: boolean | null } } };
 
 export type GetFinancesForDarshboardQueryVariables = Types.Exact<{
   filter?: Types.InputMaybe<Types.FinancesFilter>;
@@ -21,9 +22,10 @@ export type GetFinancesForDarshboardQuery = { __typename?: 'Query', finances: { 
 
 
 export const GetFinancesDocument = gql`
-    query getFinances($nameOrEmail: String) {
+    query getFinances($nameOrEmail: String, $offset: Int) {
   finances(
     filter: {or: [{supplierAndCustomer: {name: {iLike: $nameOrEmail}}}, {supplierAndCustomer: {email: {iLike: $nameOrEmail}}}]}
+    paging: {limit: 10, offset: $offset}
   ) {
     nodes {
       id
@@ -51,6 +53,10 @@ export const GetFinancesDocument = gql`
         phone
       }
     }
+    pageInfo {
+      hasNextPage
+      hasPreviousPage
+    }
   }
 }
     `;
@@ -68,6 +74,7 @@ export const GetFinancesDocument = gql`
  * const { data, loading, error } = useGetFinancesQuery({
  *   variables: {
  *      nameOrEmail: // value for 'nameOrEmail'
+ *      offset: // value for 'offset'
  *   },
  * });
  */

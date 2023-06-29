@@ -1,10 +1,17 @@
-query getAccountPlans($name: String) {
-  accountPlans(filter: { or: [{ name: { iLike: $name } }] }) {
+query getAccountPlans($name: String, $offset: Int) {
+  accountPlans(
+    filter: { or: [{ name: { iLike: $name } }] }
+    paging: { limit: 10, offset: $offset }
+  ) {
     nodes {
       id
       name
       accountPlanType
       costType
+    }
+    pageInfo {
+      hasNextPage
+      hasPreviousPage
     }
   }
 }
