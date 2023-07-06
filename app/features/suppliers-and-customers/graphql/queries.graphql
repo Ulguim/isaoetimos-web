@@ -42,11 +42,14 @@
 #   }
 # }
 
+
 query getSuppliersAndCustomers($namOrEmail: String, $offset:Int) {
   suppliersAndCustomers(
-    filter: {
-      or: { name: { iLike: $namOrEmail } }
-      email: { iLike: $namOrEmail }
+     filter: {
+      or: [
+        { name: { iLike: $namOrEmail } },
+        { email: { iLike: $namOrEmail } }
+      ]
     }
     paging: {limit:10 ,offset:$offset}
   ) {
@@ -64,5 +67,6 @@ query getSuppliersAndCustomers($namOrEmail: String, $offset:Int) {
       hasNextPage
       hasPreviousPage
     }
+    totalCount
   }
 }

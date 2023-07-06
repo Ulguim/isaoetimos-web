@@ -1049,6 +1049,8 @@ export type SuppliersAndCustomerConnection = {
   nodes: Array<SuppliersAndCustomer>;
   /** Paging information */
   pageInfo: OffsetPageInfo;
+  /** Fetch total count of records */
+  totalCount: Scalars['Int'];
 };
 
 export type SuppliersAndCustomerCountAggregate = {
@@ -1127,6 +1129,8 @@ export type SuppliersAndCustomerFinancesConnection = {
   nodes: Array<Finances>;
   /** Paging information */
   pageInfo: OffsetPageInfo;
+  /** Fetch total count of records */
+  totalCount: Scalars['Int'];
 };
 
 export type SuppliersAndCustomerMaxAggregate = {

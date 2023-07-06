@@ -15,6 +15,7 @@ import {
   faTrashCan,
 } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import InfiniteScroll from 'react-infinite-scroll-component'
 
 import { PlusButton } from '../../../../atomic/atoms/PlusButton'
 import MoreOptionsMenu from '../../../../atomic/molecules/MoreOptionsMenu/MoreOptionsMenu'
@@ -39,9 +40,36 @@ const ListAccountPlan: React.FC = () => {
     setSearch(e.target.value)
   }
 
-  const { data, loading } = useGetAccountPlansQuery({
+  const { data, loading, fetchMore } = useGetAccountPlansQuery({
     variables: { name: `%${search}%` ?? `%%` },
   })
+  const loadMore = async () => {
+    const variables = {
+      offset: data?.accountPlans?.nodes.length,
+      namOrEmail: `%${search}%` ?? `%%`,
+    }
+
+    try {
+      fetchMore({
+        variables: variables,
+        updateQuery: (previousResult, { fetchMoreResult }) => {
+          if (!fetchMoreResult) return previousResult
+
+          return {
+            accountPlans: {
+              ...previousResult.accountPlans,
+              nodes: [
+                ...previousResult.accountPlans.nodes,
+                ...fetchMoreResult.accountPlans.nodes,
+              ],
+            },
+          }
+        },
+      })
+    } catch (error) {
+      console.log(error)
+    }
+  }
   const toast = useToast()
   const [DeleteOneAccountPlan] = useDeleteOneAccountPlanMutation({
     refetchQueries: ['getAccountPlans'],
@@ -110,55 +138,88 @@ const ListAccountPlan: React.FC = () => {
           />
         </Flex>
       )}
-      {data?.accountPlans?.nodes.map(accountPlan => {
-        const borderLeftColor =
-          accountPlan.costType === 'INCOME' ? '#00B247' : '#D90000'
-
-        return (
-          <ListRowItem
-            maxW={'95%'}
-            key={accountPlan.id}
-            boxShadow={'lg'}
-            bgColor={'#FFFFFF'}
-            actions={
-              <MoreOptionsMenu
-                options={[
-                  {
-                    icon: (
-                      <FontAwesomeIcon
-                        icon={faPenToSquare}
-                        size="lg"
-                      />
-                    ),
-                    label: 'Editar',
-                    onClick: () => handleUpdate(accountPlan),
-                  },
-                  {
-                    icon: (
-                      <FontAwesomeIcon icon={faTrashCan} size="lg" />
-                    ),
-                    label: 'Excluir',
-                    onClick: () =>
-                      DeleteOneAccountPlan({
-                        variables: { id: accountPlan.id },
-                      }),
-                  },
-                ]}
-              />
-            }
-            actionsProps={{ justifySelf: 'flex-end' }}
-            borderLeft="8px"
-            borderLeftColor={borderLeftColor}
-            my={5}
+      <InfiniteScroll
+        scrollableTarget="scrollableDiv"
+        dataLength={data?.accountPlans?.nodes?.length ?? 0}
+        scrollThreshold={1}
+        style={{ overflow: 'hidden' }}
+        hasMore={data?.accountPlans?.pageInfo?.hasNextPage ?? false}
+        next={loadMore}
+        loader={
+          <Flex
+            width="100%"
+            height="25px"
+            justify="center"
+            alignItems="center"
           >
-            <GridItem>{accountPlan?.name}</GridItem>
-            <GridItem display="flex" alignItems="center">
-              <Box ml={2}>{costType(accountPlan?.costType)}</Box>
-            </GridItem>
-            <GridItem></GridItem>
-          </ListRowItem>
-        )
-      })}
+            <Spinner
+              thickness="4px"
+              speed="0.65s"
+              emptyColor="gray.200"
+              color="blue.500"
+              size="xl"
+            />
+          </Flex>
+        }
+      >
+        {data?.accountPlans?.nodes.map(accountPlan => {
+          const borderLeftColor =
+            accountPlan.costType === 'INCOME' ? '#00B247' : '#D90000'
+
+          return (
+            <ListRowItem
+              maxW={'95%'}
+              key={accountPlan.id}
+              boxShadow={'lg'}
+              bgColor={'#FFFFFF'}
+              templateColumns={[
+                '1fr',
+                '1fr 1fr 1fr 0.2fr',
+                '1fr 1fr 1fr 0.2fr',
+              ]}
+              actions={
+                <MoreOptionsMenu
+                  options={[
+                    {
+                      icon: (
+                        <FontAwesomeIcon
+                          icon={faPenToSquare}
+                          size="lg"
+                        />
+                      ),
+                      label: 'Editar',
+                      onClick: () => handleUpdate(accountPlan),
+                    },
+                    {
+                      icon: (
+                        <FontAwesomeIcon
+                          icon={faTrashCan}
+                          size="lg"
+                        />
+                      ),
+                      label: 'Excluir',
+                      onClick: () =>
+                        DeleteOneAccountPlan({
+                          variables: { id: accountPlan.id },
+                        }),
+                    },
+                  ]}
+                />
+              }
+              actionsProps={{ justifySelf: 'flex-end' }}
+              borderLeft="8px"
+              borderLeftColor={borderLeftColor}
+              my={5}
+            >
+              <GridItem>{accountPlan?.name}</GridItem>
+              <GridItem display="flex" alignItems="center">
+                <Box ml={2}>{costType(accountPlan?.costType)}</Box>
+              </GridItem>
+              <GridItem></GridItem>
+            </ListRowItem>
+          )
+        })}
+      </InfiniteScroll>
       <PlusButton onOpen={onOpen} setEdit={setIsEditform} />
       <AccountPlansDrawer
         intitialValues={initialValues}
