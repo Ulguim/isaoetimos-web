@@ -67,6 +67,5 @@ query getSuppliersAndCustomers($namOrEmail: String, $offset:Int) {
       hasNextPage
       hasPreviousPage
     }
-    totalCount
   }
 }

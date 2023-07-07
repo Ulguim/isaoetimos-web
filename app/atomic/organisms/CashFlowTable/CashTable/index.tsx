@@ -14,8 +14,12 @@ import { CashFlowData } from '../../../../generated/graphql'
 import { CashFlowTypeRow } from '../CashFlowTypeRow'
 
 export const CashTable = () => {
+  const year = new Date().getFullYear().toString()
   const [load, { data, called, loading }] = useGetCashFlowLazyQuery({
-    fetchPolicy: 'cache-and-network',
+    fetchPolicy: 'network-only',
+    variables: {
+      year,
+    },
   })
 
   const months = [
@@ -33,7 +37,15 @@ export const CashTable = () => {
     'DEZ',
   ]
 
-  const cashFlows = data?.gerenateCashFlowByAccount
+  const mokedData = [
+    { type: 'FIXO', cashFlow: [] },
+    { type: 'VARIÁVEL', cashFlow: [] },
+  ]
+
+  const cashFlows =
+    data?.gerenateCashFlowByAccount.length > 0
+      ? data?.gerenateCashFlowByAccount
+      : mokedData
 
   useEffect(() => {
     if (!called) load()

@@ -1,5 +1,5 @@
-query getCashFlow {
-  gerenateCashFlowByAccount{
+query getCashFlow($year: String) {
+  gerenateCashFlowByAccount(year: $year) {
     type
     cashFlows {
       id

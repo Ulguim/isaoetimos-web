@@ -25,11 +25,23 @@ const CashFlowGraph = () => {
     'NOV',
     'DEZ',
   ]
+
+  const year = new Date().getFullYear().toString()
   const [load, { data, called }] = useGetCashFlowLazyQuery({
-    fetchPolicy: 'cache-and-network',
+    fetchPolicy: 'network-only',
+    variables: {
+      year,
+    },
   })
 
+  const mokedData = [
+    { type: 'FIXO', cashFlow: [] },
+    { type: 'VARIÁVEL', cashFlow: [] },
+  ]
+
   const cashFlows = data?.gerenateCashFlowByAccount
+    ? data?.gerenateCashFlowByAccount
+    : mokedData
 
   const cashFlowTypes = cashFlows?.flatMap(cashFlow => {
     const type = cashFlow?.type

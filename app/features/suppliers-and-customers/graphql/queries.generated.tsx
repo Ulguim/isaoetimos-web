@@ -9,7 +9,7 @@ export type GetSuppliersAndCustomersQueryVariables = Types.Exact<{
 }>;
 
 
-export type GetSuppliersAndCustomersQuery = { __typename?: 'Query', suppliersAndCustomers: { __typename?: 'SuppliersAndCustomerConnection', totalCount: number, nodes: Array<{ __typename?: 'SuppliersAndCustomer', id: string, address: string, cpf: string, createdAt?: any | null, updatedAt?: any | null, email?: string | null, name?: string | null, phone: string }>, pageInfo: { __typename?: 'OffsetPageInfo', hasNextPage?: boolean | null, hasPreviousPage?: boolean | null } } };
+export type GetSuppliersAndCustomersQuery = { __typename?: 'Query', suppliersAndCustomers: { __typename?: 'SuppliersAndCustomerConnection', nodes: Array<{ __typename?: 'SuppliersAndCustomer', id: string, address: string, cpf: string, createdAt?: any | null, updatedAt?: any | null, email?: string | null, name?: string | null, phone: string }>, pageInfo: { __typename?: 'OffsetPageInfo', hasNextPage?: boolean | null, hasPreviousPage?: boolean | null } } };
 
 
 export const GetSuppliersAndCustomersDocument = gql`
@@ -32,7 +32,6 @@ export const GetSuppliersAndCustomersDocument = gql`
       hasNextPage
       hasPreviousPage
     }
-    totalCount
   }
 }
     `;

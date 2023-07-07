@@ -896,6 +896,16 @@ export type QueryFinancesArgs = {
 };
 
 
+export type QueryGerenateCashFlowArgs = {
+  year?: InputMaybe<Scalars['String']>;
+};
+
+
+export type QueryGerenateCashFlowByAccountArgs = {
+  year?: InputMaybe<Scalars['String']>;
+};
+
+
 export type QueryIsTokenValidArgs = {
   token: Scalars['String'];
 };
@@ -1049,8 +1059,6 @@ export type SuppliersAndCustomerConnection = {
   nodes: Array<SuppliersAndCustomer>;
   /** Paging information */
   pageInfo: OffsetPageInfo;
-  /** Fetch total count of records */
-  totalCount: Scalars['Int'];
 };
 
 export type SuppliersAndCustomerCountAggregate = {
@@ -1129,8 +1137,6 @@ export type SuppliersAndCustomerFinancesConnection = {
   nodes: Array<Finances>;
   /** Paging information */
   pageInfo: OffsetPageInfo;
-  /** Fetch total count of records */
-  totalCount: Scalars['Int'];
 };
 
 export type SuppliersAndCustomerMaxAggregate = {
