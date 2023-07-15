@@ -1,6 +1,7 @@
 import React, { memo } from 'react'
 import { useMemo } from 'react'
 
+import { fv } from '@app/common/validator'
 import {
   BoxProps,
   FormControl,
@@ -13,8 +14,6 @@ import {
 import { ValidationRule } from 'fastest-validator'
 import IMask from 'imask'
 import { useField, UseFieldConfig } from 'react-final-form'
-
-import { fv } from '../../../common/validator'
 
 export type MaskFieldProps = {
   name: string

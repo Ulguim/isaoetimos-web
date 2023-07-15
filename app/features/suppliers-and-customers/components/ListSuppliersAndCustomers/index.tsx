@@ -1,5 +1,10 @@
 import { useState } from 'react'
 
+import { PlusButton } from '@app/atomic/atoms/PlusButton'
+import MoreOptionsMenu from '@app/atomic/molecules/MoreOptionsMenu/MoreOptionsMenu'
+import { ListRowItem } from '@app/atomic/organisms/ListRowItem'
+import { SuppliersAndCustomersDrawer } from '@app/atomic/organisms/SupplersAndCustomersDrawer'
+import { SuppliersAndCustomer } from '@app/generated/graphql'
 import {
   Box,
   Flex,
@@ -19,11 +24,6 @@ import {
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import InfiniteScroll from 'react-infinite-scroll-component'
 
-import { PlusButton } from '../../../../atomic/atoms/PlusButton'
-import MoreOptionsMenu from '../../../../atomic/molecules/MoreOptionsMenu/MoreOptionsMenu'
-import { ListRowItem } from '../../../../atomic/organisms/ListRowItem'
-import { SuppliersAndCustomersDrawer } from '../../../../atomic/organisms/SupplersAndCustomersDrawer'
-import { SuppliersAndCustomer } from '../../../../generated/graphql'
 import { useDeleteOneSuppliersAndCustomerMutation } from '../../graphql/mutations.generated'
 import { useGetSuppliersAndCustomersQuery } from '../../graphql/queries.generated'
 

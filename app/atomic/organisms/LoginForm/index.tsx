@@ -1,8 +1,8 @@
 import React from 'react'
 
+import { TextField } from '@app/atomic/molecules/TextField'
 import { Button, Flex } from '@chakra-ui/react'
 
-import { TextField } from '../../molecules/TextField'
 import { useFormContextSelector } from '../FormProvider'
 
 export const LoginForm = React.memo(() => {

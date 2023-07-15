@@ -1,19 +1,18 @@
 import React from 'react'
 
-import { Box, Button } from '@chakra-ui/react'
-import { Form } from 'react-final-form'
-
-import { useGetAccountPlansQuery } from '../../../features/account-plans/graphql/queries.generated'
+import { MaskField } from '@app/atomic/molecules/MaskField'
+import ModalTemplate from '@app/atomic/molecules/Modal'
+import { NumberField } from '@app/atomic/molecules/NumberField'
+import { SelectField } from '@app/atomic/molecules/SelectField'
+import { TextAreaField } from '@app/atomic/molecules/TextareaField'
+import { useGetAccountPlansQuery } from '@app/features/account-plans/graphql/queries.generated'
 import useCreateOneFinance, {
   CreateOneFinanceProps,
-} from '../../../features/finances/hooks/useCreateOneFinance'
-import useUpdateOneFinance from '../../../features/finances/hooks/useUpdateOneFinance'
-import { useGetSuppliersAndCustomersQuery } from '../../../features/suppliers-and-customers/graphql/queries.generated'
-import { MaskField } from '../../molecules/MaskField'
-import ModalTemplate from '../../molecules/Modal'
-import { NumberField } from '../../molecules/NumberField'
-import { SelectField } from '../../molecules/SelectField'
-import { TextAreaField } from '../../molecules/TextareaField'
+} from '@app/features/finances/hooks/useCreateOneFinance'
+import useUpdateOneFinance from '@app/features/finances/hooks/useUpdateOneFinance'
+import { useGetSuppliersAndCustomersQuery } from '@app/features/suppliers-and-customers/graphql/queries.generated'
+import { Box, Button } from '@chakra-ui/react'
+import { Form } from 'react-final-form'
 
 interface FinancesModalProps {
   isOpen: boolean

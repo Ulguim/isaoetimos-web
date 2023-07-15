@@ -1,4 +1,4 @@
-import { useIsTokenValidLazyQuery } from '../../features/auth/mutation.generated'
+import { useIsTokenValidLazyQuery } from '@app/features/auth/mutation.generated'
 
 export const useValidateToken = async (ctx, token: string) => {
   const [load, { data, called }] = useIsTokenValidLazyQuery({

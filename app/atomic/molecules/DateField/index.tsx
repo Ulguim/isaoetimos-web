@@ -1,5 +1,8 @@
+import 'react-datepicker/dist/react-datepicker.css'
+
 import React, { memo } from 'react'
 
+import { fv } from '@app/common/validator'
 import {
   BoxProps,
   FormControl,
@@ -18,8 +21,6 @@ import DatePicker, {
 } from 'react-datepicker'
 import { useField, UseFieldConfig } from 'react-final-form'
 import InputMask from 'react-input-mask'
-
-import { fv } from '../../../common/validator'
 
 registerLocale('ptBR', ptBR)
 

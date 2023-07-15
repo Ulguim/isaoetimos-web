@@ -1,5 +1,10 @@
 import { useState } from 'react'
 
+import { PlusButton } from '@app/atomic/atoms/PlusButton'
+import MoreOptionsMenu from '@app/atomic/molecules/MoreOptionsMenu/MoreOptionsMenu'
+import { FinancesModal } from '@app/atomic/organisms/FinancesModal'
+import { ListRowItem } from '@app/atomic/organisms/ListRowItem'
+import { SuppliersAndCustomer } from '@app/generated/graphql'
 import {
   Box,
   Flex,
@@ -23,11 +28,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { addDays, compareAsc, format, startOfDay } from 'date-fns'
 import InfiniteScroll from 'react-infinite-scroll-component'
 
-import { PlusButton } from '../../../../atomic/atoms/PlusButton'
-import MoreOptionsMenu from '../../../../atomic/molecules/MoreOptionsMenu/MoreOptionsMenu'
-import { FinancesModal } from '../../../../atomic/organisms/FinancesModal'
-import { ListRowItem } from '../../../../atomic/organisms/ListRowItem'
-import { SuppliersAndCustomer } from '../../../../generated/graphql'
 import { useDeleteOneFinanceMutation } from '../../graphql/mutations.generated'
 import { useGetFinancesQuery } from '../../graphql/queries.generated'
 

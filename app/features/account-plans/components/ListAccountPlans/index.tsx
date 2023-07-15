@@ -1,5 +1,9 @@
 import { useState } from 'react'
 
+import { PlusButton } from '@app/atomic/atoms/PlusButton'
+import MoreOptionsMenu from '@app/atomic/molecules/MoreOptionsMenu/MoreOptionsMenu'
+import { AccountPlansDrawer } from '@app/atomic/organisms/AccountPlansDrawer'
+import { ListRowItem } from '@app/atomic/organisms/ListRowItem'
 import {
   Box,
   Flex,
@@ -17,10 +21,6 @@ import {
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import InfiniteScroll from 'react-infinite-scroll-component'
 
-import { PlusButton } from '../../../../atomic/atoms/PlusButton'
-import MoreOptionsMenu from '../../../../atomic/molecules/MoreOptionsMenu/MoreOptionsMenu'
-import { AccountPlansDrawer } from '../../../../atomic/organisms/AccountPlansDrawer'
-import { ListRowItem } from '../../../../atomic/organisms/ListRowItem'
 import { useDeleteOneAccountPlanMutation } from '../../graphql/mutations.generated'
 import { useGetAccountPlansQuery } from '../../graphql/queries.generated'
 

@@ -1,3 +1,4 @@
+import { ListRowItem } from '@app/atomic/organisms/ListRowItem'
 import { useGetFinancesForDarshboardQuery } from '@app/features/finances/graphql/queries.generated'
 import {
   FinaceStatusTypeEnum,
@@ -8,8 +9,6 @@ import { Box, GridItem } from '@chakra-ui/react'
 import { faCalendarXmark } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { addDays, format } from 'date-fns'
-
-import { ListRowItem } from '../../../../atomic/organisms/ListRowItem'
 
 const DashboardListRows: React.FC = () => {
   const today = format(new Date(), 'yyyy/MM/dd')

@@ -1,3 +1,4 @@
+import { AccountPlan } from '@app/generated/graphql'
 import {
   Accordion,
   AccordionButton,
@@ -12,7 +13,6 @@ import {
 } from '@chakra-ui/react'
 import { groupBy } from 'lodash'
 
-import { AccountPlan } from '../../../../generated/graphql'
 import { SupplerAndCustomerRow } from '../SupplerAndCustomerRow'
 
 type AccountPlanRowProps = {

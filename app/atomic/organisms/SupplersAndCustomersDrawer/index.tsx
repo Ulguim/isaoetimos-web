@@ -1,14 +1,13 @@
 import React from 'react'
 
+import { DrawerTemplate } from '@app/atomic/molecules/Drawer'
+import { MaskField } from '@app/atomic/molecules/MaskField'
+import { TextField } from '@app/atomic/molecules/TextField'
+import useCreateOneSupplierAndCustomer from '@app/features/suppliers-and-customers/hooks/useCreateOneSuppliersAndCustomer'
+import useUpdateOneSupplierAndCustomer from '@app/features/suppliers-and-customers/hooks/useUpdateOneSuppliersAndCustomer'
+import { SuppliersAndCustomer } from '@app/generated/graphql'
 import { Box, Button } from '@chakra-ui/react'
 import { Form } from 'react-final-form'
-
-import useCreateOneSupplierAndCustomer from '../../../features/suppliers-and-customers/hooks/useCreateOneSuppliersAndCustomer'
-import useUpdateOneSupplierAndCustomer from '../../../features/suppliers-and-customers/hooks/useUpdateOneSuppliersAndCustomer'
-import { SuppliersAndCustomer } from '../../../generated/graphql'
-import { DrawerTemplate } from '../../molecules/Drawer'
-import { MaskField } from '../../molecules/MaskField'
-import { TextField } from '../../molecules/TextField'
 
 interface SuppliersAndCustomersDrawerProps {
   isOpen: boolean
