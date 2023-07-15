@@ -26,16 +26,46 @@ const FinanceBySupplier = ({
       data: queryData || [],
       angleField: 'value',
       colorField: 'type',
-      radius: 0.8,
+      radius: 1,
+      innerRadius: 0.64,
+      // meta: {
+      // value: {
+      //   formatter: v => `R$ ${v}`,
+      // },
+      // },
       label: {
         type: 'inner',
+        offset: '-50%',
+        style: {
+          textAlign: 'center',
+        },
+        autoRotate: false,
+        content: '{value}',
+      },
+      statistic: {
+        title: {
+          offsetY: -4,
+        },
+        content: {
+          offsetY: 4,
+          style: {
+            fontSize: '32px',
+          },
+        },
       },
       interactions: [
         {
+          type: 'element-selected',
+        },
+        {
           type: 'element-active',
+        },
+        {
+          type: 'pie-statistic-active',
         },
       ],
     }
+
     return <Pie {...config} />
   }
 
