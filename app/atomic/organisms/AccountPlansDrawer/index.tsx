@@ -1,13 +1,12 @@
 import React from 'react'
 
+import { DrawerTemplate } from '@app/atomic/molecules/Drawer'
+import { SelectField } from '@app/atomic/molecules/SelectField'
+import { TextField } from '@app/atomic/molecules/TextField'
+import useCreateOneAccountPlan from '@app/features/account-plans/hooks/useCreateOneAccountPlan'
+import useUpdateOneAccountPlan from '@app/features/account-plans/hooks/useUpdateOneAccountPlan'
 import { Box, Button } from '@chakra-ui/react'
 import { Form } from 'react-final-form'
-
-import useCreateOneAccountPlan from '../../../features/account-plans/hooks/useCreateOneAccountPlan'
-import useUpdateOneAccountPlan from '../../../features/account-plans/hooks/useUpdateOneAccountPlan'
-import { DrawerTemplate } from '../../molecules/Drawer'
-import { SelectField } from '../../molecules/SelectField'
-import { TextField } from '../../molecules/TextField'
 
 interface AccountPlansDrawerProps {
   isOpen: boolean

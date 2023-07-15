@@ -1,5 +1,49 @@
-query getFinances {
-  finances {
+query getFinances($nameOrEmail: String, $offset: Int) {
+  finances(
+    filter: {
+      or: [
+        { supplierAndCustomer: { name: { iLike: $nameOrEmail } } }
+        { supplierAndCustomer: { email: { iLike: $nameOrEmail } } }
+      ]
+    }
+    paging: { limit: 10, offset: $offset }
+  
+  )  {
+    nodes {
+      id
+      comments
+      dueDate
+      issuedate
+      payDay
+      paymentTerm
+      status
+      value
+      createdAt
+      updatedAt
+      accountplan {
+        id
+        accountPlanType
+        costType
+        name
+      }
+      supplierAndCustomer {
+        id
+        name
+        address
+        cpf
+        email
+        phone
+      }
+    }
+       pageInfo {
+      hasNextPage
+      hasPreviousPage
+    }
+  }
+}
+
+query getFinancesForDarshboard ($filter: FinancesFilter $sorting:[FinancesSort!] $paging: OffsetPaging) {
+  finances(filter:$filter,sorting:$sorting,paging: $paging) {
     nodes {
       id
       comments

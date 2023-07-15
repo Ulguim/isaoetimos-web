@@ -1,21 +1,33 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import { useCallback } from 'react'
 
+import { handleGraphQLError } from '@app/common/errors'
 import { useToast } from '@chakra-ui/react'
 import { useRouter } from 'next/router'
 import { destroyCookie, setCookie } from 'nookies'
 
-import { handleGraphQLError } from '../../../common/errors'
 import {
   LoginMutationVariables,
   useLoginMutation,
 } from '../mutation.generated'
 
 export function useAuthHook() {
-  const [login] = useLoginMutation()
+  const toast = useToast()
+
+  const [login] = useLoginMutation({
+    onError: error => {
+      toast({
+        title: 'Erro!',
+        description: 'Usuário ou senha inválidos',
+        status: 'error',
+        position: 'top-right',
+        id: error?.message,
+        variant: 'left-accent',
+        isClosable: true,
+      })
+    },
+  })
 
   const router = useRouter()
-  const toast = useToast()
 
   const authenticate = useCallback(
     async (variables: LoginMutationVariables) => {

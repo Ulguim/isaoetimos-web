@@ -3,15 +3,21 @@ import * as Types from '../../../generated/graphql';
 import { gql } from '@apollo/client';
 import * as Apollo from '@apollo/client';
 const defaultOptions = {} as const;
-export type GetSuppliersAndCustomersQueryVariables = Types.Exact<{ [key: string]: never; }>;
+export type GetSuppliersAndCustomersQueryVariables = Types.Exact<{
+  namOrEmail?: Types.InputMaybe<Types.Scalars['String']>;
+  offset?: Types.InputMaybe<Types.Scalars['Int']>;
+}>;
 
 
-export type GetSuppliersAndCustomersQuery = { __typename?: 'Query', suppliersAndCustomers: { __typename?: 'SuppliersAndCustomerConnection', nodes: Array<{ __typename?: 'SuppliersAndCustomer', id: string, address: string, cpf: string, createdAt?: any | null, updatedAt?: any | null, email?: string | null, name?: string | null, phone: string }> } };
+export type GetSuppliersAndCustomersQuery = { __typename?: 'Query', suppliersAndCustomers: { __typename?: 'SuppliersAndCustomerConnection', nodes: Array<{ __typename?: 'SuppliersAndCustomer', id: string, address: string, cpf: string, createdAt?: any | null, updatedAt?: any | null, email?: string | null, name?: string | null, phone: string }>, pageInfo: { __typename?: 'OffsetPageInfo', hasNextPage?: boolean | null, hasPreviousPage?: boolean | null } } };
 
 
 export const GetSuppliersAndCustomersDocument = gql`
-    query getSuppliersAndCustomers {
-  suppliersAndCustomers {
+    query getSuppliersAndCustomers($namOrEmail: String, $offset: Int) {
+  suppliersAndCustomers(
+    filter: {or: [{name: {iLike: $namOrEmail}}, {email: {iLike: $namOrEmail}}]}
+    paging: {limit: 10, offset: $offset}
+  ) {
     nodes {
       id
       address
@@ -21,6 +27,10 @@ export const GetSuppliersAndCustomersDocument = gql`
       email
       name
       phone
+    }
+    pageInfo {
+      hasNextPage
+      hasPreviousPage
     }
   }
 }
@@ -38,6 +48,8 @@ export const GetSuppliersAndCustomersDocument = gql`
  * @example
  * const { data, loading, error } = useGetSuppliersAndCustomersQuery({
  *   variables: {
+ *      namOrEmail: // value for 'namOrEmail'
+ *      offset: // value for 'offset'
  *   },
  * });
  */

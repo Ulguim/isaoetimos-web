@@ -1,5 +1,6 @@
 import { memo } from 'react'
 
+import { fv } from '@app/common/validator'
 import {
   BoxProps,
   FormControl,
@@ -11,8 +12,6 @@ import {
 } from '@chakra-ui/react'
 import { ValidationRule } from 'fastest-validator'
 import { useField, UseFieldConfig } from 'react-final-form'
-
-import { fv } from '../../../common/validator'
 
 export type TextFieldProps = {
   name?: string

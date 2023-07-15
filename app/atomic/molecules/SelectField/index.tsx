@@ -1,5 +1,6 @@
 import React from 'react'
 
+import { fv } from '@app/common/validator'
 import {
   Flex,
   FormControl,
@@ -13,8 +14,6 @@ import {
   TextProps,
 } from '@chakra-ui/react'
 import { useField, UseFieldConfig } from 'react-final-form'
-
-import { fv } from '../../../common/validator'
 
 export type SelectFieldProps = {
   name: string
