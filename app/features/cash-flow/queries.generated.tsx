@@ -8,7 +8,7 @@ export type GetCashFlowQueryVariables = Types.Exact<{
 }>;
 
 
-export type GetCashFlowQuery = { __typename?: 'Query', gerenateCashFlowByAccount: Array<{ __typename?: 'CashFlowData', type: string, cashFlows: Array<{ __typename?: 'AccountPlan', id: string, name: string, accountPlanType: Types.AccountPlanTypeEnum, costType: Types.CostTypeEnum, createdAt?: any | null, deletedAt?: any | null, updatedAt?: any | null, finances?: { __typename?: 'AccountPlanFinancesConnection', nodes: Array<{ __typename?: 'Finances', id: string, value: number, issuedate: any, supplierAndCustomer?: { __typename?: 'SuppliersAndCustomer', id: string, name?: string | null } | null }> } | null }> }> };
+export type GetCashFlowQuery = { __typename?: 'Query', gerenateCashFlowByAccount: Array<{ __typename?: 'CashFlowData', type: string, cashFlows: Array<{ __typename?: 'AccountPlan', id: string, name: string, accountPlanType: Types.AccountPlanTypeEnum, costType: Types.CostTypeEnum, createdAt?: any | null, deletedAt?: any | null, updatedAt?: any | null, finances?: { __typename?: 'AccountPlanFinancesConnection', nodes: Array<{ __typename?: 'Finances', id: string, value: number, issuedate: any, supplierAndCustomer?: { __typename?: 'SuppliersAndCustomer', id: string, name?: string | null } | null, accountplan?: { __typename?: 'AccountPlan', costType: Types.CostTypeEnum } | null }> } | null }> }> };
 
 
 export const GetCashFlowDocument = gql`
@@ -31,6 +31,9 @@ export const GetCashFlowDocument = gql`
           supplierAndCustomer {
             id
             name
+          }
+          accountplan {
+            costType
           }
         }
       }

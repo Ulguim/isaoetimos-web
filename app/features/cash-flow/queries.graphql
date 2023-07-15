@@ -18,6 +18,9 @@ query getCashFlow($year: String) {
             id
             name
           }
+          accountplan{
+            costType
+          }
         }
       }
     }

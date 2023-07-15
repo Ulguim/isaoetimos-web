@@ -1,3 +1,4 @@
+import { Finances } from '@app/generated/graphql'
 import {
   Box,
   Divider,
@@ -9,7 +10,7 @@ import {
 import { getMonth } from 'date-fns'
 import { sum } from 'lodash'
 
-import { Finances } from '../../../../generated/graphql'
+import { formatCashFlowValues } from '../utils/formatCashFlowValues'
 
 type SupplerAndCustomerRowProps = {
   finances?: Finances[]
@@ -21,12 +22,12 @@ export const SupplerAndCustomerRow: React.FC<
   const months = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
   const name = finances?.[0]?.supplierAndCustomer?.name
   const values = []
-  const total = sum(finances?.map(item => item.value))
+  const total = sum(finances?.map(item => formatCashFlowValues(item)))
 
   finances?.map(item => {
     values.push({
       month: getMonth(new Date(item?.issuedate)) + 1,
-      value: item?.value,
+      value: formatCashFlowValues(item),
     })
   })
 
