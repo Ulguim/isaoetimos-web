@@ -8,7 +8,10 @@ import { Box, Grid } from '@chakra-ui/react'
 import CashFlowGraph from '../CashFlowGraph'
 import FinanceBySupplier from '../FinanceBySupplier'
 import FinanceGraph from '../FinancesGraph'
-import { handleFinanceData } from './utils/formatQuery'
+import {
+  handleFinanceData,
+  handleSUpplierFinanceData,
+} from './utils/formatQuery'
 
 const DashboardLayout = () => {
   const { data: financeGraphData, loading: isFinanceLoading } =
@@ -38,12 +41,13 @@ const DashboardLayout = () => {
           isLoading={isFinanceLoading}
           queryData={handleFinanceData(financeGraphData)}
           title="Finanças por tipo"
-        />
-        <CashFlowGraph title="Fluxo de caixa" />
+        ></FinanceGraph>
+        <CashFlowGraph></CashFlowGraph>
+
         <FinanceBySupplier
           isLoading={isFinanceLoading}
-          queryData={handleFinanceData(financeGraphData)}
-          title="Finanças por tipo"
+          queryData={handleSUpplierFinanceData(financeGraphData)}
+          title="Finanças por Fornecedor / Cliente"
         />
       </Grid>
     </Box>
