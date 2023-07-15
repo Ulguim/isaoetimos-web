@@ -1,16 +1,22 @@
-import React, { useEffect } from 'react'
+import React, { FC, useEffect } from 'react'
 
 import { useGetCashFlowLazyQuery } from '@app/features/cash-flow/queries.generated'
-import { Box } from '@chakra-ui/react'
+import { Box, Flex, Spinner, Text } from '@chakra-ui/react'
 import { getMonth } from 'date-fns'
 import dynamic from 'next/dynamic'
+
+import { formatCashFlowValues } from '../CashFlowTable/utils/formatCashFlowValues'
 
 const Column = dynamic(
   () => import('@ant-design/charts').then(mod => mod.Column as any),
   { ssr: false },
 ) as any
 
-const CashFlowGraph = () => {
+type CashFlowGraphProps = {
+  title?: string
+}
+
+const CashFlowGraph: FC<CashFlowGraphProps> = ({ title }) => {
   const months = [
     'JAN',
     'FEV',
@@ -27,7 +33,7 @@ const CashFlowGraph = () => {
   ]
 
   const year = new Date().getFullYear().toString()
-  const [load, { data, called }] = useGetCashFlowLazyQuery({
+  const [load, { data, called, loading }] = useGetCashFlowLazyQuery({
     fetchPolicy: 'network-only',
     variables: {
       year,
@@ -39,9 +45,10 @@ const CashFlowGraph = () => {
     { type: 'VARIÁVEL', cashFlow: [] },
   ]
 
-  const cashFlows = data?.gerenateCashFlowByAccount
-    ? data?.gerenateCashFlowByAccount
-    : mokedData
+  const cashFlows =
+    data?.gerenateCashFlowByAccount.length > 0
+      ? data?.gerenateCashFlowByAccount
+      : mokedData
 
   const cashFlowTypes = cashFlows?.flatMap(cashFlow => {
     const type = cashFlow?.type
@@ -51,7 +58,7 @@ const CashFlowGraph = () => {
       item?.finances?.nodes?.map(item => {
         values.push({
           month: getMonth(new Date(item?.issuedate)),
-          value: item?.value,
+          value: formatCashFlowValues(item),
         })
       })
     })
@@ -79,8 +86,6 @@ const CashFlowGraph = () => {
     return result
   })
 
-  console.log({ cashFlowTypes })
-
   const DemoColumn = () => {
     const config = {
       data: cashFlowTypes || [],
@@ -97,14 +102,6 @@ const CashFlowGraph = () => {
           autoRotate: false,
         },
       },
-      meta: {
-        type: {
-          alias: '类别',
-        },
-        sales: {
-          alias: 'total',
-        },
-      },
     }
     return <Column {...config} />
   }
@@ -115,9 +112,29 @@ const CashFlowGraph = () => {
 
   return (
     <Box backgroundColor="white" borderRadius="5px">
-      <Box width={'min-content'} padding={'20px'}>
-        <DemoColumn />
-      </Box>
+      <Text fontSize="24px" pl="20px" pt="5px" fontWeight="bold">
+        {title}
+      </Text>
+      {loading ? (
+        <Flex
+          width="100%"
+          height="100%"
+          justify="center"
+          alignItems="center"
+        >
+          <Spinner
+            thickness="4px"
+            speed="0.65s"
+            emptyColor="gray.200"
+            color="blue.500"
+            size="xl"
+          />
+        </Flex>
+      ) : (
+        <Box width={'min-content'} padding={'20px'}>
+          <DemoColumn />
+        </Box>
+      )}
     </Box>
   )
 }

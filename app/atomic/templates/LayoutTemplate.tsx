@@ -67,6 +67,7 @@ const LayoutTemplate: React.FC<any> = ({ children }) => {
                   display="flex"
                   flexDirection="row"
                   alignItems="center"
+                  sx={{ _hover: { cursor: 'pointer' } }}
                 >
                   <Flex
                     width="100%"
@@ -88,7 +89,7 @@ const LayoutTemplate: React.FC<any> = ({ children }) => {
                   >
                     {menuItems.map(item => (
                       <Link
-                        display={['none', 'none', '']}
+                        display={['flex', 'flex', 'none', 'none']}
                         key={item.href}
                         href={item.href}
                       >
