@@ -8,9 +8,10 @@ import {
 } from '@chakra-ui/react'
 
 export type ListRowItemProps = {
-  actions: any
+  actions?: any
   marker?: any
   actionsProps?: GridItemProps
+  variant?: 'default' | 'dashboard'
 } & GridProps
 
 export const ListRowItem: React.FC<ListRowItemProps> = ({
@@ -19,15 +20,29 @@ export const ListRowItem: React.FC<ListRowItemProps> = ({
   actionsProps,
   children,
   templateColumns,
+  variant = 'default',
   ...props
 }) => {
+  const styles = {
+    default: {
+      minH: 75,
+      px: 6,
+      py: 2,
+    },
+    dashboard: {
+      minH: 10,
+      px: 2,
+      py: 2,
+    },
+  }
+
   return (
     <Grid
-      minH={75}
+      minH={styles[variant].minH}
       w="100%"
       rounded="lg"
-      px={6}
-      py={2}
+      px={styles[variant].px}
+      py={styles[variant].py}
       alignItems="center"
       templateColumns={
         templateColumns || [
@@ -42,7 +57,7 @@ export const ListRowItem: React.FC<ListRowItemProps> = ({
     >
       {children}
       {marker && marker}
-      <GridItem {...actionsProps}>{actions}</GridItem>
+      <GridItem {...actionsProps}>{actions && actions}</GridItem>
     </Grid>
   )
 }

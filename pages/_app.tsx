@@ -2,12 +2,12 @@ import '../styles/globals.css'
 
 import { ApolloProvider } from '@apollo/client'
 import { getDataFromTree } from '@apollo/client/react/ssr'
+import { apolloClient } from '@app/apollo'
+import NoSsr from '@app/common/utils/no-ssr'
 import { ChakraProvider } from '@chakra-ui/react'
 import { AppProps } from 'next/app'
 import { ProSidebarProvider } from 'react-pro-sidebar'
 
-import { apolloClient } from '../app/apollo'
-import NoSsr from '../app/common/utils/no-ssr'
 import { client } from '../src/apollo'
 
 function MyApp({ Component, pageProps }: AppProps) {

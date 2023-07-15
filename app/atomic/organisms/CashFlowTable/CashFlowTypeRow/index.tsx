@@ -1,3 +1,4 @@
+import { CashFlowData } from '@app/generated/graphql'
 import {
   Accordion,
   AccordionButton,
@@ -13,8 +14,8 @@ import {
 import { getMonth } from 'date-fns'
 import { sum } from 'lodash'
 
-import { CashFlowData } from '../../../../generated/graphql'
 import { AccountPlanRow } from '../AccountPlanRow'
+import { formatCashFlowValues } from '../utils/formatCashFlowValues'
 
 type CashFlowTypeRowProps = {
   cashFlow?: CashFlowData
@@ -32,7 +33,7 @@ export const CashFlowTypeRow: React.FC<CashFlowTypeRowProps> = ({
     item?.finances?.nodes?.map(item => {
       values.push({
         month: getMonth(new Date(item?.issuedate)) + 1,
-        value: item?.value,
+        value: formatCashFlowValues(item),
       })
     })
   })

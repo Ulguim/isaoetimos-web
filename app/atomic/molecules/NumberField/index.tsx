@@ -1,5 +1,6 @@
 import React, { memo } from 'react'
 
+import { fv } from '@app/common/validator'
 import {
   BoxProps,
   FormControl,
@@ -14,8 +15,6 @@ import {
   NumberInputStepper,
 } from '@chakra-ui/react'
 import { useField, UseFieldConfig } from 'react-final-form'
-
-import { fv } from '../../../common/validator'
 
 export type NumberFieldProps = {
   name: string

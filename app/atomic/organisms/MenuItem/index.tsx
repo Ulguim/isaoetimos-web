@@ -1,5 +1,5 @@
 import {
-  // faHouse,
+  faHouse,
   faImage,
   faList,
   faMoneyBillTransfer,
@@ -8,11 +8,11 @@ import {
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 export const menuItems = [
-  // {
-  //   label: 'Home',
-  //   href: '/suppliers-and-customers',
-  //   icon: <FontAwesomeIcon icon={faHouse} />,
-  // },
+  {
+    label: 'Dashboard',
+    href: '/admin/dashboard',
+    icon: <FontAwesomeIcon icon={faHouse} />,
+  },
   {
     label: 'Fluxo de Caixa',
     href: '/admin/cash-flow',

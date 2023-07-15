@@ -896,6 +896,16 @@ export type QueryFinancesArgs = {
 };
 
 
+export type QueryGerenateCashFlowArgs = {
+  year?: InputMaybe<Scalars['String']>;
+};
+
+
+export type QueryGerenateCashFlowByAccountArgs = {
+  year?: InputMaybe<Scalars['String']>;
+};
+
+
 export type QueryIsTokenValidArgs = {
   token: Scalars['String'];
 };

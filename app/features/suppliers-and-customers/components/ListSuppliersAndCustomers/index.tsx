@@ -1,8 +1,17 @@
 import { useState } from 'react'
 
+import { PlusButton } from '@app/atomic/atoms/PlusButton'
+import MoreOptionsMenu from '@app/atomic/molecules/MoreOptionsMenu/MoreOptionsMenu'
+import { ListRowItem } from '@app/atomic/organisms/ListRowItem'
+import { SuppliersAndCustomersDrawer } from '@app/atomic/organisms/SupplersAndCustomersDrawer'
+import { SuppliersAndCustomer } from '@app/generated/graphql'
 import {
   Box,
+  Flex,
   GridItem,
+  Input,
+  Spinner,
+  Stack,
   useDisclosure,
   useToast,
 } from '@chakra-ui/react'
@@ -13,17 +22,51 @@ import {
   faTrashCan,
 } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import InfiniteScroll from 'react-infinite-scroll-component'
 
-import { PlusButton } from '../../../../atomic/atoms/PlusButton'
-import MoreOptionsMenu from '../../../../atomic/molecules/MoreOptionsMenu/MoreOptionsMenu'
-import { ListRowItem } from '../../../../atomic/organisms/ListRowItem'
-import { SuppliersAndCustomersDrawer } from '../../../../atomic/organisms/SupplersAndCustomersDrawer'
-import { SuppliersAndCustomer } from '../../../../generated/graphql'
 import { useDeleteOneSuppliersAndCustomerMutation } from '../../graphql/mutations.generated'
 import { useGetSuppliersAndCustomersQuery } from '../../graphql/queries.generated'
 
 const ListSupplyAndCustomer: React.FC = () => {
-  const { data } = useGetSuppliersAndCustomersQuery()
+  const [search, setSearch] = useState('')
+
+  const handleSearch = (e: any) => {
+    setSearch(e.target.value)
+  }
+
+  const { data, loading, fetchMore } =
+    useGetSuppliersAndCustomersQuery({
+      variables: { namOrEmail: `%${search}%` ?? `%%` },
+    })
+
+  const loadMore = async () => {
+    const variables = {
+      offset: data?.suppliersAndCustomers?.nodes.length,
+      namOrEmail: `%${search}%` ?? `%%`,
+    }
+
+    try {
+      fetchMore({
+        variables: variables,
+        updateQuery: (previousResult, { fetchMoreResult }) => {
+          if (!fetchMoreResult) return previousResult
+
+          return {
+            suppliersAndCustomers: {
+              ...previousResult.suppliersAndCustomers,
+              nodes: [
+                ...previousResult.suppliersAndCustomers.nodes,
+                ...fetchMoreResult.suppliersAndCustomers.nodes,
+              ],
+            },
+          }
+        },
+      })
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
   const toast = useToast()
   const [DeleteSupplierAndCustomer] =
     useDeleteOneSuppliersAndCustomerMutation({
@@ -39,6 +82,7 @@ const ListSupplyAndCustomer: React.FC = () => {
         })
       },
     })
+
   const { isOpen, onOpen, onClose } = useDisclosure()
   const [initialValues, setInitalValues] =
     useState<SuppliersAndCustomer | null>(null)
@@ -58,55 +102,116 @@ const ListSupplyAndCustomer: React.FC = () => {
 
   return (
     <>
-      {data?.suppliersAndCustomers?.nodes.map(supply => (
-        <ListRowItem
-          maxW={'95%'}
-          key={supply.id}
+      <Stack spacing={3}>
+        <Input
+          backgroundColor="white"
+          maxWidth="400px"
+          placeholder="Pesquisar"
           boxShadow={'lg'}
-          bgColor={'#FFFFFF'}
-          actions={
-            <MoreOptionsMenu
-              options={[
-                {
-                  icon: (
-                    <FontAwesomeIcon icon={faPenToSquare} size="lg" />
-                  ),
-                  label: 'Editar',
-                  onClick: () => handleUpdate(supply),
-                },
-                {
-                  icon: (
-                    <FontAwesomeIcon icon={faTrashCan} size="lg" />
-                  ),
-                  label: 'Excluir',
-                  onClick: () =>
-                    DeleteSupplierAndCustomer({
-                      variables: { id: supply.id },
-                    }),
-                },
-              ]}
-            />
-          }
-          actionsProps={{ justifySelf: 'flex-end' }}
-          borderLeft="8px"
-          borderLeftColor="#00B247"
-          my={5}
+          size="lg"
+          onChange={e => handleSearch(e)}
+        />
+      </Stack>
+
+      {/* <Button disabled={isFetchingMore || loading} onClick={loadMore}>
+        loadmore
+      </Button> */}
+
+      {loading && (
+        <Flex
+          width="100%"
+          height="100%"
+          justify="center"
+          alignItems="center"
         >
-          <GridItem>{supply?.name}</GridItem>
-          <GridItem display="flex" alignItems="center">
-            <FontAwesomeIcon icon={faEnvelope} size="lg" />
-            <Box ml={2}>{supply?.email}</Box>
-          </GridItem>
-          <GridItem display="flex" alignItems="center">
-            <FontAwesomeIcon
-              icon={faSquarePhone}
-              size="lg"
-              color="#00B247"
+          <Spinner
+            thickness="4px"
+            speed="0.65s"
+            emptyColor="gray.200"
+            color="blue.500"
+            size="xl"
+          />
+        </Flex>
+      )}
+      <InfiniteScroll
+        scrollableTarget="scrollableDiv"
+        dataLength={data?.suppliersAndCustomers?.nodes?.length ?? 0}
+        scrollThreshold={1}
+        style={{ overflow: 'hidden' }}
+        hasMore={
+          data?.suppliersAndCustomers?.pageInfo?.hasNextPage ?? false
+        }
+        next={loadMore}
+        loader={
+          <Flex
+            width="100%"
+            height="25px"
+            justify="center"
+            alignItems="center"
+          >
+            <Spinner
+              thickness="4px"
+              speed="0.65s"
+              emptyColor="gray.200"
+              color="blue.500"
+              size="xl"
             />
-            <Box ml={2}>{supply?.phone}</Box>
-          </GridItem>
-        </ListRowItem>
-      ))}
+          </Flex>
+        }
+      >
+        {data?.suppliersAndCustomers?.nodes.map(supply => (
+          <ListRowItem
+            maxW={'95%'}
+            key={supply.id}
+            boxShadow={'lg'}
+            bgColor={'#FFFFFF'}
+            actions={
+              <MoreOptionsMenu
+                options={[
+                  {
+                    icon: (
+                      <FontAwesomeIcon
+                        icon={faPenToSquare}
+                        size="lg"
+                      />
+                    ),
+                    label: 'Editar',
+                    onClick: () => handleUpdate(supply),
+                  },
+                  {
+                    icon: (
+                      <FontAwesomeIcon icon={faTrashCan} size="lg" />
+                    ),
+                    label: 'Excluir',
+                    onClick: () =>
+                      DeleteSupplierAndCustomer({
+                        variables: { id: supply.id },
+                      }),
+                  },
+                ]}
+              />
+            }
+            actionsProps={{ justifySelf: 'flex-end' }}
+            borderLeft="8px"
+            borderLeftColor="#00B247"
+            my={5}
+          >
+            <GridItem>{supply?.name}</GridItem>
+            <GridItem display="flex" alignItems="center">
+              <FontAwesomeIcon icon={faEnvelope} size="lg" />
+              <Box ml={2}>{supply?.email}</Box>
+            </GridItem>
+            <GridItem display="flex" alignItems="center">
+              <FontAwesomeIcon
+                icon={faSquarePhone}
+                size="lg"
+                color="#00B247"
+              />
+              <Box ml={2}>{supply?.phone}</Box>
+            </GridItem>
+          </ListRowItem>
+        ))}
+      </InfiniteScroll>
       <PlusButton onOpen={onOpen} setEdit={setIsEditform} />
       <SuppliersAndCustomersDrawer
         intitialValues={initialValues}

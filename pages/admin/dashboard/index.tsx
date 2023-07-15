@@ -1,18 +1,20 @@
+import DashboardLayout from '@app/atomic/organisms/DashboardLayout/DashboardLayout'
+import DashboardList from '@app/atomic/organisms/DashboardList'
 import LayoutTemplate from '@app/atomic/templates/LayoutTemplate'
-import ListSupplyAndCustomer from '@app/features/suppliers-and-customers/components/ListSuppliersAndCustomers'
 import { Box } from '@chakra-ui/react'
 
-const SuppliersAndCustomers = () => {
+const Dashboard = () => {
   return (
     <LayoutTemplate>
       <Box margin={5}>
         <Box fontSize="24px" fontWeight="bold" pb="6px">
-          Fornecedores e Clientes
+          Dashboard
         </Box>
-        <ListSupplyAndCustomer />
+        <DashboardLayout />
+        <DashboardList />
       </Box>
     </LayoutTemplate>
   )
 }
 
-export default SuppliersAndCustomers
+export default Dashboard

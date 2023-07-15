@@ -22,13 +22,10 @@ export const menuItemStyle: ButtonProps = {
 }
 const ActionButtons = ({
   onEdit,
-  // onRemove,
   hasRemoveOption,
   hasEditOption,
   children,
-}: // isAdminTable,
-// isPlanOption,
-{
+}: {
   hasRemoveOption: boolean
   hasEditOption: boolean
   isAdminTable?: boolean
@@ -84,11 +81,6 @@ const ActionButtons = ({
                     onCloseMenu()
                   }}
                 >
-                  {/* <EditPencil
-                    fill="#464646"
-                    width="18px"
-                    height="18px"
-                  /> */}
                   <Text fontSize={'14px'} lineHeight={'16px'}>
                     Editar
                   </Text>
@@ -100,11 +92,6 @@ const ActionButtons = ({
                   onClick={onOpen}
                   _hover={{ bg: 'gray.200' }}
                 >
-                  {/* <RemoveItem
-                    fill="#464646"
-                    width="18px"
-                    height="18px"
-                  /> */}
                   <Text fontSize={'14px'} lineHeight={'16px'}>
                     Remover
                   </Text>

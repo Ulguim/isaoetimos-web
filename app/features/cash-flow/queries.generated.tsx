@@ -3,15 +3,17 @@ import * as Types from '../../generated/graphql';
 import { gql } from '@apollo/client';
 import * as Apollo from '@apollo/client';
 const defaultOptions = {} as const;
-export type GetCashFlowQueryVariables = Types.Exact<{ [key: string]: never; }>;
+export type GetCashFlowQueryVariables = Types.Exact<{
+  year?: Types.InputMaybe<Types.Scalars['String']>;
+}>;
 
 
-export type GetCashFlowQuery = { __typename?: 'Query', gerenateCashFlowByAccount: Array<{ __typename?: 'CashFlowData', type: string, cashFlows: Array<{ __typename?: 'AccountPlan', id: string, name: string, accountPlanType: Types.AccountPlanTypeEnum, costType: Types.CostTypeEnum, createdAt?: any | null, deletedAt?: any | null, updatedAt?: any | null, finances?: { __typename?: 'AccountPlanFinancesConnection', nodes: Array<{ __typename?: 'Finances', id: string, value: number, issuedate: any, supplierAndCustomer?: { __typename?: 'SuppliersAndCustomer', id: string, name?: string | null } | null }> } | null }> }> };
+export type GetCashFlowQuery = { __typename?: 'Query', gerenateCashFlowByAccount: Array<{ __typename?: 'CashFlowData', type: string, cashFlows: Array<{ __typename?: 'AccountPlan', id: string, name: string, accountPlanType: Types.AccountPlanTypeEnum, costType: Types.CostTypeEnum, createdAt?: any | null, deletedAt?: any | null, updatedAt?: any | null, finances?: { __typename?: 'AccountPlanFinancesConnection', nodes: Array<{ __typename?: 'Finances', id: string, value: number, issuedate: any, supplierAndCustomer?: { __typename?: 'SuppliersAndCustomer', id: string, name?: string | null } | null, accountplan?: { __typename?: 'AccountPlan', costType: Types.CostTypeEnum } | null }> } | null }> }> };
 
 
 export const GetCashFlowDocument = gql`
-    query getCashFlow {
-  gerenateCashFlowByAccount {
+    query getCashFlow($year: String) {
+  gerenateCashFlowByAccount(year: $year) {
     type
     cashFlows {
       id
@@ -29,6 +31,9 @@ export const GetCashFlowDocument = gql`
           supplierAndCustomer {
             id
             name
+          }
+          accountplan {
+            costType
           }
         }
       }
@@ -49,6 +54,7 @@ export const GetCashFlowDocument = gql`
  * @example
  * const { data, loading, error } = useGetCashFlowQuery({
  *   variables: {
+ *      year: // value for 'year'
  *   },
  * });
  */
