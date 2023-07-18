@@ -29,10 +29,10 @@ export async function middleware(req: NextRequest) {
   const isValidUser = !!res?.data?.data?.isTokenValid?.valid
 
   if (isValidUser && req.nextUrl.pathname == '/') {
-    return NextResponse.rewrite(new URL('/admin/finances', req.url))
+    return NextResponse.rewrite(new URL('/admin/dashboard', req.url))
   }
 
-  if(!isValidUser && req.nextUrl.pathname == '/') {
+  if (!isValidUser && req.nextUrl.pathname == '/') {
     return NextResponse.rewrite(new URL('/auth/login', req.url))
   }
 
